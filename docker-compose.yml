@@ -1,31 +1,60 @@
 version: '3.7'
-
 services:
-  db:
-    image: postgres:alpine
-    env_file:
-      - .env
-    ports:
-      - "5432:5432"
-    volumes:
-      - ../db-data:/var/lib/postgresql/data
-    networks:
-      - db-net
-    restart: "on-failure"
-
   web:
-    image: lorisleiva/laravel-docker
+    build: ./
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver"
+    environment:
+      DJANGO_DEBUG: "True"
     volumes:
-      - .:/var/www
-    command: bash ./entrypoint.sh
+#      - ./media:/usr/media
+      - ./src:/var/www
+#      - ./log/celery:/var/log/celery
+#      - ./run/celery:/run/celery
+#      - ./confs/django:/etc/django:ro
+#      - ./log/django:/var/log/django
+#    networks:
+#      - db-net
+#      - amqp-net
+#      - nginx-net
     ports:
       - "8000:8000"
     depends_on:
       - db
-    networks:
-      - db-net
+      - rabbit
     restart: "on-failure"
+
+#  db:
+#    image: postgres:alpine
+#     # Make Postgres log to a file.
+#     # More on logging with Postgres: https://www.postgresql.org/docs/current/static/runtime-config-logging.html
+#     # command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
+##    environment:
+#
+##      POSTGRES_PASSWORD: "qwertyuioasdfghjkl" #provide POSTGRES_PASSWORD}
+#    volumes:
+#      # Persist the data between container invocations
+#      - ./postgres-data:/var/lib/postgresql/data
+#      # - ./logs:/logs
+#    ports:
+#      - "5432:5432"
+#    networks:
+#      - db-net
+#    restart: "on-failure"
+
+#  nginx:
+#    image: nginx:alpine
+#    networks:
+#      - nginx-net
+#    ports:
+#      - "8000:80"
+#    volumes:
+#      - ./confs/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+#    depends_on:
+#      - web
+
 
 networks:
   db-net:
     driver: bridge
+#  nginx-net:
+#    driver: bridge
