@@ -20,8 +20,8 @@ def check_access(request: Request):
     now  = datetime.utcnow()
     result = Accesses.objects.filter(user=user, lock=lock, access_start__lte=now, access_stop__gte=now).exists()
     if result:
-        result = '#'
+        result_char = '#'
     else:
-        result = '*'
+        result_char = '*'
     Logs.objects.create(user=user, lock=lock, result=result, try_time=now)
-    return Response(result, status=200)
+    return Response(result_char, status=200)

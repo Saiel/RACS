@@ -29,13 +29,15 @@ class AccessesSerializer(serializers.ModelSerializer):
         model = Accesses
         fields = [
             'lock',
+            'lock_desc',
             'user',
+            'card_id',
             'access_start',
             'access_stop',
-            'card_id',
         ]
     
-    card_id = serializers.ReadOnlyField(source='u_id.card_id')
+    card_id   = serializers.ReadOnlyField(source='user.card_id')
+    lock_desc = serializers.ReadOnlyField(source='lock.description')
 
 
 class UserModelSerializer(serializers.ModelSerializer):
@@ -61,4 +63,9 @@ class LogsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Logs
         fields = '__all__'
-        read_only_fields = '__all__'
+        read_only_fields = [
+            'lock',
+            'user',
+            'try_time',
+            'result',
+        ]
