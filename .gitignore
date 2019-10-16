@@ -143,4 +143,9 @@ dmypy.json
 
 /src/lockadmin/migrations/
 /src/datestart.utcdatetime
+
+# macOS
 .DS_STORE
+
+# tmp files
+*~
