@@ -55,7 +55,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     
     @classmethod
     def get_instance_by_hash_id(cls, hash_id):
-        return cls.objects.get(hash_id=hash_id)
+        return cls.objects.get(hash_id__exact=hash_id)
     
     @property
     def full_name(self):

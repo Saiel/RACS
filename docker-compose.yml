@@ -33,7 +33,7 @@ services:
 ##      POSTGRES_PASSWORD: "qwertyuioasdfghjkl" #provide POSTGRES_PASSWORD}
 #    volumes:
 #      # Persist the data between container invocations
-#      - ./postgres-data:/var/lib/postgresql/data
+        #      - ./postgres-data:/var/lib/postgresql/data
 #      # - ./logs:/logs
 #    ports:
 #      - "5432:5432"
