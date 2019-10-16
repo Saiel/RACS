@@ -16,8 +16,12 @@ def check_access(request: Request):
         user = UserModel.get_instance_by_hash_id(user_id_hash.lower())
         lock = Locks.get_instance_by_hash_id(lock_id_hash.lower())
     except ObjectDoesNotExist as exc:
-        return Response(0, headers={'Error': str(exc)})
+        return Response('*', headers={'Error': str(exc)})
     now  = datetime.utcnow()
     result = Accesses.objects.filter(user=user, lock=lock, access_start__lte=now, access_stop__gte=now).exists()
+    if result:
+        result = '#'
+    else:
+        result = '*'
     Logs.objects.create(user=user, lock=lock, result=result, try_time=now)
-    return Response(int(result), status=200)
+    return Response(result, status=200)
