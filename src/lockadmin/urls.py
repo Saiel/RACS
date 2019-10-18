@@ -18,4 +18,5 @@ router.register('roles', views.RolesViewSet)
 urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('lock-api/check-access/', views.check_access),
+    path('', views.VueIndex)
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

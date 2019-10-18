@@ -8,7 +8,6 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: pagesRoutes,
-  mode: 'history',
 });
 
 const app = new Vue({
