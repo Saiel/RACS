@@ -13,6 +13,7 @@ router.register(r'roles', views.RolesViewSet)
 
 
 urlpatterns = [
+    path('', views.VueIndex),
     path('', include(router.urls)),
     path('lock-api/check-access/', views.check_access),
 ]
