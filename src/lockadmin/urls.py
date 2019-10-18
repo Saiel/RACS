@@ -1,4 +1,6 @@
 from django.urls import re_path, path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework import routers
 
 from . import views
@@ -16,4 +18,4 @@ urlpatterns = [
     path('', views.VueIndex),
     path('', include(router.urls)),
     path('lock-api/check-access/', views.check_access),
-]
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
