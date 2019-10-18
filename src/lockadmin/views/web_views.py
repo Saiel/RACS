@@ -29,5 +29,5 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Logs.objects.all()
     serializer_class = LogsSerializer
 
-def VueIndex(request):
+def VueIndex(request, *args, **kwargs):
   return render(request, 'index.html')
