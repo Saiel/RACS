@@ -1,6 +1,6 @@
 import { User, Log, Lock, LockAccess, UserPOST, Role, LockAccessPOST, LockPOST } from 'store/types';
 
-export const API_HOST = 'http://localhost:8000/';
+export const API_HOST = '/';
 export const API_BASE = 'api/v1/';
 
 // TO-DO: move to separate files
@@ -45,7 +45,8 @@ export type APIResponses = {
 };
 
 export function getAPIUrl(endpoint: string) {
-  return new URL(endpoint, `${API_HOST}${API_BASE}`);
+  // return new URL(endpoint, `${API_HOST}${API_BASE}`);
+  return new URL(`${API_HOST}${endpoint}`, window.location.origin);
 }
 
 // TO-DO: profile
