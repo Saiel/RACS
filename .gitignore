@@ -154,3 +154,6 @@ dmypy.json
 node_modules
 .vscode
 dist
+
+# collected static
+/src/static
