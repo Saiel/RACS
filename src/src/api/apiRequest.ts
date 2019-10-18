@@ -1,6 +1,6 @@
 import { User, Log, Lock, LockAccess, UserPOST, Role, LockAccessPOST, LockPOST } from 'store/types';
 
-export const API_HOST = 'http://192.168.99.100:8000/';
+export const API_HOST = 'http://localhost:8000/';
 export const API_BASE = 'api/v1/';
 
 // TO-DO: move to separate files
