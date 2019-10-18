@@ -1,0 +1,28 @@
+.Typo {
+  font-family: Geneva, Tahoma, sans-serif;
+
+  &_h1 {
+    margin: 0;
+    font-size: var(--font-size-m);
+    line-height: var(--line-height-m);
+  }
+
+  &_s {
+    font-size: var(--font-size-s);
+    line-height: var(--line-height-s);
+  }
+
+  &_m {
+    font-size: var(--font-size-m);
+    line-height: var(--line-height-m);
+  }
+  
+  &_l {
+    font-size: var(--font-size-l);
+    line-height: var(--line-height-l);
+  }
+
+  &_weight_bold {
+    font-weight: 700;
+  }
+}
