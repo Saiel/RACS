@@ -60,11 +60,16 @@ const config: webpack.Configuration = {
   },
 
   devServer: {
-    contentBase: resolve('dist'),
+    contentBase: resolve(__dirname, 'dist'),
     compress: true,
+    host: '0.0.0.0',
     port: 9000,
     hot: true,
     historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 500, // delay before reloading
+      poll: 1000 // enable polling since fsevents are not supported in docker
+    }
   },
 };
 
