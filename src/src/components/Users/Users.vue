@@ -8,6 +8,7 @@ import { apiRequest, apiGetRequest, apiPostRequest, apiDeleteRequest } from 'api
 
 import Table from 'components/Table/Table.vue';
 import Button from 'components/Button/Button.vue';
+import { Role } from '../../store/types';
 
 export default Vue.extend({
   name: 'Users',
@@ -26,9 +27,21 @@ export default Vue.extend({
       card_id: '',
       patronymic: '',
       email: '',
+      roles: [] as Array<Role>,
     };
   },
   methods: {
+    getRoles() {
+      apiGetRequest('roles')
+      .then(json => {
+        this.roles = json.results;
+      })
+      .catch(error => {
+        this.roles = [];
+        console.log('Error getting role list');
+      });
+    },
+
     getUsers() {
       apiGetRequest('users')
         .then((json) => {
@@ -74,6 +87,7 @@ export default Vue.extend({
   },
   mounted() {
     this.getUsers();
+    this.getRoles();
   },
 });
 </script>
@@ -99,6 +113,9 @@ export default Vue.extend({
         <input type="text" placeholder="Отчество" v-model="patronymic" />
         <input type="email" placeholder="E-mail" v-model="email" />
         <input type="text" placeholder="ID карточки" v-model="card_id" />
+        <select>
+          <option v-for="role in roles" :key="role.name">{{ role.name }}</option>
+        </select>
         <Button viewType="ok" @on-click="addUser">Добавить</Button>
       </form>
     </div>
