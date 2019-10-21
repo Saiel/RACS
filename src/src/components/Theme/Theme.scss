@@ -1,0 +1,28 @@
+$black: rgba(0, 0, 0, 1);
+$red: rgba(254, 95, 85, 1);
+$green: rgba(175, 208, 191, 1);
+$light: rgba(251, 251, 251, 1);
+$blue: rgba(51, 101, 138, 1);
+
+:root {
+  --color-primary: #000000;
+  --color-accent: rgba(51, 101, 138, 1);
+  --color-light: rgba(251, 251, 251, 1);
+  --color-red: rgba(254, 95, 85, 1);;
+  --color-green: rgba(175, 208, 191, 1);
+
+  --color-table-divider: #cecece;
+  --color-content-divider: #adadad;
+
+  --header-bg: var(--color-light);
+
+  --font-size-s: 12px;
+  --line-height-s: 18px;
+  --font-size-m: 14px;
+  --line-height-m: 21px;
+  --font-size-l: 16px;
+  --line-height-l: 24px;
+
+  --content-padding-h: 32px;
+  --content-padding-v: 16px;
+}

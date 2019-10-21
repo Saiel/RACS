@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -26,6 +25,7 @@ SECRET_KEY = '+@(8hq)@mnjl8(fcsft1-@k$=6&mu&pl&v0ngvm%^l&(%$&a_q'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -58,7 +58,9 @@ ROOT_URLCONF = 'RACS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+          '/var/www/dist'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,8 +127,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
+STATIC_ROOT = "/var/www/static/"
+STATIC_URL = '/dist/'
+STATICFILES_DIRS = [
+  '/var/www/dist'
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'lockadmin.paginations.CustomPageNumberPagination'
