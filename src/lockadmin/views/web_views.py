@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import viewsets
 
 from ..serializers import *
@@ -27,3 +28,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
 class LogsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Logs.objects.all()
     serializer_class = LogsSerializer
+
+def VueIndex(request, *args, **kwargs):
+  return render(request, 'index.html')

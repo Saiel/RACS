@@ -1,0 +1,7 @@
+.Page {
+  margin: 0;
+
+  &-Content {
+    margin: var(--content-padding-v) var(--content-padding-h);
+  }
+}
