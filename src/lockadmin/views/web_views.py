@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from ..serializers import *
 from ..models import *
@@ -8,6 +10,7 @@ from ..models import *
 class LocksViewSet(viewsets.ModelViewSet):
     queryset = Locks.objects.all()
     serializer_class = LocksSerializer
+    # permission_classes = [permissions.IsAdminUser]
 
 
 class RolesViewSet(viewsets.ModelViewSet):
@@ -29,5 +32,12 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Logs.objects.all()
     serializer_class = LogsSerializer
 
-def VueIndex(request, *args, **kwargs):
-  return render(request, 'index.html')
+
+class VueIndex(APIView):
+    permission_classes = [
+    #     permissions.IsAuthenticated,
+    #     permissions.IsAdminUser,
+    ]
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, 'index.html')
