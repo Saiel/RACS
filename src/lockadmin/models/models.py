@@ -36,9 +36,13 @@ class Accesses(models.Model):
 
 
 class Logs(models.Model):
-    lock     = models.ForeignKey   (Locks,     models.CASCADE, 'l_logs', null=False,
-                                    verbose_name='l_id')
-    user     = models.ForeignKey   (UserModel, models.CASCADE, 'u_logs', null=False,
-                                    verbose_name='u_id')
-    try_time = models.DateTimeField('try_time', null=False)
-    result   = models.BooleanField ('result', null=False)
+    class Meta:
+        ordering = ['-try_time']
+    
+    lock      = models.ForeignKey   (Locks,     models.CASCADE, 'l_logs', null=True,
+                                     verbose_name='l_id')
+    user      = models.ForeignKey   (UserModel, models.CASCADE, 'u_logs', null=True,
+                                     verbose_name='u_id')
+    try_time  = models.DateTimeField('try_time', null=False)
+    result    = models.BooleanField ('result', null=False)
+    is_failed = models.BooleanField ('is_failed', null=False, default=False)
