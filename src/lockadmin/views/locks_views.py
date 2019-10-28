@@ -12,12 +12,14 @@ from ..models import Accesses, Locks, Logs, UserModel
 def check_access(request: Request):
     lock_id_hash: str = request.query_params['lock']
     user_id_hash: str = request.query_params['pass']
+    now  = datetime.utcnow()
     try:
         user = UserModel.get_instance_by_hash_id(user_id_hash.lower())
         lock = Locks.get_instance_by_hash_id(lock_id_hash.lower())
     except ObjectDoesNotExist as exc:
+        Logs.objects.create(result=False, is_failed=True, try_time=now)
         return Response('*', headers={'Error': str(exc)})
-    now  = datetime.utcnow()
+    
     result = Accesses.objects.filter(user=user, lock=lock, access_start__lte=now, access_stop__gte=now).exists()
     if result:
         result_char = '#'

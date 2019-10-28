@@ -68,4 +68,5 @@ class LogsSerializer(serializers.ModelSerializer):
             'user',
             'try_time',
             'result',
+            'is_failed'
         ]
