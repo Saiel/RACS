@@ -89,7 +89,7 @@ export default Vue.extend({
       <h2>Добавить доступ</h2>
       <form class="Form">
         <input type="number" placeholder="ID Пользователя" v-model="user">
-        <input type="number" placeholder="ID замка" v-model="lock" >
+        <input type="string" placeholder="ID замка" v-model="lock" >
         <input type="datetime-local" placeholder="Начало доступа" v-model="access_start">
         <input type="datetime-local" placeholder="Окончание доступа" v-model="access_stop">
         <Button viewType="ok" @on-click="addAccess">Добавить</Button>

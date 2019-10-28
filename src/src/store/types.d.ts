@@ -21,14 +21,14 @@ export interface LockPOST {
 }
 
 export interface Lock extends LockPOST {
-  id: number;
+  id: string;
   is_on: boolean;
 }
 
 export interface LockAccessPOST {
   access_start: string;
   access_stop: string;
-  lock: number;
+  lock: string;
   user: number;
 }
 
