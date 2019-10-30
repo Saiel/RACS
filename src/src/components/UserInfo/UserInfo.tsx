@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Flex } from '@chakra-ui/core';
+import React, { PropsWithChildren } from 'react';
+
 import { User } from 'store/types';
+import Flex, { FlexItem } from 'components/Flex/Flex';
 
+export interface UserProps {
+  user: User
+}
 
-const UserInfo = () => {
-  const [user, setUser] = useState({
-
-  } as User);
-  useEffect(() => {
-
-  });
-
+const UserInfo: React.FC<PropsWithChildren<UserProps>> = ({ user }) => {
   return (
-    <Flex>
+    <Flex direction={'column'}>
+     <FlexItem>{user.first_name}</FlexItem> 
+     <FlexItem>{user.last_name}</FlexItem> 
+     <FlexItem>{user.email}</FlexItem> 
+     <FlexItem>{user.card_id}</FlexItem> 
+     <FlexItem>{user.role}</FlexItem> 
     </Flex>
   );
-}
+};
+
 
 export default UserInfo;
