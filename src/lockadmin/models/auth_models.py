@@ -34,13 +34,15 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     u_id         = models.BigAutoField('u_id',         primary_key=True)
     
     role         = models.ForeignKey  ('Roles', models.CASCADE, 'role', to_field='name', null=True, db_index=False)
-    hash_id      = models.CharField   ('hash_id',      null=False, blank=False, max_length=256)
+    hash_id      = models.CharField   ('hash_id',      null=False, blank=False, max_length=256,
+                                       unique=True)
     email        = models.EmailField  ('email',        null=False, blank=False, max_length=64,
                                        unique=True, db_index=True)
     first_name   = models.CharField   ('first_name',   null=False, blank=False, max_length=50)
     last_name    = models.CharField   ('last_name',    null=False, blank=False, max_length=50)
     patronymic   = models.CharField   ('patronymic',   null=False, blank=True,  max_length=50)
-    card_id      = models.CharField   ('card_id',      null=False, blank=False, max_length=10)
+    card_id      = models.CharField   ('card_id',      null=False, blank=False, max_length=10,
+                                       unique=True)
     is_staff     = models.BooleanField('is_staff',     null=False, default=False)
     
     objects = UserModelManager()

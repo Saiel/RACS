@@ -9,16 +9,16 @@ from .models import Locks, UserModel
 @receiver(pre_save, sender=Locks)
 def hash_lock_id(sender, **kwargs):
     new_lock = kwargs['instance']
-    print(new_lock.l_id.__class__)
-    if new_lock.hash_id:
-        return
-    new_lock.hash_id = sha1(str(new_lock.l_id).encode('utf-8')).hexdigest()
+    
+    new_lock.hash_id = sha1(str(new_lock.uuid).encode('utf-8')).hexdigest()
 
 
 @receiver(pre_save, sender=UserModel)
 def hash_card_id(sender, **kwargs):
     new_user = kwargs['instance']
+    
     new_user.card_id = new_user.card_id.upper()
-    if new_user.hash_id:
-        return
+    while new_user.card_id.startswith('0'):
+        new_user.card_id = new_user.card_id[1:]
+    
     new_user.hash_id = sha1(str(new_user.card_id).encode('utf-8')).hexdigest()

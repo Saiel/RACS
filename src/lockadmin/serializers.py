@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import *
+from . import validators
 
 
 class LocksSerializer(serializers.ModelSerializer):
@@ -8,11 +9,16 @@ class LocksSerializer(serializers.ModelSerializer):
         model = Locks
         fields = [
             'l_id',
+            'uuid',
             'description',
-            'version'
+            'version',
+            'is_approved',
+            'last_echo',
+            'is_on',
         ]
         read_only_fields = [
             'l_id',
+            'uuid',
             'last_echo',
             'is_on'
         ]
@@ -21,19 +27,26 @@ class LocksSerializer(serializers.ModelSerializer):
 class RolesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Roles
-        fields = ['name']
+        fields = ['r_id', 'name']
+        read_only_fields = [
+            'r_id',
+        ]
 
 
 class AccessesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Accesses
         fields = [
+            'a_id',
             'lock',
             'lock_desc',
             'user',
             'card_id',
             'access_start',
             'access_stop',
+        ]
+        read_only_fields = [
+            'a_id'
         ]
     
     card_id   = serializers.ReadOnlyField(source='user.card_id')
@@ -46,6 +59,7 @@ class UserModelSerializer(serializers.ModelSerializer):
         fields = [
             'u_id',
             'email',
+            # 'password',
             'first_name',
             'last_name',
             'patronymic',
@@ -57,6 +71,24 @@ class UserModelSerializer(serializers.ModelSerializer):
             'u_id',
             'is_superuser',
         ]
+        extra_kwargs = {
+            # 'password': {
+            #     'write_only': True,
+            #     'default': '',
+            # },
+            'first_name': {
+                'validators': [validators.cyrillic_letters_validator],
+            },
+            'last_name': {
+                'validators': [validators.cyrillic_letters_validator],
+            },
+            'patronymic': {
+                'validators': [validators.cyrillic_letters_validator],
+            },
+            'card_id': {
+                'validators': [validators.card_validator],
+            },
+        }
 
 
 class LogsSerializer(serializers.ModelSerializer):

@@ -18,9 +18,10 @@ def check_access(request: Request):
         lock = Locks.get_instance_by_hash_id(lock_id_hash.lower())
     except ObjectDoesNotExist as exc:
         Logs.objects.create(result=False, is_failed=True, try_time=now)
-        return Response('*', headers={'Error': str(exc)})
+        return Response('*', headers={'Error': str(exc)}, status=403)
     
-    result = Accesses.objects.filter(user=user, lock=lock, access_start__lte=now, access_stop__gte=now).exists()
+    result = Accesses.objects.filter(user=user, lock=lock, lock__is_approved=True,
+                                     access_start__lte=now, access_stop__gte=now).exists()
     if result:
         result_char = '#'
     else:

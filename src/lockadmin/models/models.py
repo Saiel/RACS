@@ -10,10 +10,13 @@ class Roles(models.Model):
 
 
 class Locks(models.Model):
-    l_id        = models.UUIDField    ('l_id',        primary_key=True, default=uuid.uuid4, editable=False)
-    hash_id     = models.CharField    ('hash_id',     null=False, blank=False, max_length=256)
+    l_id        = models.BigAutoField ('l_id', primary_key=True)
+    uuid        = models.UUIDField    ('uid', default=uuid.uuid4, editable=False)
+    hash_id     = models.CharField    ('hash_id',     null=False, blank=False, max_length=256, 
+                                       unique=True)
     description = models.TextField    ('description', null=False, blank=True,  max_length=200)
     is_on       = models.BooleanField ('is_on',       null=False, default=True)
+    is_approved = models.BooleanField ('is_approved', null=False, default=True)  # temporary for dev
     version     = models.IntegerField ('version',     null=False)
     last_echo   = models.DateTimeField('last_echo',   null=False, auto_now_add=True)
     
