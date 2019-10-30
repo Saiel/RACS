@@ -1,9 +1,11 @@
 import React from 'react';
 
+import UserInfo from 'components/UserInfo/UserInfo';
+
 const Home = () => (
-  <div>
-    <h1>Home</h1>
-  </div>
+  <React.Fragment>
+    <UserInfo />
+  </React.Fragment>
 );
 
 export default Home;
