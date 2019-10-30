@@ -1,8 +1,10 @@
 import { RouteConfig } from 'vue-router';
-import Users from 'components/Users/Users.vue';
+
+import AccessControl from 'components/AccessControl/AccessControl.vue';
+import Home from 'components/Home/Home.vue';
 import Locks from 'components/Locks/Locks.vue';
 import Logs from 'components/Logs/Logs.vue';
-import AccessControl from 'components/AccessControl/AccessControl.vue';
+import Users from 'components/Users/Users.vue';
 
 const pagesRoutes: Array<RouteConfig> = [
   {
@@ -25,6 +27,11 @@ const pagesRoutes: Array<RouteConfig> = [
     name: 'Замки',
     component: Locks,
   },
+  {
+    path: '/',
+    name: 'Главная страница',
+    component: Home,
+  }
 ];
 
 export default pagesRoutes;
