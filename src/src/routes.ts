@@ -2,27 +2,27 @@ const pagesRoutes: Array<Object> = [
   {
     path: '/users',
     name: 'Пользователи',
-    component: Users,
+    component: 'Users',
   },
   {
     path: '/logs',
     name: 'Журнал',
-    component: Logs,
+    component: 'Logs',
   },
   {
     path: '/access',
     name: 'Управление доступом',
-    component: AccessControl,
+    component: 'AccessControl',
   },
   {
     path: '/locks',
     name: 'Замки',
-    component: Locks,
+    component: 'Locks',
   },
   {
     path: '/',
     name: 'Главная страница',
-    component: Home,
+    component: 'Home',
   }
 ];
 

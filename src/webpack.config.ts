@@ -5,7 +5,7 @@ import webpack from 'webpack';
 
 const config: webpack.Configuration = {
   name: 'client bundle',
-  entry: resolve(__dirname, './src/index.ts'),
+  entry: resolve(__dirname, './src/index.tsx'),
 
   target: 'web',
 
