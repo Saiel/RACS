@@ -1,12 +1,4 @@
-import { RouteConfig } from 'vue-router';
-
-import AccessControl from 'components/AccessControl/AccessControl.vue';
-import Home from 'components/Home/Home.vue';
-import Locks from 'components/Locks/Locks.vue';
-import Logs from 'components/Logs/Logs.vue';
-import Users from 'components/Users/Users.vue';
-
-const pagesRoutes: Array<RouteConfig> = [
+const pagesRoutes: Array<Object> = [
   {
     path: '/users',
     name: 'Пользователи',
