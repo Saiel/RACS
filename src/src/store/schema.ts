@@ -1,4 +1,6 @@
-export const UserSchema: Record<string, string> = {
+import { User } from './types';
+
+export const UserSchema: Record<keyof User, string> = {
   u_id: 'ID',
   email: 'E-mail',
   first_name: 'Имя',
@@ -6,7 +8,7 @@ export const UserSchema: Record<string, string> = {
   patronymic: 'Отчество',
   card_id: 'ID карточки',
   role: 'Роль',
-  // is_superuser: 'Главный администратор',
+  is_superuser: 'Главный администратор',
 };
 
 export const LogSchema: Record<string, string> = {
