@@ -19,11 +19,11 @@ const config: webpack.Configuration = {
       {
         test: /\.css$/,
         exclude: [/node_modules/],
-        use: ['css-loader'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/,
-        use: ['css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.tsx?$/,
