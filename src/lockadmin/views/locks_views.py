@@ -1,18 +1,25 @@
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.decorators import api_view
-from rest_framework.request import Request
 from datetime import datetime
 
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.request import Request
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 
 from ..models import Accesses, Locks, Logs, UserModel
+from ..serializers import RegisterLockSerializer
 
 
 @api_view(['GET'])
 def check_access(request: Request):
-    lock_id_hash: str = request.query_params['lock']
-    user_id_hash: str = request.query_params['pass']
+    lock_id_hash: str = request.query_params.get('lock', None)
+    user_id_hash: str = request.query_params.get('pass', None)
+    if not (lock_id_hash and user_id_hash):
+        return Response('Provide "lock" and "pass" query parameters',
+                        status=status.HTTP_400_BAD_REQUEST)
     now  = datetime.utcnow()
+
     try:
         user = UserModel.get_instance_by_hash_id(user_id_hash.lower())
         lock = Locks.get_instance_by_hash_id(lock_id_hash.lower())
@@ -26,5 +33,26 @@ def check_access(request: Request):
         result_char = '#'
     else:
         result_char = '*'
+
+    lock.echo()
     Logs.objects.create(user=user, lock=lock, result=result, try_time=now)
+
     return Response(result_char, status=200)
+
+
+class RegisterLock(CreateAPIView):
+    queryset = Locks.objects.all()
+    serializer_class = RegisterLockSerializer
+
+    def create(self, request, *args, **kwargs):
+        # TODO: make master pass validation
+        try:
+            lock = Locks.objects.get(uuid__exact=request.data['uuid'])
+            lock.echo()
+
+            return Response(status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            super(RegisterLock, self).create(*args, **kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(description=serializer.validated_data['uuid'])

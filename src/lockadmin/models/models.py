@@ -1,5 +1,6 @@
 import uuid
 
+from datetime import datetime
 from django.db import models
 from .auth_models import UserModel
 
@@ -11,15 +12,19 @@ class Roles(models.Model):
 
 class Locks(models.Model):
     l_id        = models.BigAutoField ('l_id', primary_key=True)
-    uuid        = models.UUIDField    ('uid', default=uuid.uuid4, editable=False)
+    uuid        = models.UUIDField    ('uid', default=uuid.uuid4, editable=True,
+                                       unique=True)
     hash_id     = models.CharField    ('hash_id',     null=False, blank=False, max_length=256, 
                                        unique=True)
     description = models.TextField    ('description', null=False, blank=True,  max_length=200)
     is_on       = models.BooleanField ('is_on',       null=False, default=True)
     is_approved = models.BooleanField ('is_approved', null=False, default=True)  # temporary for dev
-    version     = models.IntegerField ('version',     null=False)
+    version     = models.IntegerField ('version',     null=False, )
     last_echo   = models.DateTimeField('last_echo',   null=False, auto_now_add=True)
-    
+
+    def echo(self):
+        self.last_echo = datetime.utcnow()
+
     @classmethod
     def get_instance_by_hash_id(cls, hash_id):
         return cls.objects.get(hash_id__exact=hash_id)

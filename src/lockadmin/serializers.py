@@ -4,6 +4,23 @@ from .models import *
 from . import validators
 
 
+class RegisterLockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Locks
+        fields = [
+            'uuid',
+            'version',
+        ]
+        extra_kwargs = {
+            'uuid': {
+                'required': True,
+            },
+            'version': {
+                'required': True,
+            }
+        }
+
+
 class LocksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Locks
