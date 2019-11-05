@@ -1,5 +1,6 @@
 export interface Role {
   name: string;
+  r_id: number;
 }
 export interface UserPOST {
   email: string;
@@ -21,27 +22,28 @@ export interface LockPOST {
 }
 
 export interface Lock extends LockPOST {
-  id: string;
+  l_id: string;
+  uuid: string;
   is_on: boolean;
+  is_approved: boolean;
 }
 
 export interface LockAccessPOST {
   access_start: string;
   access_stop: string;
-  lock: string;
+  lock: number;
   user: number;
 }
 
 export interface LockAccess extends LockAccessPOST {
+  a_id: number;
   card_id: string;
+  lock_desc: string;
 }
 
 export interface Log {
-  l_id: string;
-  u_id: string;
+  lock: number;
+  user: number;
   try_time: string;
   result: boolean;
-  first_name: string;
-  last_name: string;
-  description: string;
 }
