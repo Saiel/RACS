@@ -15,17 +15,15 @@ const Table: React.FC<TableProps> = ({ headerFields, entries }) => {
             <div className="Table-Item" key={idx}>{field}</div>
           ) }
       </div>
-      <div className="Table-Body">
-        { entries.map((Entry, idx) => { 
-              return (
-                <div className="Table-Row" key={idx}>
-                  {Entry}
-                </div> 
-              )
-            }
-          ) 
-        }
-      </div>
+      { entries.map((Entry, idx) => { 
+            return (
+              <div className="Table-Row" key={idx}>
+                {Entry}
+              </div> 
+            )
+          }
+        ) 
+      }
     </div>
   )
 }

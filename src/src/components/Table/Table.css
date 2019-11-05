@@ -1,3 +1,18 @@
 .Table-Header, .Table-Row { 
   display: flex;
 }
+
+.Table-Row {
+  background: var(--color-light);
+  padding: 5px;
+  border-bottom: 1px solid var(--color-table-divider);
+}
+
+.Table-Row:nth-child(2n + 1) {
+  background: rgba(231, 231, 231, 1); 
+}
+
+.Table-Header {
+  background: rgba(231, 231, 231, 1); 
+  border-bottom: 2px solid var(--color-content-divider);
+}

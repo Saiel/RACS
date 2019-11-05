@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom'; 
 
-import './root.css';
+import './root.scss';
 import 'components/Typo/Typo.css';
 import 'components/Layout/Layout.scss';
 import Home from 'components/Home/Home';
