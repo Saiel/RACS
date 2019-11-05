@@ -8,7 +8,7 @@ import UserInfo from 'components/UserInfo/UserInfo';
 import { apiGetRequest } from 'api/apiRequest';
 
 const Home = () => {
-  const [user, setUser]: [User | null, Function] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     apiGetRequest('users')
