@@ -22,6 +22,16 @@ class AccessesViewSet(viewsets.ModelViewSet):
     queryset = Accesses.objects.all()
     serializer_class = AccessesSerializer
 
+    def get_queryset(self): 
+      queryset = Accesses.objects.all()
+
+      u_id = self.request.query_params.get('u_id', None)
+
+      if u_id is not None:
+        queryset = queryset.filter(user=u_id)
+
+      return queryset
+
 
 class UserModelViewSet(viewsets.ModelViewSet):
     queryset = UserModel.objects.all()
