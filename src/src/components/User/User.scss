@@ -1,5 +1,25 @@
 .User {
   &-UserInfo {
     width: 35%;
+
+    margin-right: 120px;
+  }
+
+  &-Tables {
+    flex: 1;
+  }
+
+  .AccessList .Table-Row div {
+    &:nth-child(1) {
+      width: 10%;
+    }
+
+    &:nth-child(2) {
+      width: 25%;
+    }
+
+    &:nth-child(3) {
+      width: 25%;
+    }
   }
 }
