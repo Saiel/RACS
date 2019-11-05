@@ -1,6 +1,7 @@
 .Layout {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   padding: 32px var(--content-padding-h); 
 
   &-Title {
