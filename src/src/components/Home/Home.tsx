@@ -36,7 +36,7 @@ const Home = () => {
         <div className="Layout-Title Typo Typo_h3">Аудитории</div>
         <LockList locks={locks} className="Layout-Table" />
         <div className="Layout-Title Typo Typo_h3">Пользователи</div>
-        <UserList users={users} />
+        <UserList users={users} className="Layout-Table" />
       </div>
     </div>
   );
