@@ -9,7 +9,7 @@ export interface UserProps {
 
 const UserInfo: React.FC<PropsWithChildren<UserProps>> = ({ user }) => {
   return (
-    <Flex direction={'column'}>
+    <Flex direction='column'>
      <FlexItem>{user.first_name}</FlexItem> 
      <FlexItem>{user.last_name}</FlexItem> 
      <FlexItem>{user.email}</FlexItem> 
