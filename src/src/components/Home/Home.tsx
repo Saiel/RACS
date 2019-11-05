@@ -26,6 +26,7 @@ const Home = () => {
 
   return (
     <div className="Home Layout Layout_columns_2">
+      <div className="Page-Title">Управление системой</div>
       <div className="Layout-Column Home-User">
         <div className="Layout-Title">
           Текущий пользователь
