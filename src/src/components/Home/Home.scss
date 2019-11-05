@@ -1,0 +1,49 @@
+.Home {
+  &-User {
+    width: 30%;
+  }
+
+  &-Tables {
+    width: 70%;
+  }
+
+  .LockList .Table-Row div {
+    &:nth-child(1) {
+      width: 10%;
+    }
+
+    &:nth-child(2) {
+      width: 15%;
+    }
+
+    &:nth-child(3) {
+      width: 15%;
+    }
+  }
+
+  .UserList .Table-Row div {
+    &:nth-child(1) {
+      width: 10%;
+    }
+
+    &:nth-child(2) {
+      width: 15%;
+    }
+
+    &:nth-child(3) {
+      width: 15%;
+    }
+
+    &:nth-child(4) {
+      width: 20%;
+    }
+
+    &:nth-child(5) {
+      width: 15%;
+    }
+
+    &:nth-child(6) {
+      width: 15%;
+    }
+  }
+}

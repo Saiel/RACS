@@ -1,15 +1,15 @@
-import { User } from './types';
+export type Schema<T> = Array<[keyof T, string]>;
 
-export const UserSchema: Record<keyof User, string> = {
-  u_id: 'ID',
-  email: 'E-mail',
-  first_name: 'Имя',
-  last_name: 'Фамилия',
-  patronymic: 'Отчество',
-  card_id: 'ID карточки',
-  role: 'Роль',
-  is_superuser: 'Главный администратор',
-};
+export const UserSchema: Schema<User> = [
+  ['u_id', 'ID'],
+  ['email', 'E-mail'],
+  ['first_name', 'Имя'],
+  ['last_name', 'Фамилия'],
+  ['patronymic', 'Отчество'],
+  ['card_id', 'ID карточки'],
+  ['role', 'Роль'],
+  ['is_superuser', 'Главный администратор'],
+];
 
 export const LogSchema: Record<string, string> = {
   l_id: 'Замок',
