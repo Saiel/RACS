@@ -1,0 +1,21 @@
+.Layout {
+  display: flex;
+  flex-direction: row;
+
+  &-Title {
+    margin-bottom: 15px;
+  }
+
+  &-Table {
+    
+  }
+}
+
+.Flex {
+  display: flex;
+  flex-direction: column;
+
+  &_row {
+    flex-direction: row;
+  }
+}

@@ -1,36 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
-import { User } from 'store/types';
-
-import Flex, { FlexItem } from 'components/Flex/Flex';
 import UserInfo from 'components/UserInfo/UserInfo';
+import LockList from 'components/LockList/LockList';
+import UserList from 'components/UserList/UserList';
 import { apiGetRequest } from 'api/apiRequest';
 
+import './Home.scss';
+
 const Home = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [locks, setLocks] = useState<Lock[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     apiGetRequest('users')
     .then(json => {
-      setUser(json.results[0]);
+      setUsers(json.results);
     })
-    .catch((error) => {
-      console.log(error);
-      setUser(null);
+
+    apiGetRequest('locks')
+    .then(json => {
+      setLocks(json.results);
     })
+
   }, []);
 
   return (
-    <Flex direction={'row'}>
-      <FlexItem>
-        { user && <UserInfo user={user} /> }
-      </FlexItem>
-      <FlexItem>
-        <Link to="/users">Список пользователей</Link>
-        <Link to="/locks">Список замков</Link>
-      </FlexItem>
-    </Flex>
+    <div className="Home Layout Layout_columns_2">
+      <div className="Layout-Column Home-User">
+        { users.length > 0 && <React.Fragment>
+          <div className="Typo Typo_h3">Текущий пользователь: {users[0].first_name} {users[0].last_name}</div>
+          <UserInfo user={users[0]}/> 
+        </React.Fragment> }
+      </div>
+      <div className="Layout-Column Home-Tables">
+        <div className="Layout-Title Typo Typo_h3">Аудитории</div>
+        <LockList locks={locks} className="Layout-Table" />
+        <div className="Layout-Title Typo Typo_h3">Пользователи</div>
+        <UserList users={users} />
+      </div>
+    </div>
   );
 };
 

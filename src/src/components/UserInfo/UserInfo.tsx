@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 
-import { User } from 'store/types';
-import Flex, { FlexItem } from 'components/Flex/Flex';
+import { UserSchema } from 'store/schema';
+import ModelField from 'components/ModelField/ModelField';
 
 export interface UserProps {
   user: User
@@ -9,15 +9,12 @@ export interface UserProps {
 
 const UserInfo: React.FC<PropsWithChildren<UserProps>> = ({ user }) => {
   return (
-    <Flex direction='column'>
-     <FlexItem>{user.first_name}</FlexItem> 
-     <FlexItem>{user.last_name}</FlexItem> 
-     <FlexItem>{user.email}</FlexItem> 
-     <FlexItem>{user.card_id}</FlexItem> 
-     <FlexItem>{user.role}</FlexItem> 
-    </Flex>
+    <div className="Flex">
+      { UserSchema.map((field) => 
+          <ModelField key={field[0]} field={field[1]} value={user[field[0]]}/>
+      ) }
+    </div>
   );
 };
-
 
 export default UserInfo;
