@@ -22,7 +22,7 @@ const ModelField: React.FC<ModelFieldProps> = ({ field, value }) => {
 
   return (
     <div className="ModelField">
-      <div className="ModelField-Field">{field}</div>
+      <div className="ModelField-Field">{field}:</div>
       <div className="ModelField-Value">
         {val}
       </div>

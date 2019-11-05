@@ -1,13 +1,10 @@
 .Layout {
   display: flex;
   flex-direction: row;
+  padding: var(--content-padding-v) var(--content-padding-h); 
 
   &-Title {
     margin-bottom: 15px;
-  }
-
-  &-Table {
-    
   }
 }
 

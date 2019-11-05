@@ -1,7 +1,9 @@
 .ModelField {
+  display: flex;
   margin-top: 10px;
 }
 
 .ModelField-Field {
   font-weight: bold;
+  width: 35%;
 }
