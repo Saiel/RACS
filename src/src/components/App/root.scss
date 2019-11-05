@@ -29,4 +29,11 @@ $blue: rgba(51, 101, 138, 1);
 .Page {
   background: #edeef0;
   margin: 0;
+
+  &-Title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    width: 100%;
+  }
 }

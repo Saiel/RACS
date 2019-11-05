@@ -1,7 +1,7 @@
 .Layout {
   display: flex;
   flex-direction: row;
-  padding: var(--content-padding-v) var(--content-padding-h); 
+  padding: 32px var(--content-padding-h); 
 
   &-Title {
     font-size: 20px;

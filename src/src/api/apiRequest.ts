@@ -1,5 +1,6 @@
 export const API_HOST = 'http://192.168.99.100:8000/';
 export const API_BASE = 'api/v1/';
+export const API_STR = `${API_HOST}${API_BASE}`;
 
 // TO-DO: move to separate files
 
