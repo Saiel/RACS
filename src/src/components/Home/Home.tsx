@@ -27,15 +27,14 @@ const Home = () => {
   return (
     <div className="Home Layout Layout_columns_2">
       <div className="Layout-Column Home-User">
-        { users.length > 0 && <React.Fragment>
-          <div className="Typo Typo_h3">Текущий пользователь: {users[0].first_name} {users[0].last_name}</div>
+        { users.length > 0 && 
           <UserInfo user={users[0]}/> 
-        </React.Fragment> }
+        }
       </div>
       <div className="Layout-Column Home-Tables">
-        <div className="Layout-Title Typo Typo_h3">Аудитории</div>
+        <div className="Layout-Title">Аудитории</div>
         <LockList locks={locks} className="Layout-Table" />
-        <div className="Layout-Title Typo Typo_h3">Пользователи</div>
+        <div className="Layout-Title">Пользователи</div>
         <UserList users={users} className="Layout-Table" />
       </div>
     </div>

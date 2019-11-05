@@ -4,11 +4,11 @@ export const UserSchema: Schema<User> = [
   ['u_id', 'ID'],
   ['email', 'E-mail'],
   ['first_name', 'Имя'],
-  ['last_name', 'Фамилия'],
   ['patronymic', 'Отчество'],
+  ['last_name', 'Фамилия'],
   ['card_id', 'ID карточки'],
   ['role', 'Роль'],
-  ['is_superuser', 'Главный администратор'],
+  ['is_superuser', 'Администратор'],
 ];
 
 export const LogSchema: Record<string, string> = {
