@@ -1,11 +1,10 @@
 export type Schema<T> = Array<[keyof T, string]>;
 
 export const UserSchema: Schema<User> = [
-  ['u_id', 'ID'],
-  ['email', 'E-mail'],
   ['first_name', 'Имя'],
   ['patronymic', 'Отчество'],
   ['last_name', 'Фамилия'],
+  ['email', 'E-mail'],
   ['card_id', 'ID карточки'],
   ['role', 'Роль'],
   ['is_superuser', 'Администратор'],

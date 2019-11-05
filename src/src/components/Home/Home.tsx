@@ -27,6 +27,9 @@ const Home = () => {
   return (
     <div className="Home Layout Layout_columns_2">
       <div className="Layout-Column Home-User">
+        <div className="Layout-Title">
+          Текущий пользователь
+        </div>
         { users.length > 0 && 
           <UserInfo user={users[0]}/> 
         }
