@@ -14,15 +14,15 @@ router.register('logs',     views.LogsViewSet)
 router.register('roles',    views.RolesViewSet)
 
 
-locks_urls_patterns = [
+locks_urls_patterns_v1 = [
     path('check-access/', views.check_access),
     path('register-lock/', views.RegisterLock.as_view()),
 ]
 
 
 urlpatterns = [
-    path('',                       views.VueIndex.as_view()),
-    path('api/v1/',                include(router.urls)),
-    # path('lock-api/check-access/', views.check_access),
-    path('lock-api/',              include(locks_urls_patterns)),
+    path('',             views.VueIndex.as_view()),
+    path('api/v1/',      include(router.urls)),
+    path('lock-api/',    include(locks_urls_patterns_v1)),  # deprecated
+    path('lock-api/v1/', include(locks_urls_patterns_v1)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
