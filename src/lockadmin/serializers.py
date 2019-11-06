@@ -17,6 +17,7 @@ class RegisterLockSerializer(serializers.ModelSerializer):
             },
             'version': {
                 'required': True,
+                'validators': [validators.version_point_validator]
             }
         }
 
@@ -39,6 +40,12 @@ class LocksSerializer(serializers.ModelSerializer):
             'last_echo',
             'is_on'
         ]
+        extra_kwargs = {
+            'version': {
+                'required': True,
+                'validators': [validators.version_point_validator]
+            }
+        }
 
 
 class RolesSerializer(serializers.ModelSerializer):

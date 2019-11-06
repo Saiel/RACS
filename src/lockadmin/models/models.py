@@ -19,8 +19,20 @@ class Locks(models.Model):
     description = models.TextField    ('description', null=False, blank=True,  max_length=200)
     is_on       = models.BooleanField ('is_on',       null=False, default=True)
     is_approved = models.BooleanField ('is_approved', null=False, default=True)  # temporary for dev
-    version     = models.IntegerField ('version',     null=False, )
+    version     = models.CharField    ('version',     null=False, max_length=5)
     last_echo   = models.DateTimeField('last_echo',   null=False, auto_now_add=True)
+
+    @property
+    def major_version(self):
+        return int(self.version.split('.')[0])
+
+    @property
+    def minor_version(self):
+        return int(self.version.split('.')[-1])
+
+    @property
+    def full_version(self):
+        return int(self.version)
 
     def echo(self):
         self.last_echo = datetime.utcnow()
