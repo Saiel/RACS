@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
@@ -45,14 +46,20 @@ class RegisterLock(CreateAPIView):
     serializer_class = RegisterLockSerializer
 
     def create(self, request, *args, **kwargs):
-        # TODO: make master pass validation
+        master_key = request.data.get('master', None)
+        uuid       = request.data.get('uuid',   None)
+        if not (master_key and uuid):
+            return Response('Provide "master" and "uuid" query parameters',
+                            status=status.HTTP_400_BAD_REQUEST)
+        if master_key != settings.LOCK_MASTER_KEY:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         try:
             lock = Locks.objects.get(uuid__exact=request.data['uuid'])
             lock.echo()
 
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            super(RegisterLock, self).create(*args, **kwargs)
+            super(RegisterLock, self).create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(description=serializer.validated_data['uuid'])
