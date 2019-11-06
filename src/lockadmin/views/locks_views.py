@@ -59,7 +59,7 @@ class RegisterLock(CreateAPIView):
 
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            super(RegisterLock, self).create(request, *args, **kwargs)
+            return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(description=serializer.validated_data['uuid'])
