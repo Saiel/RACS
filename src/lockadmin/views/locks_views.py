@@ -17,7 +17,7 @@ def check_access(request: Request):
     lock_id_hash: str = request.query_params.get('lock', None)
     user_id_hash: str = request.query_params.get('pass', None)
     if not (lock_id_hash and user_id_hash):
-        return Response('Provide "lock" and "pass" query parameters',
+        return Response('Provide "lock" and "pass" query parameters\n',
                         status=status.HTTP_400_BAD_REQUEST)
     now  = datetime.utcnow()
 
@@ -49,7 +49,7 @@ class RegisterLock(CreateAPIView):
         master_key = request.data.get('master', None)
         uuid       = request.data.get('uuid',   None)
         if not (master_key and uuid):
-            return Response('Provide "master" and "uuid" query parameters',
+            return Response('Provide "master" and "uuid" query parameters\n',
                             status=status.HTTP_400_BAD_REQUEST)
         if master_key != settings.LOCK_MASTER_KEY:
             return Response(status=status.HTTP_403_FORBIDDEN)
