@@ -9,6 +9,7 @@ class RegisterLockSerializer(serializers.ModelSerializer):
         model = Locks
         fields = [
             'uuid',
+            'master',
             'version',
         ]
         extra_kwargs = {
@@ -19,6 +20,8 @@ class RegisterLockSerializer(serializers.ModelSerializer):
                 'required': True,
             }
         }
+
+    master = serializers.UUIDField(required=True, write_only=True)
 
 
 class LocksSerializer(serializers.ModelSerializer):
