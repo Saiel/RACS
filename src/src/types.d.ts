@@ -39,6 +39,7 @@ interface LockAccess extends LockAccessPOST {
   a_id: number;
   card_id: string;
   lock_desc: string;
+  user_fio: string;
 }
 
 interface Log {
