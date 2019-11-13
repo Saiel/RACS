@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from 'components/Table/Table';
+import { Link } from 'react-router-dom';
 
 const userFields = [
   'ID', 'Имя', 'Фамилия', 'Email', 'ID карточки', 'Роль',
@@ -14,6 +15,7 @@ const UserListRow: React.FC<{ user: User }> = ({ user }) => {
       <div className="User-Email">{user.email}</div>
       <div className="User-CardID">{user.card_id}</div>
       <div className="User-Role">{user.role}</div>
+      <div className="User-Link>"><Link to={`/users/${user.u_id}`}>Редактировать</Link></div>
     </React.Fragment>
   )
 };

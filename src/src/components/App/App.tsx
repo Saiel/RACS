@@ -7,6 +7,8 @@ import 'components/Layout/Layout.scss';
 import Home from 'components/Home/Home';
 import Header from 'components/Header/Header';
 import User from 'components/User/User';
+import Users from 'components/Users/Users';
+import Logs from 'components/Logs/Logs';
 
 const App = () => (
   <HashRouter>
@@ -16,6 +18,8 @@ const App = () => (
         <Home />
       </Route>
       <Route path="/users/:uId" component={User} />
+      <Route path="/users/" component={Users} />
+      <Route path="/logs/" component={Logs} />
     </Switch>
   </HashRouter>
 );
