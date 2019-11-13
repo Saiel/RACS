@@ -6,6 +6,7 @@ import UserList from 'components/UserList/UserList';
 import { apiGetRequest, APIResponse } from 'api/apiRequest';
 
 import './Home.scss';
+import { getUsers, getLocks } from 'api';
 
 
 const Home = () => {
@@ -15,16 +16,13 @@ const Home = () => {
   const locksPagination = usePagination(locks, setLocks); 
 
   useEffect(() => {
-    apiGetRequest('users')
-    .then(json => {
-      setUsers(json);
-    })
+    async function loadData() {
+      const [usersData, locksData] = await Promise.all([getUsers(), getLocks()]);
+      setUsers(usersData);
+      setLocks(locksData);
+    }
 
-    apiGetRequest('locks')
-    .then(json => {
-      setLocks(json);
-    })
-
+    loadData();
   }, []);
 
   return (
