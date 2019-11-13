@@ -11,7 +11,7 @@ const LockInfoRow: React.FC<{ lock: Lock }> = ({ lock }) => {
   return (
     <React.Fragment>
       <div className="Lock-ID">{lock.l_id}</div>
-      <div className="Lock-Description">{lock.description}</div>
+      <div className="Lock-Description">{lock.description.split('\r\n')[0]}</div>
       <div className="Lock-Version">{lock.version}</div>
       <div className="Lock-Approved">{lock.is_approved ? 'Да' : 'Нет'}</div>
     </React.Fragment>
