@@ -9,6 +9,7 @@ import Header from 'components/Header/Header';
 import User from 'components/User/User';
 import Users from 'components/Users/Users';
 import Logs from 'components/Logs/Logs';
+import Accesses from 'components/Accesses/Accesses';
 
 const App = () => (
   <HashRouter>
@@ -20,6 +21,7 @@ const App = () => (
       <Route path="/users/:uId" component={User} />
       <Route path="/users/" component={Users} />
       <Route path="/logs/" component={Logs} />
+      <Route path="/accesses" component={Accesses} />
     </Switch>
   </HashRouter>
 );

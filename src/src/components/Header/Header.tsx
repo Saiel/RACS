@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ username, userid }) => {
           <Link to="/locks">Замки</Link>
         </div>
         <div className="Header-Link">
-          <Link to="/access">Доступы</Link>
+          <Link to="/accesses">Доступы</Link>
         </div>
         <div className="Header-Link">
           <Link to="/logs">Журнал</Link>
