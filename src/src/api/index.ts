@@ -1,5 +1,9 @@
 import { APIResponse } from "./apiRequest";
 
+type UserQuery = Record<keyof User, string>;
+type LockQuery = Record<keyof Lock, string>;
+type QueryParams<T> = Record<keyof T, string>;
+
 export const API_URL = 'http://192.168.99.100:8000/api/v1/';
 
 const API = {
@@ -29,6 +33,18 @@ const API = {
 
 export function getRoles() {
   return API.get('roles') as Promise<APIResponse<Role>>;
+}
+
+export function getUsers(params?: QueryParams<User>) {
+  return API.get('users', params) as Promise<APIResponse<User>>;
+}
+
+export function getLocks(params?: QueryParams<Lock>) {
+  return API.get('locks', params) as Promise<APIResponse<Lock>>;
+}
+
+export function apiGet<T>(path: string, params?: QueryParams<T>) {
+  return API.get(path, params) as Promise<APIResponse<T>>;
 }
 
 export function updateUser(id: string | number, data: FormData) {
