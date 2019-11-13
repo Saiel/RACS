@@ -8,7 +8,7 @@ const Accesses: React.FC = () => {
 
   useEffect(() => {
     apiGet<LockAccess>('accesses')
-    .then((json) => setAccessList(json));
+    .then((json) => { console.log(json); setAccessList(json) });
   }, []);
 
   return (
