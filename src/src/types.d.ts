@@ -44,6 +44,8 @@ interface LockAccess extends LockAccessPOST {
 interface Log {
   lock: number;
   user: number;
+  user_fio: string;
+  lock_desc: string;
   try_time: string;
   result: boolean;
 }
