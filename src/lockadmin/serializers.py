@@ -125,5 +125,16 @@ class LogsSerializer(serializers.ModelSerializer):
             'user',
             'try_time',
             'result',
-            'is_failed'
+            'is_failed',
+            'user_fio',
+            'lock_desc'
         ]
+
+    user_fio = serializers.SerializerMethodField()
+    lock_desc = serializers.ReadOnlyField(source='lock.description')
+
+    def get_user_fio(self, obj):
+      if obj.user is not None:
+        return ' '.join([obj.user.first_name, obj.user.last_name])
+      else:
+        return 'неизвестно'
