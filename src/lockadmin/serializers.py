@@ -69,6 +69,7 @@ class AccessesSerializer(serializers.ModelSerializer):
             'card_id',
             'access_start',
             'access_stop',
+            'user_fio'
         ]
         read_only_fields = [
             'a_id'
@@ -76,6 +77,7 @@ class AccessesSerializer(serializers.ModelSerializer):
     
     card_id   = serializers.ReadOnlyField(source='user.card_id')
     lock_desc = serializers.ReadOnlyField(source='lock.description')
+    user_fio = serializers.ReadOnlyField(source='user.short_name')
 
 
 class UserModelSerializer(serializers.ModelSerializer):
@@ -130,11 +132,5 @@ class LogsSerializer(serializers.ModelSerializer):
             'lock_desc'
         ]
 
-    user_fio = serializers.SerializerMethodField()
+    user_fio = serializers.ReadOnlyField(source='user.short_name')
     lock_desc = serializers.ReadOnlyField(source='lock.description')
-
-    def get_user_fio(self, obj):
-      if obj.user is not None:
-        return ' '.join([obj.user.first_name, obj.user.last_name])
-      else:
-        return 'неизвестно'
