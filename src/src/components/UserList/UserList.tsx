@@ -15,7 +15,6 @@ const UserListRow: React.FC<{ user: User }> = ({ user }) => {
       <div className="User-Email">{user.email}</div>
       <div className="User-CardID">{user.card_id}</div>
       <div className="User-Role">{user.role}</div>
-      <div className="User-Link>"><Link to={`/users/${user.u_id}`}>Редактировать</Link></div>
     </React.Fragment>
   )
 };
@@ -26,11 +25,23 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps> = ({ users, className = '' }) => {
-  const userList = users.map((user) => <UserListRow key={user.u_id} user={user} />);
-
   return (
     <div className={`UserList ${className}`}>
-      <Table entries={userList} headerFields={userFields} />
+      <div className="Table">
+        <div className="Table-Row Table-Header">
+          { userFields.map((field, idx) => 
+              <div className="Table-Item" key={idx}>{field}</div>
+            ) }
+        </div>
+        { users.map((user) => { 
+            return (
+              <Link className="BlockLink BlockLink_primary" to={`/users/${user.u_id}`}><div className="Table-Row" key={user.u_id}>
+                <UserListRow user={user} />
+              </div></Link>
+            )
+          }) 
+        }
+      </div>
     </div>
   )
 };

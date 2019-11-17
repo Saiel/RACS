@@ -6,7 +6,7 @@ type QueryParams<T> = Record<keyof T, string>;
 
 export const API_URL = 'http://192.168.99.100:8000/api/v1/';
 
-const API = {
+export const API = {
   async get(path: string, params?: Record<string, string>) {
     const url = new URL(path, API_URL);
 
@@ -15,6 +15,17 @@ const API = {
     }
 
     const response = await fetch(url.href);
+
+    return response.json() as Promise<Object>;
+  },
+  async post(path: string, data: FormData) {
+    const url = new URL(path, API_URL);
+
+    const response = await fetch(url.href, {
+      method: 'POST',
+      mode: 'cors',
+      body: data
+    });
 
     return response.json();
   },
@@ -28,6 +39,14 @@ const API = {
     });
 
     return response.json();
+  },
+  delete(path: string) {
+    const url = new URL(path, API_URL);
+
+    return fetch(url.href, {
+      method: 'DELETE',
+      mode: 'cors',
+    });
   }
 }
 
@@ -45,6 +64,10 @@ export function getLocks(params?: QueryParams<Lock>) {
 
 export function apiGet<T>(path: string, params?: QueryParams<T>) {
   return API.get(path, params) as Promise<APIResponse<T>>;
+}
+
+export function apiPost<T>(path: string, data: FormData) {
+  return API.post(`${path}/`, data) as Promise<T>;
 }
 
 export function updateUser(id: string | number, data: FormData) {

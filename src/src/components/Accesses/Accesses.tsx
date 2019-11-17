@@ -3,6 +3,8 @@ import { APIResponse } from 'api/apiRequest';
 import AccessList from 'components/AccessList/AccessList';
 import { apiGet } from 'api';
 
+import './Accesses.scss';
+
 const Accesses: React.FC = () => {
   const [accessList, setAccessList] = useState<APIResponse<LockAccess> | null>(null);
 
@@ -12,7 +14,7 @@ const Accesses: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="Accesses">
       <div>Список доступов</div>
       { accessList && <AccessList accesses={accessList.results} /> }
     </div>

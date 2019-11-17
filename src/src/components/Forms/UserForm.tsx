@@ -1,13 +1,21 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, ChangeEventHandler } from 'react';
 import { getRoles } from 'api';
 import { validateUser } from 'validation/validators';
 
 interface Props {
-  user: UserPOST;
+  user?: UserPOST;
   onSubmit: (state: FormData) => void;
 }
 
-const UserForm: React.FC<Props> = ({ user, onSubmit }) => {
+const defaultUser: UserPOST = {
+  first_name: '',
+  last_name: '',
+  patronymic: '',
+  card_id: '',
+  email: '',
+}
+
+const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
   const [formState, setFormState] = useState<UserPOST>({ ...user });
   const [roles, setRoles] = useState<Role[]>([]);
 
@@ -23,10 +31,13 @@ const UserForm: React.FC<Props> = ({ user, onSubmit }) => {
     onSubmit(data);    
   }, [onSubmit]);
 
-  const handleFieldChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((e) => {
+  const handleFieldChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => { 
     const { name, value } = e.target;
-    setFormState({ ...formState, [name]: value }); 
-  }, [setFormState]);
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
   useEffect(() => {
     async function fetchRoles() {
@@ -34,7 +45,6 @@ const UserForm: React.FC<Props> = ({ user, onSubmit }) => {
 
       setRoles(response.results);
     }
-
     fetchRoles();
   }, []);
 
@@ -98,7 +108,7 @@ const UserForm: React.FC<Props> = ({ user, onSubmit }) => {
       <div>
         <label>
           Роль
-          <select name="role" value={formState.role}>
+          <select name="role" value={formState.role} onChange={handleFieldChange}>
             {roles.map((role) => (
               <option key={role.r_id} value={role.name}> 
                 {role.name}
