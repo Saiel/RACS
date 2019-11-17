@@ -31,7 +31,7 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
     onSubmit(data);
   }, [onSubmit]);
 
-  const handleFieldChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => {
+  const handleFieldChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => { 
     const { name, value } = e.target;
     setFormState({
       ...formState,
@@ -112,6 +112,13 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
       <div>
         <label>
           Роль
+          <select name="role" value={formState.role} onChange={handleFieldChange}>
+            {roles.map((role) => (
+              <option key={role.r_id} value={role.name}> 
+                {role.name}
+              </option>
+            ))}
+          </select>
         </label>
         <select name="role" value={formState.role} onChange={handleFieldChange} required={true}>
           {roles.map((role) => (
