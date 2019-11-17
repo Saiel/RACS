@@ -63,6 +63,15 @@ class UserInfo(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
+    def get_queryset(self):
+      queryset = Logs.objects.all()
+      u_id = self.request.query_params.get('u_id', None)
+
+      if u_id is not None:
+        queryset = queryset.filter(user=u_id)
+
+      return queryset
+
 
 class VueIndex(APIView):
     permission_classes = [

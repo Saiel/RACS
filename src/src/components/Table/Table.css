@@ -1,15 +1,21 @@
 .Table-Header, .Table-Row { 
   display: flex;
+  flex-wrap: wrap;
 }
 
 .Table-Row {
   background: var(--color-light);
+  cursor: pointer;
   padding: 5px;
   border-bottom: 1px solid var(--color-table-divider);
 }
 
 .Table-Row:nth-child(2n + 1) {
   background: rgba(231, 231, 231, 1); 
+}
+
+.Table-Row:not(.Table-Header):hover {
+  background: rgba(19, 128, 52, 0.33);
 }
 
 .Table-Header {
