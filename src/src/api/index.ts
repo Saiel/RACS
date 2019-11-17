@@ -17,24 +17,16 @@ export const API = {
 
     const response = await fetch(url.href);
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
     return response.json() as Promise<Object>;
   },
   async post(path: string, data: FormData) {
-    const url = new URL(`${API_URL}${path}`, window.location.origin);
+    const url = new URL(path, API_URL);
 
     const response = await fetch(url.href, {
       method: 'POST',
       mode: 'cors',
       body: data
     });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
 
     return response.json();
   },
@@ -54,7 +46,7 @@ export const API = {
     return response.json();
   },
   delete(path: string) {
-    const url = new URL(`${API_URL}${path}`, window.location.origin);
+    const url = new URL(path, API_URL);
 
     return fetch(url.href, {
       method: 'DELETE',
@@ -81,10 +73,6 @@ export function apiGet<T>(path: string, params?: QueryParams<T>) {
 
 export function apiPost<T>(path: string, data: FormData) {
   return API.post(`${path}/`, data) as Promise<T>;
-}
-
-export function apiUpdate<T>(path: string, id: number | string, data: FormData) {
-  return API.put(`${path}/${id}/`, data) as Promise<T>;
 }
 
 export function updateUser(id: string | number, data: FormData) {

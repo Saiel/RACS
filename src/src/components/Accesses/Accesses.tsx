@@ -14,8 +14,8 @@ const Accesses: React.FC = () => {
   }, []);
 
   return (
-    <div className="Accesses Layout">
-      <div className="Page-Title">Список доступов</div>
+    <div className="Accesses">
+      <div>Список доступов</div>
       { accessList && <AccessList accesses={accessList.results} /> }
     </div>
   );
