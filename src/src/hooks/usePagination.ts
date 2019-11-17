@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { APIResponses } from 'api/apiRequest';
 
-type OneOfApiResponses = APIResponses[keyof APIResponses] | null;
-type PaginationHandler = (type: 'previous' | 'next') => () => void;
+export type OneOfApiResponses = APIResponses[keyof APIResponses] | null;
+export type PaginationHandler = (type: 'previous' | 'next') => () => void;
 
 function usePagination<T extends OneOfApiResponses>(state: T, setState: React.Dispatch<React.SetStateAction<T>>) {
   const cb = useCallback<PaginationHandler>((type) => async () => {
