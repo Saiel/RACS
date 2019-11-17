@@ -36,10 +36,6 @@ $blue: rgba(51, 101, 138, 1);
     margin-bottom: 20px;
     width: 100%;
   }
-
-  &-Actions {
-    margin: 10px 0px;
-  }
 }
 
 .BlockLink {
@@ -48,41 +44,5 @@ $blue: rgba(51, 101, 138, 1);
 
   &_primary {
     color: var(--color-primary);
-  }
-}
-
-.Btn {
-  border: 2px solid black;
-  color: var(--color-primary);
-  cursor: pointer;
-  font-size: 16px;
-  padding: 5px;
-
-  &:hover {
-    border-color: var(--color-accent);
-    text-decoration: underline;
-  }
-
-  &_add {
-    background: var(--color-green);
-  }
-
-  &_danger {
-    background: var(--color-red);
-    color: var(--color-light);
-  }
-
-  &:disabled {
-    border-color: graytext;
-    color: graytext;
-    cursor: default;
-  }
-}
-
-.Form {
-  &-Submit {
-    margin: 10px auto;
-    text-align: center;
-    width: 100%;
   }
 }
