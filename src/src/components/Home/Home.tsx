@@ -3,7 +3,7 @@ import usePagination from 'hooks/usePagination';
 import UserInfo from 'components/UserInfo/UserInfo';
 import LockList from 'components/LockList/LockList';
 import UserList from 'components/UserList/UserList';
-import { apiGetRequest, APIResponse } from 'api/apiRequest';
+import { APIResponse } from 'api/apiRequest';
 
 import './Home.scss';
 import { getUsers, getLocks } from 'api';

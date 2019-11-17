@@ -37,3 +37,12 @@ $blue: rgba(51, 101, 138, 1);
     width: 100%;
   }
 }
+
+.BlockLink {
+  text-decoration: none;
+  outline: none;
+
+  &_primary {
+    color: var(--color-primary);
+  }
+}
