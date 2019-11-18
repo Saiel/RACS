@@ -26,9 +26,13 @@ class AccessesViewSet(viewsets.ModelViewSet):
       queryset = Accesses.objects.all()
 
       u_id = self.request.query_params.get('u_id', None)
+      lock = self.request.query_params.get('lock', None)
 
       if u_id is not None:
         queryset = queryset.filter(user=u_id)
+
+      if lock is not None:
+        queryset = queryset.filter(lock=lock)
 
       return queryset
 
@@ -44,10 +48,15 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
       queryset = Logs.objects.all()
+
       u_id = self.request.query_params.get('u_id', None)
+      lock = self.request.query_params.get('lock', None)
 
       if u_id is not None:
         queryset = queryset.filter(user=u_id)
+
+      if lock is not None:
+        queryset = queryset.filter(lock=lock)
 
       return queryset
 
