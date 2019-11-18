@@ -28,10 +28,10 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
       return;
     }
 
-    onSubmit(data);    
+    onSubmit(data);
   }, [onSubmit]);
 
-  const handleFieldChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => { 
+  const handleFieldChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => {
     const { name, value } = e.target;
     setFormState({
       ...formState,
@@ -53,71 +53,77 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
       <div>
         <label>
           Имя
-          <input
-            type="text"
-            value={formState.first_name}
-            name="first_name"
-            onChange={handleFieldChange}
-          ></input>
         </label>
+        <input
+          type="text"
+          value={formState.first_name}
+          name="first_name"
+          onChange={handleFieldChange}
+          required={true}
+        ></input>
       </div>
       <div>
         <label>
           Отчество
-          <input
-            type="text"
-            value={formState.patronymic}
-            name="patronymic"
-            onChange={handleFieldChange}
-          ></input>
         </label>
+        <input
+          type="text"
+          value={formState.patronymic}
+          name="patronymic"
+          onChange={handleFieldChange}
+        ></input>
       </div>
       <div>
         <label>
           Фамилия
-          <input
-            type="text"
-            value={formState.last_name}
-            name="last_name"
-            onChange={handleFieldChange}
-          ></input>
         </label>
+        <input
+          type="text"
+          value={formState.last_name}
+          name="last_name"
+          onChange={handleFieldChange}
+          required={true}
+        ></input>
       </div>
       <div>
         <label>
           E-Mail
-          <input
-            type="email"
-            value={formState.email}
-            name="email"
-            onChange={handleFieldChange}
-          ></input>
         </label>
+        <input
+          type="email"
+          value={formState.email}
+          name="email"
+          onChange={handleFieldChange}
+          required={true}
+        ></input>
       </div>
       <div>
         <label>
           ID карточки
-          <input
-            type="text"
-            value={formState.card_id}
-            name="card_id"
-            onChange={handleFieldChange}
-          ></input>
         </label>
+        <input
+          type="text"
+          value={formState.card_id}
+          name="card_id"
+          onChange={handleFieldChange}
+          required={true}
+        ></input>
       </div>
       <div>
         <label>
           Роль
-          <select name="role" value={formState.role} onChange={handleFieldChange}>
-            {roles.map((role) => (
-              <option key={role.r_id} value={role.name}> 
-                {role.name}
-              </option>
-            ))}
-          </select>
         </label>
+        <select name="role" value={formState.role} onChange={handleFieldChange} required={true}>
+          {roles.map((role) => (
+            <option key={role.r_id} value={role.name}>
+              {role.name}
+            </option>
+          ))}
+        </select>
       </div>
-      <button>Сохранить</button>
+      <div className="Form-Submit">
+        <button className="Btn Btn_add">Сохранить</button>
+      </div>
     </form>
   );
 };
