@@ -24,6 +24,7 @@ const Users: React.FC<RouteComponentProps> = ({ history }) => {
   );
 
   const deleteUser: deleteFn = async (id) => {
+    if (!confirm('Удалить пользователя?')) return;
     const response = await API.delete(`users/${id}`);
     if (!response.ok) {
       alert('Ошибка при удалении пользователя');
