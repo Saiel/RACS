@@ -1,0 +1,26 @@
+.Users {
+  .UserList {
+    width: 100%;
+
+    .Table-Row div {
+      &:nth-child(1) {
+        width: 5%;
+      }
+      &:nth-child(2) {
+        width: 15%;
+      }
+      &:nth-child(3) {
+        width: 15%;
+      }
+      &:nth-child(4) {
+        width: 20%;
+      } 
+      &:nth-child(5) {
+        width: 8%;
+      }
+      &:nth-child(6) {
+        width: 8%;
+      }
+    }
+  }
+}
