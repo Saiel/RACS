@@ -45,6 +45,7 @@ const Lock: React.FC<RouteComponentProps<LockRoute>> = ({
   }
 
   const deleteAccess: deleteFn = async (id) => {
+    if (!confirm('Удалить доступ?')) return;
     const response = await API.delete(`accesses/${id}`);
     if (!response.ok) {
       alert('Ошибка при удалении доступа');
