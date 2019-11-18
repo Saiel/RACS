@@ -3,17 +3,11 @@ import { Link } from 'react-router-dom';
 
 import './Header.scss';
 
-interface HeaderProps {
-  username: string;
-  userid: number;
-}
-
-const Header: React.FC<HeaderProps> = ({ username, userid }) => {
+const Header: React.FC = () => {
   return (
     <div className="Header">
       <div className="Header-Logo">СКУД</div>
       <div className="Header-User">
-        <Link to={`/users/${userid}`}>({username})</Link>
       </div>
       <div className="Header-Nav">
         <div className="Header-Link">

@@ -7,13 +7,14 @@ import { APIResponse } from 'api/apiRequest';
 
 import './Home.scss';
 import { getUsers, getLocks } from 'api';
+import Pagination from 'components/Pagination/Pagination';
 
 
 const Home = () => {
   const [locks, setLocks] = useState<APIResponse<Lock> | null>(null);
   const [users, setUsers] = useState<APIResponse<User> | null>(null);
   const usersPagination = usePagination(users, setUsers);
-  const locksPagination = usePagination(locks, setLocks); 
+  const locksPagination = usePagination(locks, setLocks);
 
   useEffect(() => {
     async function loadData() {
@@ -32,19 +33,25 @@ const Home = () => {
         <div className="Layout-Title">
           Текущий пользователь
         </div>
-        { users && users.results.length > 0 && 
-          <UserInfo user={users.results[0]}/> 
-        }
+        {/* {users && users.results.length > 0 &&
+          <UserInfo user={users.results[0]} />
+        } */}
       </div>
       <div className="Layout-Column Home-Tables">
         <div className="Layout-Title">Аудитории</div>
-        {locks && <LockList locks={locks.results} className="Layout-Table" />}
-        <button className="Page-Prev" onClick={locksPagination('previous')} > {'<'} </button>
-        <button className="Page-Next" onClick={locksPagination('next')}> > </button>        
+        {locks &&
+           <div className="Layout-Table" >
+            <LockList locks={locks.results} />
+            <Pagination paginationFn={locksPagination} state={locks} />
+          </div>
+        }
         <div className="Layout-Title">Пользователи</div>
-        {users && <UserList users={users.results} className="Layout-Table" />}
-        <button className="Page-Prev" onClick={usersPagination('previous')} > {'<'} </button>
-        <button className="Page-Next" onClick={usersPagination('next')}> > </button>
+        {users &&
+          <div className="Layout-Table" >
+            <UserList users={users.results} />
+            <Pagination paginationFn={usersPagination} state={users} />
+          </div>
+        }
       </div>
     </div>
   );
