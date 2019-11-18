@@ -17,8 +17,8 @@ const Logs: React.FC = () => {
   }, []);
 
   return (
-    <div className="Logs">
-      <div>Журнал доступов</div>
+    <div className="Logs Layout">
+      <div className="Page-Title">Журнал доступов</div>
       { logs && 
       <>
         <LogList logs={logs.results}/> 
