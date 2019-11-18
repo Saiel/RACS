@@ -1,0 +1,24 @@
+.Overlay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.6);
+  min-width: 100vw;
+  min-height: 100vh;
+
+  &-Close {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 20px;
+  }
+
+  &-Content {
+    background: white;
+    padding: 20px;
+  }
+}
