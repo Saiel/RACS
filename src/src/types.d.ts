@@ -19,13 +19,13 @@ interface User extends UserPOST {
 interface LockPOST {
   description: string;
   version: string;
+  uuid: string;
+  is_approved: boolean;
 }
 
 interface Lock extends LockPOST {
-  l_id: string;
-  uuid: string;
+  l_id: number;
   is_on: boolean;
-  is_approved: boolean;
 }
 
 interface LockAccessPOST {
@@ -50,3 +50,5 @@ interface Log {
   try_time: string;
   result: boolean;
 }
+
+type deleteFn = (id: string | number) => void;
