@@ -16,6 +16,10 @@ export const API = {
 
     const response = await fetch(url.href);
 
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
     return response.json() as Promise<Object>;
   },
   async post(path: string, data: FormData) {
@@ -27,6 +31,10 @@ export const API = {
       body: data
     });
 
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
     return response.json();
   },
   async put(path: string, data: FormData) {
@@ -37,6 +45,10 @@ export const API = {
       mode: 'cors',
       body: data,
     });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
 
     return response.json();
   },
@@ -68,6 +80,10 @@ export function apiGet<T>(path: string, params?: QueryParams<T>) {
 
 export function apiPost<T>(path: string, data: FormData) {
   return API.post(`${path}/`, data) as Promise<T>;
+}
+
+export function apiUpdate<T>(path: string, id: number | string, data: FormData) {
+  return API.put(`${path}/${id}/`, data) as Promise<T>;
 }
 
 export function updateUser(id: string | number, data: FormData) {
