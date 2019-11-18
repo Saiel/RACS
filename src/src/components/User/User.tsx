@@ -46,6 +46,7 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
   );
 
   const deleteUser = useCallback(async () => {
+    if (!confirm('Удалить пользователя?')) return;
     const response = await API.delete(`users/${uId}/`);
     if (response.ok) {
       alert('Пользователь удален');
@@ -57,6 +58,7 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
   }, [user]);
 
   const deleteAccess: deleteFn = async (id) => {
+    if (!confirm('Удалить доступ?')) return;
     const response = await API.delete(`accesses/${id}`);
     if (!response.ok) {
       alert('Ошибка при удалении доступа');
