@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Table from 'components/Table/Table';
 import { LockSchema } from 'store/schema';
 
@@ -19,13 +20,25 @@ const LockInfoRow: React.FC<{ lock: Lock }> = ({ lock }) => {
 }
 
 const LockList: React.FC<LockListProps> = ({ locks, className = '' }) => {
-  const lockRows = locks.map((lock) => 
-    <LockInfoRow key={lock.l_id} lock={lock} />
-  );
-
   return (
     <div className={`LockList ${className}`}>
-      <Table entries={lockRows} headerFields={Object.values(LockSchema)} />
+      <div className="Table">
+        <div className="Table-Row Table-Header">
+          {Object.values(LockSchema).map((field, idx) =>
+            <div className="Table-Item" key={idx}>{field}</div>
+          )}
+        </div>
+        {locks.map((lock) => {
+          return (
+            <Link className="BlockLink BlockLink_primary" to={`/locks/${lock.l_id}`} key={lock.l_id}>
+              <div className="Table-Row">
+                <LockInfoRow lock={lock} />
+              </div>
+            </Link>
+          )
+        })
+        }
+      </div>
     </div>
   );
 }
