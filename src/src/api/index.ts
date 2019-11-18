@@ -4,11 +4,12 @@ type UserQuery = Record<keyof User, string>;
 type LockQuery = Record<keyof Lock, string>;
 type QueryParams<T> = Record<keyof T, string>;
 
-export const API_URL = 'http://192.168.99.100:8000/api/v1/';
+// export const API_URL = 'http://192.168.99.100:8000/api/v1/';
+export const API_URL = '/api/v1/';
 
 export const API = {
   async get(path: string, params?: Record<string, string>) {
-    const url = new URL(path, API_URL);
+    const url = new URL(`${API_URL}${path}`, window.location.origin);
 
     if (params) {
       url.search = new URLSearchParams(params).toString();
@@ -23,7 +24,7 @@ export const API = {
     return response.json() as Promise<Object>;
   },
   async post(path: string, data: FormData) {
-    const url = new URL(path, API_URL);
+    const url = new URL(`${API_URL}${path}`, window.location.origin);
 
     const response = await fetch(url.href, {
       method: 'POST',
@@ -38,7 +39,7 @@ export const API = {
     return response.json();
   },
   async put(path: string, data: FormData) {
-    const url = new URL(path, API_URL);
+    const url = new URL(`${API_URL}${path}`, window.location.origin);
 
     const response = await fetch(url.href, {
       method: 'PUT',
@@ -53,7 +54,7 @@ export const API = {
     return response.json();
   },
   delete(path: string) {
-    const url = new URL(path, API_URL);
+    const url = new URL(`${API_URL}${path}`, window.location.origin);
 
     return fetch(url.href, {
       method: 'DELETE',
