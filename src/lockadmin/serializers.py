@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from guardian.models import UserObjectPermission
 
 from .models import *
 from . import validators
