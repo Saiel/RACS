@@ -18,7 +18,8 @@ def hash_card_id(sender, **kwargs):
     new_user = kwargs['instance']
     
     new_user.card_id = new_user.card_id.upper()
-    while new_user.card_id.startswith('0'):
-        new_user.card_id = new_user.card_id[1:]
+    length = len(new_user.card_id)
+    if length != 6:
+        new_user.card_id = new_user.card_id[length-6:]
     
     new_user.hash_id = sha1(str(new_user.card_id).encode('utf-8')).hexdigest()

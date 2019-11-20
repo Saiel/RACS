@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 from django.db import models
 from .auth_models import UserModel
+from ..validators import version_validator
 
 
 class Roles(models.Model):
@@ -19,7 +20,8 @@ class Locks(models.Model):
     description = models.TextField    ('description', null=False, blank=True,  max_length=200)
     is_on       = models.BooleanField ('is_on',       null=False, default=True)
     is_approved = models.BooleanField ('is_approved', null=False, default=True)  # temporary for dev
-    version     = models.CharField    ('version',     null=False, max_length=5)
+    version     = models.CharField    ('version',     null=False, max_length=5,
+                                       validators=[version_validator])
     last_echo   = models.DateTimeField('last_echo',   null=False, auto_now_add=True)
 
     @property
