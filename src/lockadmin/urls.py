@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from . import views
 
@@ -25,6 +26,11 @@ api_urls_patterns_v1 = [
     path('start-time/', views.get_server_start_time),
 ]
 
+api_urls_patterns_v1 = [
+    path('',               include(router.urls)),
+    path('token/auth/',    TokenObtainPairView.as_view()),
+    path('token/refresh/', TokenRefreshView.as_view()),
+]
 
 urlpatterns = [
     path('',             views.VueIndex.as_view()),
