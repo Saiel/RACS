@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from . import views
 
@@ -19,10 +20,15 @@ locks_urls_patterns_v1 = [
     path('register-lock/', views.RegisterLock.as_view()),
 ]
 
+api_urls_patterns_v1 = [
+    path('',               include(router.urls)),
+    path('token/auth/',    TokenObtainPairView.as_view()),
+    path('token/refresh/', TokenRefreshView.as_view()),
+]
 
 urlpatterns = [
     path('',             views.VueIndex.as_view()),
-    path('api/v1/',      include(router.urls)),
+    path('api/v1/',      include(api_urls_patterns_v1)),
     path('lock-api/',    include(locks_urls_patterns_v1)),  # deprecated
     path('lock-api/v1/', include(locks_urls_patterns_v1)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
