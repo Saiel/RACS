@@ -1,13 +1,14 @@
-export const UserSchema: Record<string, string> = {
-  u_id: 'ID',
-  email: 'E-mail',
-  first_name: 'Имя',
-  last_name: 'Фамилия',
-  patronymic: 'Отчество',
-  card_id: 'ID карточки',
-  role: 'Роль',
-  // is_superuser: 'Главный администратор',
-};
+export type Schema<T> = Array<[keyof T, string]>;
+
+export const UserSchema: Schema<User> = [
+  ['first_name', 'Имя'],
+  ['patronymic', 'Отчество'],
+  ['last_name', 'Фамилия'],
+  ['email', 'E-mail'],
+  ['card_id', 'ID карточки'],
+  ['role', 'Роль'],
+  ['is_superuser', 'Администратор'],
+];
 
 export const LogSchema: Record<string, string> = {
   l_id: 'Замок',

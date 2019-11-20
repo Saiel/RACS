@@ -1,0 +1,20 @@
+.Layout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 32px var(--content-padding-h); 
+
+  &-Title {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+}
+
+.Flex {
+  display: flex;
+  flex-direction: column;
+
+  &_row {
+    flex-direction: row;
+  }
+}

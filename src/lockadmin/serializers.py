@@ -68,6 +68,7 @@ class AccessesSerializer(serializers.ModelSerializer):
             'card_id',
             'access_start',
             'access_stop',
+            'user_fio'
         ]
         read_only_fields = [
             'a_id'
@@ -75,6 +76,7 @@ class AccessesSerializer(serializers.ModelSerializer):
     
     card_id   = serializers.ReadOnlyField(source='user.card_id')
     lock_desc = serializers.ReadOnlyField(source='lock.description')
+    user_fio = serializers.ReadOnlyField(source='user.short_name')
 
 
 class UserModelSerializer(serializers.ModelSerializer):
@@ -124,5 +126,10 @@ class LogsSerializer(serializers.ModelSerializer):
             'user',
             'try_time',
             'result',
-            'is_failed'
+            'is_failed',
+            'user_fio',
+            'lock_desc'
         ]
+
+    user_fio = serializers.ReadOnlyField(source='user.short_name')
+    lock_desc = serializers.ReadOnlyField(source='lock.description')

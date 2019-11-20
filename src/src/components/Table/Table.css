@@ -1,0 +1,21 @@
+.Table-Header, .Table-Row { 
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Table-Row {
+  background: var(--color-light);
+  cursor: pointer;
+  padding: 10px 5px;
+  border-bottom: 2px solid var(--color-table-divider);
+}
+
+.Table-Row:not(.Table-Header):hover {
+  background: rgba(19, 128, 52, 0.33);
+}
+
+.Table-Header {
+  background: rgba(231, 231, 231, 1); 
+  border-bottom: 2px solid var(--color-content-divider);
+}
