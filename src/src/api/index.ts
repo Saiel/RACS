@@ -4,8 +4,8 @@ type UserQuery = Record<keyof User, string>;
 type LockQuery = Record<keyof Lock, string>;
 type QueryParams<T> = Record<keyof T, string>;
 
-// export const API_URL = 'http://192.168.99.100:8000/api/v1/';
-export const API_URL = '/api/v1/';
+export const API_URL = 'http://192.168.99.100:8000/api/v1/';
+// export const API_URL = '/api/v1/';
 
 export const API = {
   async get(path: string, params?: Record<string, string>) {
