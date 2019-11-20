@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'guardian',
+    # 'guardian',
     'lockadmin',
 ]
 
@@ -65,6 +65,10 @@ AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
         'guardian.backends.ObjectPermissionBackend',
 )
+# AUTHENTICATION_BACKENDS = (
+#         'django.contrib.auth.backends.ModelBackend',
+#         'guardian.backends.ObjectPermissionBackend',
+# )
 
 ROOT_URLCONF = 'RACS.urls'
 
@@ -131,14 +135,14 @@ STATICFILES_DIRS = [
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'lockadmin.paginations.CustomPageNumberPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME':  timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'USER_ID_FIELD': 'u_id',
-
 }
