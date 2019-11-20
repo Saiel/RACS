@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from guardian.models import UserObjectPermission
 
 from .models import *
 from . import validators
@@ -17,7 +18,7 @@ class RegisterLockSerializer(serializers.ModelSerializer):
             },
             'version': {
                 'required': True,
-                'validators': [validators.version_point_validator]
+                'validators': [validators.version_validator]
             }
         }
 
@@ -43,7 +44,7 @@ class LocksSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'version': {
                 'required': True,
-                'validators': [validators.version_point_validator]
+                'validators': [validators.version_validator]
             }
         }
 
