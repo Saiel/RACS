@@ -11,7 +11,7 @@ import Overlay from 'components/Overlay/Overlay';
 import UserInfo from 'components/UserInfo/UserInfo';
 import LockAccessForm from 'components/Access/AccessForm/AccessForm';
 import usePagination from 'hooks/usePagination';
-import { APIResponse, apiDeleteRequest } from 'api/apiRequest';
+import { APIResponse } from 'api/apiRequest';
 import Pagination from 'components/Pagination/Pagination';
 
 interface UserRoute {
