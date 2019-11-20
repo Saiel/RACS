@@ -1,7 +1,6 @@
-import { User, Log, Lock, LockAccess, UserPOST, Role, LockAccessPOST, LockPOST } from 'store/types';
-
-export const API_HOST = '';
+export const API_HOST = 'http://192.168.99.100:8000/';
 export const API_BASE = 'api/v1/';
+export const API_STR = `${API_HOST}${API_BASE}`;
 
 // TO-DO: move to separate files
 
@@ -45,8 +44,8 @@ export type APIResponses = {
 };
 
 export function getAPIUrl(endpoint: string) {
-  // return new URL(endpoint, `${API_HOST}${API_BASE}`);
-  return new URL(`${API_BASE}${endpoint}`, window.location.origin);
+  return new URL(endpoint, `${API_HOST}${API_BASE}`);
+  // return new URL(`${API_BASE}${endpoint}`, window.location.origin);
 }
 
 // TO-DO: profile
@@ -120,7 +119,7 @@ export function apiPostRequest<T extends Models>(
 ): Promise<ModelTypes[T]> {
   return new Promise((resolve, reject) => {
     const url = getAPIUrl(endpoint);
-    console.log('POST data', data);
+    
     apiRequest(url.href, {
       method: 'POST',
       headers: {

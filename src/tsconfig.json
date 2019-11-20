@@ -6,10 +6,11 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "jsx": "react",
     "module": "commonjs",
     "paths": {
       "components/*": ["components/*"],
       "store/*": ["store/*"]
     }
-  },
+  }
 }

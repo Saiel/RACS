@@ -1,0 +1,27 @@
+.Logs {
+  .LogList {
+    width: 100%;
+  }
+
+  .Table-Header div {
+    &:nth-child(1) {
+      width: 5%;
+    }
+    &:nth-child(2) {
+      width: 20%;
+    }
+    &:nth-child(3) {
+      width: 20%
+    }
+  }
+
+  .Log-Lock {
+    width: 5%;
+  }
+  .Log-User {
+    width: 20%;
+  }
+  .Log-Time {
+    width: 20%;
+  }
+}

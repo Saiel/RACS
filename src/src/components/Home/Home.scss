@@ -1,0 +1,71 @@
+.Home {
+  &-User {
+    width: 30%;
+  }
+
+  &-Tables {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 1024px) {
+    &-User, &-Tables {
+      width: 100%;
+    }
+  }
+
+  .Layout-Table {
+    margin-bottom: 30px;
+  }
+
+  .LockList .Table-Row div {
+    &:nth-child(1) {
+      width: 3%;
+    }
+
+    &:nth-child(2) {
+      width: 15%;
+    }
+
+    &:nth-child(3) {
+      width: 20%;
+    }
+
+    @media screen and (max-width: 1024px) {
+      &:nth-child(n) {
+        width: 100%;
+      }
+    }
+  }
+
+  .UserList .Table-Row div {
+    &:nth-child(1) {
+      width: 3%;
+    }
+
+    &:nth-child(2) {
+      width: 15%;
+    }
+
+    &:nth-child(3) {
+      width: 20%;
+    }
+
+    &:nth-child(4) {
+      width: 30%;
+    }
+
+    &:nth-child(5) {
+      width: 15%;
+    }
+
+    &:nth-child(6) {
+      width: 15%;
+    }
+
+    @media screen and (max-width: 1024px) {
+      &:nth-child(n) {
+        width: 100%;
+      }
+    }
+  }
+}

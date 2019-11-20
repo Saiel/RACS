@@ -1,0 +1,17 @@
+.ModelField {
+  display: flex;
+  margin-top: 10px;
+}
+
+.ModelField:first-child {
+  margin-top: 0px;
+}
+
+.ModelField-Field {
+  font-weight: bold;
+  width: 50%;
+}
+
+.ModelField-Value {
+  width: 50%;
+}
