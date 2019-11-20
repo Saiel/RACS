@@ -12,7 +12,7 @@ def card_validator(value):
         raise ValidationError('Card_id must contain only latin and digit character')
 
 
-def version_point_validator(value: str):
+def version_validator(value: str):
     if not re.fullmatch(r'\d{1,2}\.\d{1,2}', value):
         raise ValidationError('Version must have format "<major>.<minor>" with <major> '
                               'and <minor> from 0 to 99')
