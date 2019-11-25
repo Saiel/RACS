@@ -18,6 +18,7 @@ router.register('roles',    views.RolesViewSet)
 locks_urls_patterns_v1 = [
     path('check-access/', views.check_access),
     path('register-lock/', views.RegisterLock.as_view()),
+    path('echo/', views.echo),
 ]
 
 api_urls_patterns_v1 = [
