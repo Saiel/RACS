@@ -63,3 +63,19 @@ class RegisterLock(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(description=serializer.validated_data['uuid'])
+
+
+@api_view(['GET'])
+def echo(request: Request):
+    lock_id = request.query_params.get('lock', None)
+    if not lock_id:
+        return Response('Provide "lock" query parameter\n',
+                        status=status.HTTP_400_BAD_REQUEST)
+    try:
+        lock = Locks.objects.get(uuid=lock_id)
+    except ObjectDoesNotExist:
+        return Response(f'Lock with uuid "{lock_id}" does not found',
+                        status=status.HTTP_404_NOT_FOUND)
+    lock.echo()
+    lock.save()
+    return Response(status=status.HTTP_200_OK)
