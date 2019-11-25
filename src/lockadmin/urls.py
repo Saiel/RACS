@@ -24,10 +24,6 @@ locks_urls_patterns_v1 = [
 api_urls_patterns_v1 = [
     path('',               include(router.urls)),
     path('start-time/', views.get_server_start_time),
-]
-
-api_urls_patterns_v1 = [
-    path('',               include(router.urls)),
     path('get-user-info/', views.UserInfo.as_view()),
     path('token/auth/',    TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
