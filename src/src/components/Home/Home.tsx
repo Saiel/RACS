@@ -8,23 +8,31 @@ import { APIResponse } from 'api/apiRequest';
 import './Home.scss';
 import { getUsers, getLocks } from 'api';
 import Pagination from 'components/Pagination/Pagination';
+import { RouteComponentProps } from 'react-router';
 
 
-const Home = () => {
+const Home: React.FC<RouteComponentProps<{}>> = ({ history }) => {
   const [locks, setLocks] = useState<APIResponse<Lock> | null>(null);
   const [users, setUsers] = useState<APIResponse<User> | null>(null);
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const usersPagination = usePagination(users, setUsers);
   const locksPagination = usePagination(locks, setLocks);
 
   useEffect(() => {
-    async function loadData() {
-      const [usersData, locksData] = await Promise.all([getUsers(), getLocks()]);
-      setUsers(usersData);
-      setLocks(locksData);
-    }
-
-    loadData();
+    void async function loadData() {
+      try {
+        const [usersData, locksData] = await Promise.all([getUsers(), getLocks()]);
+        setUsers(usersData);
+        setLocks(locksData);
+      } catch (error) {
+        setLoadError(error); 
+      }
+    }();
   }, []);
+
+  if (loadError) {
+    throw loadError;
+  }
 
   return (
     <div className="Home Layout Layout_columns_2">

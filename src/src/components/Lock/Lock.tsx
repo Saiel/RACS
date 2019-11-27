@@ -27,6 +27,7 @@ const Lock: React.FC<RouteComponentProps<LockRoute>> = ({
 }) => {
   const [lock, setLock] = useState<Lock | null>(null);
   const [logs, setLogs] = useState<APIResponse<Log> | null>(null);
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const [lockAccessList, setLockAccessList] = useState<APIResponse<LockAccess> | null>(null);
   const [showLockForm, setShowLockForm] = useState<boolean>(false);
 
@@ -40,60 +41,88 @@ const Lock: React.FC<RouteComponentProps<LockRoute>> = ({
   );
 
   async function getUserAccessList() {
-    const json = await apiGet<LockAccess>(`accesses/?lock=${lockId}`);
-    setLockAccessList(json);
+    try {
+      const json = await apiGet<LockAccess>(`accesses/?lock=${lockId}`);
+      setLockAccessList(json);
+    } catch (error) {
+      setLoadError(error);
+    }
   }
 
   const deleteAccess: deleteFn = async (id) => {
     if (!confirm('Удалить доступ?')) return;
-    const response = await API.delete(`accesses/${id}`);
-    if (!response.ok) {
-      alert('Ошибка при удалении доступа');
-    } else {
-      alert('Доступ удален');
-      getUserAccessList();
+    try {
+      const response = await API.delete(`accesses/${id}`);
+      if (!response.ok) {
+        alert('Ошибка при удалении доступа');
+      } else {
+        alert('Доступ удален');
+        getUserAccessList();
+      }
+    } catch (error) {
+      setLoadError(error);
     }
   }
 
   const deleteLock = useCallback(async () => {
-    const response = await API.delete(`locks/${lockId}/`);
-    if (response.ok) {
-      alert('Замок удален')
-      history.push('/locks');
-    } else {
-      alert('Ошибка при удалении замка');
-      console.log(await response.text());
+    try {
+      const response = await API.delete(`locks/${lockId}/`);
+      if (response.ok) {
+        alert('Замок удален')
+        history.push('/locks');
+      } else {
+        alert('Ошибка при удалении замка');
+        console.log(await response.text());
+      }
+    } catch (error) {
+      setLoadError(error);
     }
   }, [lock]);
 
   const saveLock = useCallback(
     async (data: FormData) => {
-      const response = await apiUpdate<Lock>('locks', lockId, data); 
-      alert('Замок обновлен');
-      console.log(response);
-      setLock(response);
-      setShowLockForm(false);
+      try {
+        const response = await apiUpdate<Lock>('locks', lockId, data); 
+        alert('Замок обновлен');
+        console.log(response);
+        setLock(response);
+        setShowLockForm(false);
+      } catch (error) {
+        setLoadError(error);
+      }
     },
     [lockId],
   );
 
   useEffect(() => {
     async function getLock() {
-      const json = await API.get(`locks/${lockId}`) as Lock;
-      setLock(json);
+      try {
+        const json = await API.get(`locks/${lockId}`) as Lock;
+        setLock(json);
+      } catch (error) {
+        setLoadError(error);
+      }
     }
 
     
 
     async function getLogList() {
-      const json = await apiGet<Log>(`logs/?lock=${lockId}`);
-      setLogs(json);
+      try {
+        const json = await apiGet<Log>(`logs/?lock=${lockId}`);
+        setLogs(json);
+      } catch (error) {
+        setLoadError(error);
+      }
     }
 
     getLock();
     getUserAccessList();
     getLogList();
   }, [lockId]);
+
+  if (loadError) {
+    throw loadError;
+  }
 
   return (
     <div className="Lock Layout Layout_columns_2">

@@ -4,8 +4,10 @@ type UserQuery = Record<keyof User, string>;
 type LockQuery = Record<keyof Lock, string>;
 type QueryParams<T> = Record<keyof T, string>;
 
-// export const API_URL = 'http://192.168.99.100:8000/api/v1/';
-export const API_URL = '/api/v1/';
+export const API_URL = 'http://192.168.99.100:8000/api/v1/';
+export const BASE_URL = 'http://192.168.99.100:8000/';
+// export const API_URL = '/api/v1/';
+// export const BASE_URL = '/';
 
 export const API = {
   async get(path: string, params?: Record<string, string>) {
@@ -15,7 +17,14 @@ export const API = {
       url.search = new URLSearchParams(params).toString();
     }
 
-    const response = await fetch(url.href);
+    const response = await fetch(url.href, {
+      credentials: 'include',
+      mode: 'cors'
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
 
     return response.json() as Promise<Object>;
   },
@@ -24,9 +33,30 @@ export const API = {
 
     const response = await fetch(url.href, {
       method: 'POST',
+      credentials: 'include',
       mode: 'cors',
       body: data
     });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  },
+  async auth(data: FormData) {
+    const url = new URL('/auth/login/', BASE_URL);
+
+    const response = await fetch(url.href, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      body: data
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
 
     return response.json();
   },
@@ -36,11 +66,12 @@ export const API = {
     const response = await fetch(url.href, {
       method: 'PUT',
       mode: 'cors',
+      credentials: 'include',
       body: data,
     });
 
     if (!response.ok) {
-      throw new Error(response.statusText);
+      throw new Error(response.status.toString());
     }
 
     return response.json();
