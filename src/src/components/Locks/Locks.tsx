@@ -9,12 +9,25 @@ import Pagination from 'components/Pagination/Pagination';
 
 const Locks: React.FC = () => {
   const [locks, setLocks] = useState<APIResponse<Lock> | null>(null);
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const locksPagination = usePagination(locks, setLocks);
 
   useEffect(() => {
-    apiGet<Lock>('locks')
-    .then((json) => { console.log(json); setLocks(json) });
+    async function loadLocks() {
+      const locks = await apiGet<Lock>('/locks');
+      setLocks(locks);
+    }
+
+    try {
+      loadLocks();
+    } catch (error) {
+      setLoadError(error);
+    }
   }, []);
+
+  if (loadError) {
+    throw loadError;
+  }
 
   return (
     <div className="Locks Layout">
