@@ -17,6 +17,7 @@ const defaultUser: UserPOST = {
 
 const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
   const [formState, setFormState] = useState<UserPOST>({ ...user });
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const [roles, setRoles] = useState<Role[]>([]);
 
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
@@ -45,8 +46,17 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
 
       setRoles(response.results);
     }
-    fetchRoles();
+
+    try {
+      fetchRoles();
+    } catch (error) {
+      setLoadError(error);
+    }
   }, []);
+
+  if (loadError) {
+    throw loadError;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
