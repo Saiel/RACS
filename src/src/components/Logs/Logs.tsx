@@ -9,12 +9,26 @@ import Pagination from 'components/Pagination/Pagination';
 
 const Logs: React.FC = () => {
   const [logs, setLogs] = useState<APIResponse<Log> | null>(null);
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const logsPagination = usePagination(logs, setLogs); 
 
+
   useEffect(() => {
-    apiGet<Log>('logs')
-    .then((json) => { console.log(json); setLogs(json) });
+    async function loadLogs() {
+      const logs = await apiGet<Log>('/logs');
+      setLogs(logs);
+    }
+
+    try {
+      loadLogs();
+    } catch (error) {
+      setLoadError(error);
+    }
   }, []);
+
+  if (loadError) {
+    throw loadError;
+  }
 
   return (
     <div className="Logs">
