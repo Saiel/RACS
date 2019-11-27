@@ -32,6 +32,7 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
   const accessPagination = usePagination(userAccessList, setUserAccessList);
   const logsPagination = usePagination(logs, setLogs);
 
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const [showUserForm, setShowUserForm] = useState<boolean>(false);
   const [showAccessForm, setShowAccessForm] = useState<boolean>(false);
 
@@ -47,24 +48,32 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
 
   const deleteUser = useCallback(async () => {
     if (!confirm('Удалить пользователя?')) return;
-    const response = await API.delete(`users/${uId}/`);
-    if (response.ok) {
-      alert('Пользователь удален');
-      history.push('/users');
-    } else {
-      alert('Ошибка при удалении пользователя');
-      console.log(await response.text());
+    try {
+      const response = await API.delete(`users/${uId}/`);
+      if (response.ok) {
+        alert('Пользователь удален');
+        history.push('/users');
+      } else {
+        alert('Ошибка при удалении пользователя');
+        console.log(await response.text());
+      }
+    } catch (error) {
+      setLoadError(error);
     }
   }, [user]);
 
   const deleteAccess: deleteFn = async (id) => {
     if (!confirm('Удалить доступ?')) return;
-    const response = await API.delete(`accesses/${id}`);
-    if (!response.ok) {
-      alert('Ошибка при удалении доступа');
-    } else {
-      alert('Доступ удален');
-      getUserAccessList();
+    try {
+      const response = await API.delete(`accesses/${id}`);
+      if (!response.ok) {
+        alert('Ошибка при удалении доступа');
+      } else {
+        alert('Доступ удален');
+        getUserAccessList();
+      }
+    } catch (error) {
+      setLoadError(error);
     }
   }
 
@@ -74,17 +83,25 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
 
   const saveUser = useCallback(
     async (data: FormData) => {
-      const response = await updateUser(uId, data);
-      alert('Пользователь обновлен');
-      setUser(response);
-      setShowUserForm(false);
+      try {
+        const response = await updateUser(uId, data);
+        alert('Пользователь обновлен');
+        setUser(response);
+        setShowUserForm(false);
+      } catch (error) {
+        setLoadError(error);
+      }
     },
     [uId],
   );
 
   async function getUserAccessList() {
-    const json = await apiGet<LockAccess>(`accesses/?u_id=${uId}`);
-    setUserAccessList(json);
+    try {
+      const json = await apiGet<LockAccess>(`accesses/?u_id=${uId}`);
+      setUserAccessList(json);
+    } catch (error) {
+      setLoadError(error);
+    }
   }
 
   const saveAccess = async (data: FormData) => {
@@ -94,8 +111,9 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
       alert('Доступ добавлен');
       getUserAccessList();
       setShowAccessForm(false);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
+      setLoadError(error);
     }
   }
 
@@ -117,11 +135,19 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
       setLocks(json);
     }
 
-    getUser();
-    getUserAccessList();
-    getLogList();
-    getLocks();
+    try {
+      getUser();
+      getUserAccessList();
+      getLogList();
+      getLocks();
+    } catch (error) {
+      setLoadError(error);
+    }
   }, [uId]);
+
+  if (loadError) {
+    throw loadError;
+  }
 
   return (
     <div className="User Layout Layout_columns_2">

@@ -75,10 +75,10 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class VueIndex(APIView):
-    permission_classes = [
-        permissions.IsAuthenticated,
+    # permission_classes = [
+        # permissions.IsAuthenticated,
         # permissions.IsAdminUser,
-    ]
+    # ]
     
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html')
