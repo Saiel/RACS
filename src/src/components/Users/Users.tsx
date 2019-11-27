@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { APIResponse } from 'api/apiRequest';
-import { getUsers, apiPost, API } from 'api';
+import { getUsers, apiPost, API, apiGet } from 'api';
 import UserList from 'components/UserList/UserList';
 import usePagination from 'hooks/usePagination';
 
@@ -12,8 +12,8 @@ import Pagination from 'components/Pagination/Pagination';
 
 const Users: React.FC<RouteComponentProps> = ({ history }) => {
   const [users, setUsers] = useState<APIResponse<User> | null>(null);
+  const [loadError, setLoadError] = useState<Error | null>(null);
   const [addUserOverlayActive, setAddUserOverlayActive] = useState<Boolean>(false);
-
   const userPagination = usePagination(users, setUsers);
 
   const toggleOverlay = useCallback(
@@ -25,23 +25,44 @@ const Users: React.FC<RouteComponentProps> = ({ history }) => {
 
   const deleteUser: deleteFn = async (id) => {
     if (!confirm('Удалить пользователя?')) return;
-    const response = await API.delete(`users/${id}`);
-    if (!response.ok) {
-      alert('Ошибка при удалении пользователя');
-    } else {
-      alert('Пользователь удален');
-      getUsers().then((json) => setUsers(json));
+    try {
+      const response = await API.delete(`users/${id}`);
+      if (!response.ok) {
+        alert('Ошибка при удалении пользователя');
+      } else {
+        alert('Пользователь удален');
+        getUsers().then((json) => setUsers(json));
+      }
+    } catch (error) {
+      setLoadError(error);
     }
   }
 
   const onUserFormSubmit = useCallback(async (state: FormData) => {
-    const json = await apiPost<User>('users', state);
-    history.push(`/users/${json.u_id}`);
+    try {
+      const json = await apiPost<User>('users', state);
+      history.push(`/users/${json.u_id}`);
+    } catch (error) {
+      setLoadError(error);
+    }
   }, []);
 
   useEffect(() => {
-    getUsers().then((json) => setUsers(json));
+    async function loadUsers() {
+      const users = await apiGet<User>('/users');
+      setUsers(users);
+    }
+
+    try {
+      loadUsers();
+    } catch (error) {
+      setLoadError(error);
+    }
   }, []);
+
+  if (loadError) {
+    throw loadError;
+  }
 
   return (
     <div className="Users Layout">
