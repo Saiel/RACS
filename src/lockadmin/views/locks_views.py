@@ -21,19 +21,22 @@ def check_access(request: Request):
                         status=status.HTTP_400_BAD_REQUEST)
     now  = datetime.utcnow()
 
+
     try:
-        user = UserModel.get_instance_by_hash_id(user_id_hash.lower())
         lock = Locks.get_instance_by_hash_id(lock_id_hash.lower())
     except ObjectDoesNotExist as exc:
-        Logs.objects.create(result=False, is_failed=True, try_time=now)
         return Response('*', headers={'Error': str(exc)}, status=403)
     
+    try:
+        user = UserModel.get_instance_by_hash_id(user_id_hash.lower())
+    except ObjectDoesNotExist as exc:
+        Logs.objects.create(result=False, is_failed=True, lock=lock, try_time=now)
+        return Response('*', headers={'Error': str(exc)}, status=403)
+
     result = Accesses.objects.filter(user=user, lock=lock, lock__is_approved=True,
                                      access_start__lte=now, access_stop__gte=now).exists()
-    if result:
-        result_char = '#'
-    else:
-        result_char = '*'
+
+    result_char = '#' if result else '*'
 
     lock.echo()
     Logs.objects.create(user=user, lock=lock, result=result, try_time=now)
