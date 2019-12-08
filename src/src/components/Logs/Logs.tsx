@@ -15,7 +15,7 @@ const Logs: React.FC = () => {
 
   useEffect(() => {
     async function loadLogs() {
-      const logs = await apiGet<Log>('/logs');
+      const logs = await apiGet<Log>('logs');
       setLogs(logs);
     }
 
