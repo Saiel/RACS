@@ -26,6 +26,9 @@ export class ErrorBoundary extends React.Component<{}, BoundaryState> {
   }
 
   static getDerivedStateFromError(error: Error) {
+    if (error.message === '403') {
+      return { hasError: false };
+    }
     return { hasError: true };
   }
 
@@ -47,14 +50,19 @@ export class ErrorBoundary extends React.Component<{}, BoundaryState> {
 }
 
 const App = () => {
-  const [auth, setAuth] = useState<Record<string,boolean>>({});
+  const [auth, setAuth] = useState(false);
 
   useEffect(() => {
     void async function getUserData() {
-      const response = await API.get('get-user-info');
-      console.log(response);
+      try {
+        const response = await API.get('get-user-info/');
+        setAuth(true);
+      } catch (error) {
+        if (error.message === '401') {
+          setAuth(false);
+        }
+      }
 
-      setAuth({ auth: false });
     }();
   }, []);
 
@@ -64,7 +72,6 @@ const App = () => {
         <ErrorBoundary>
           <Header />
           <Switch>
-            <Route path="/auth" component={Auth} />
             <Route path="/" exact={true} component={Home} />
             <Route path="/users/:uId" component={User} />
             <Route path="/users/" component={Users} />
