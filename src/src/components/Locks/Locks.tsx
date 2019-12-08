@@ -14,15 +14,15 @@ const Locks: React.FC = () => {
 
   useEffect(() => {
     async function loadLocks() {
-      const locks = await apiGet<Lock>('/locks');
+      try {
+      const locks = await apiGet<Lock>('locks');
       setLocks(locks);
+      } catch (error) {
+        setLoadError(error);
+      }
     }
 
-    try {
-      loadLocks();
-    } catch (error) {
-      setLoadError(error);
-    }
+    loadLocks();
   }, []);
 
   if (loadError) {

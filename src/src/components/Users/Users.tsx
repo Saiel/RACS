@@ -48,7 +48,7 @@ const Users: React.FC<RouteComponentProps> = ({ history }) => {
 
   useEffect(() => {
     async function loadUsers() {
-      const users = await apiGet<User>('/users');
+      const users = await apiGet<User>('users');
       setUsers(users);
     }
 
