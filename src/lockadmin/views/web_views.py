@@ -49,6 +49,11 @@ class UserModelViewSet(viewsets.ModelViewSet):
     serializer_class = UserModelSerializer
     permission_classes = [permissions.IsAdminUser]
 
+class UserInfo(generics.RetrieveAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = UserModelSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
     def retrieve(self, request, *args, **kwargs):
         instance = request.user
         serializer = self.get_serializer(instance)
