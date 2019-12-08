@@ -18,8 +18,10 @@ export const API = {
     }
 
     const response = await fetch(url.href, {
-      credentials: 'include',
-      mode: 'cors'
+      mode: 'cors',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('ja')}`,
+      },
     });
 
     if (!response.ok) {
@@ -45,7 +47,7 @@ export const API = {
     return response.json();
   },
   async auth(data: FormData) {
-    const url = new URL('/auth/login/', BASE_URL);
+    const url = new URL('token/auth/', API_URL);
 
     const response = await fetch(url.href, {
       method: 'POST',
