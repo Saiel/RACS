@@ -20,10 +20,15 @@ locks_urls_patterns_v1 = [
     path('echo/', views.echo),
 ]
 
+api_urls_patterns_v1 = [
+    path('',               include(router.urls)),
+    path('start-time/', views.get_server_start_time),
+]
+
 
 urlpatterns = [
     path('',             views.VueIndex.as_view()),
-    path('api/v1/',      include(router.urls)),
+    path('api/v1/',      include(api_urls_patterns_v1)),
     path('lock-api/',    include(locks_urls_patterns_v1)),  # deprecated
     path('lock-api/v1/', include(locks_urls_patterns_v1)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
