@@ -22,23 +22,24 @@ class RolesViewSet(viewsets.ModelViewSet):
     serializer_class = RolesSerializer
 
 
+# noinspection DuplicatedCode
 class AccessesViewSet(viewsets.ModelViewSet):
     queryset = Accesses.objects.all()
     serializer_class = AccessesSerializer
 
     def get_queryset(self): 
-      queryset = Accesses.objects.all()
+        queryset = Accesses.objects.all()
 
-      u_id = self.request.query_params.get('u_id', None)
-      lock = self.request.query_params.get('lock', None)
+        u_id = self.request.query_params.get('u_id', None)
+        lock = self.request.query_params.get('lock', None)
 
-      if u_id is not None:
-        queryset = queryset.filter(user=u_id)
+        if u_id is not None:
+            queryset = queryset.filter(user=u_id)
 
-      if lock is not None:
-        queryset = queryset.filter(lock=lock)
+        if lock is not None:
+            queryset = queryset.filter(lock=lock)
 
-      return queryset
+        return queryset
 
 
 class UserModelViewSet(viewsets.ModelViewSet):
@@ -46,29 +47,30 @@ class UserModelViewSet(viewsets.ModelViewSet):
     serializer_class = UserModelSerializer
 
 
+# noinspection DuplicatedCode
 class LogsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Logs.objects.all()
     serializer_class = LogsSerializer
 
     def get_queryset(self):
-      queryset = Logs.objects.all()
+        queryset = Logs.objects.all()
 
-      u_id = self.request.query_params.get('u_id', None)
-      lock = self.request.query_params.get('lock', None)
+        u_id = self.request.query_params.get('u_id', None)
+        lock = self.request.query_params.get('lock', None)
 
-      if u_id is not None:
-        queryset = queryset.filter(user=u_id)
+        if u_id is not None:
+            queryset = queryset.filter(user=u_id)
 
-      if lock is not None:
-        queryset = queryset.filter(lock=lock)
+        if lock is not None:
+            queryset = queryset.filter(lock=lock)
 
-      return queryset
+        return queryset
 
 
 class VueIndex(APIView):
     permission_classes = [
-    #     permissions.IsAuthenticated,
-    #     permissions.IsAdminUser,
+        # permissions.IsAuthenticated,
+        # permissions.IsAdminUser,
     ]
     
     def get(self, request, *args, **kwargs):
