@@ -12,35 +12,31 @@ services:
 #      - ./run/celery:/run/celery
 #      - ./confs/django:/etc/django:ro
 #      - ./log/django:/var/log/django
-#    networks:
-#      - db-net
+    networks:
+      - db-net
 #      - amqp-net
 #      - nginx-net
     ports:
       - "8000:8000"
       - "9000:9000"
-#    depends_on:
-#      - db
+    depends_on:
+      - db
 #      - rabbit
     restart: "on-failure"
 
-#  db:
-#    image: postgres:alpine
-#     # Make Postgres log to a file.
-#     # More on logging with Postgres: https://www.postgresql.org/docs/current/static/runtime-config-logging.html
-#    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/var/log
-#    env_file:
-#      - ./.env
-##      POSTGRES_PASSWORD: "qwertyuioasdfghjkl" #provide POSTGRES_PASSWORD}
-#    volumes:
-#      # Persist the data between container invocations
-#      - ./postgres-data:/var/lib/postgresql/data
-#       - ./log/pgsql:/var/log
-#    ports:
-#      - "5432:5432"
-#    networks:
-#      - db-net
-#    restart: "on-failure"
+  db:
+    image: postgres:alpine
+    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/var/log
+    env_file:
+      - ./.env
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./log/pgsql:/var/log
+    ports:
+      - "5432:5432"
+    networks:
+      - db-net
+    restart: "on-failure"
 
 #  nginx:
 #    image: nginx:alpine
@@ -54,8 +50,8 @@ services:
 #      - web
 
 
-#networks:
-#  db-net:
-#    driver: bridge
+networks:
+  db-net:
+    driver: bridge
 #  nginx-net:
 #    driver: bridge
