@@ -108,6 +108,10 @@ export function apiPost<T>(path: string, data: FormData) {
   return API.post(`${path}/`, data) as Promise<T>;
 }
 
+export function apiUpdate<T>(path: string, id: number | string, data: FormData) {	
+  return API.put(`${path}/${id}/`, data) as Promise<T>;	
+}
+
 export function updateUser(id: string | number, data: FormData) {
   return API.put(`users/${id}/`, data) as Promise<User>;
 }
