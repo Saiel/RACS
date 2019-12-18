@@ -5,10 +5,14 @@ import './User.scss';
 import Card from 'components/Card/Card';
 import AccessList from 'components/AccessList/AccessList';
 import UserForm from 'components/Forms/UserForm';
-import { updateUser, API, apiGet } from 'api';
+import { updateUser, API, apiGet, apiPost } from 'api';
 import LogList from 'components/LogList/LogList';
 import Overlay from 'components/Overlay/Overlay';
 import UserInfo from 'components/UserInfo/UserInfo';
+import LockAccessForm from 'components/Access/AccessForm/AccessForm';
+import usePagination from 'hooks/usePagination';
+import { APIResponse } from 'api/apiRequest';
+import Pagination from 'components/Pagination/Pagination';
 
 interface UserRoute {
   uId: string;
@@ -18,7 +22,7 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
   match: {
     params: { uId },
   },
-  history
+  history,
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [logs, setLogs] = useState<APIResponse<Log> | null>(null);
@@ -30,10 +34,18 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
 
   const [loadError, setLoadError] = useState<Error | null>(null);
   const [showUserForm, setShowUserForm] = useState<boolean>(false);
+  const [showAccessForm, setShowAccessForm] = useState<boolean>(false);
+
   const toggleOverlay = useCallback(
     (type: 'open' | 'close') => () => setShowUserForm(type === 'open'),
     [setShowUserForm],
   );
+
+  const toggleAccessOverlay = useCallback(	
+    (type: 'open' | 'close') => () => setShowAccessForm(type === 'open'),	
+    [setShowAccessForm],	
+  );
+
   const deleteUser = useCallback(async () => {
     if (!confirm('Удалить пользователя?')) return;
     try {
@@ -121,6 +133,11 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
       setLogs(json.results);
     }
 
+    async function getLocks() {
+      const json = await apiGet<Lock>('locks');
+      setLocks(json);
+    }
+
     try {
       getUser();
       getUserAccessList();
@@ -142,22 +159,43 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
         {user && (
           <Card>
             <UserInfo user={user} />
-            <button onClick={toggleOverlay('open')}>Изменить</button>
-            <button onClick={deleteUser}>Удалить</button>
+            <div className="Card-Actions">	            
+              <button className="Btn Btn_add" onClick={toggleAccessOverlay('open')}>Добавить доступ</button>
+              <button className="Btn" onClick={toggleOverlay('open')}>Изменить</button>	
+              <button className="Btn Btn_danger" onClick={deleteUser}>Удалить</button>	
+            </div>
           </Card>
         )}
       </div>
       <div className="Layout-Columns User-Tables">
         <div className="Layout-Title">Доступы пользователя</div>
-        <AccessList accesses={userAccessList} className="Layout-Table" />
+        {}
+        {userAccessList &&	
+          <>	
+            <AccessList accesses={userAccessList.results} onDelete={deleteAccess} className="Layout-Table" />	
+            <Pagination paginationFn={accessPagination} state={userAccessList} />	
+          </>}
         <div className="Layout-Title">Журнал проходов</div>
-        <LogList logs={logs} className="Layout-Table" />
+        {logs &&
+          <>	
+            <LogList logs={logs.results} className="Layout-Table" />	
+            <Pagination paginationFn={logsPagination} state={logs} />	
+          </>}
       </div>
       {showUserForm && user && (
         <Overlay onClose={toggleOverlay('close')}>
           <UserForm user={user} onSubmit={saveUser} />
         </Overlay>
       )}
+      {showAccessForm && user && locks &&	
+        <Overlay onClose={toggleAccessOverlay('close')}>	
+          <LockAccessForm	
+            users={[user]}	
+            locks={locks.results}	
+            lockAccess={{ access_stop: '', access_start: '', lock: locks.results[0].l_id, user: user.u_id }}	
+            onSubmit={saveAccess} />	
+        </Overlay>	
+      }
     </div>
   );
 };
