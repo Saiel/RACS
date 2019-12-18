@@ -125,12 +125,12 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
 
     async function getUserAccessList() {
       const json = await apiGet<LockAccess>(`accesses/?u_id=${uId}`);
-      setUserAccessList(json.results);
+      setUserAccessList(json);
     }
 
     async function getLogList() {
       const json = await apiGet<Log>(`logs/?u_id=${uId}`);
-      setLogs(json.results);
+      setLogs(json);
     }
 
     async function getLocks() {

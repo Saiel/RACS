@@ -58,7 +58,7 @@ const App = () => {
         const response = await API.get('get-user-info/');
         setAuth(true);
       } catch (error) {
-        if (error.message === '401') {
+        if (error.message === '401' || error.message === '403') {
           setAuth(false);
         }
       }
