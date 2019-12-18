@@ -37,6 +37,9 @@ export const API = {
       method: 'POST',
       credentials: 'include',
       mode: 'cors',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('ja')}`,
+      },
       body: data
     });
 
@@ -69,6 +72,9 @@ export const API = {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('ja')}`,
+      },
       body: data,
     });
 
@@ -83,6 +89,9 @@ export const API = {
 
     return fetch(url.href, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('ja')}`,
+      },
       mode: 'cors',
     });
   }

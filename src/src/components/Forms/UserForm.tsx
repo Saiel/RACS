@@ -130,13 +130,6 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
             ))}
           </select>
         </label>
-        <select name="role" value={formState.role} onChange={handleFieldChange} required={true}>
-          {roles.map((role) => (
-            <option key={role.r_id} value={role.name}>
-              {role.name}
-            </option>
-          ))}
-        </select>
       </div>
       <div className="Form-Submit">
         <button className="Btn Btn_add">Сохранить</button>
