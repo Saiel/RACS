@@ -8,6 +8,7 @@ import './Users.scss';
 import UserForm from 'components/Forms/UserForm';
 import Overlay from 'components/Overlay/Overlay';
 import { RouteComponentProps } from 'react-router';
+import Pagination from 'components/Pagination/Pagination';	
 
 const Users: React.FC<RouteComponentProps> = ({ history }) => {
   const [users, setUsers] = useState<APIResponse<User> | null>(null);
@@ -64,26 +65,20 @@ const Users: React.FC<RouteComponentProps> = ({ history }) => {
   }
 
   return (
-    <div className="Users">
-      <div>Список пользователей</div>
-      {users && 
-      <>
-        <UserList users={users.results} />
-        <div className="Pageination">
-          <button disabled={!users.previous} className="Pagination-Prev" onClick={userPagination('previous')}>
-            {' '}
-            {'<'}{' '}
-          </button>
-          <button disabled={!users.next} className="Pagination-Next" onClick={userPagination('next')}>
-            {' '}
-            >{' '}
-          </button>
-        </div>
-      </>
+    <div className="Users Layout">
+      <div className="Page-Title">Список пользователей</div>
+      <div className="Page-Actions">
+        <button className="Btn Btn_add" onClick={toggleOverlay('open')}>
+          Добавить пользователя
+        </button>
+      </div>
+      {users &&
+        <>
+          <UserList onDelete={deleteUser} users={users.results} />
+          <Pagination paginationFn={userPagination} state={users} />
+        </>
       }
-      <button className="Btn Btn_add" onClick={toggleOverlay('open')}>
-        Добавить пользователя
-      </button>
+
       {addUserOverlayActive && (
         <Overlay onClose={toggleOverlay('close')}>
           <UserForm onSubmit={onUserFormSubmit}></UserForm>
