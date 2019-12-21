@@ -39,6 +39,7 @@ export const Auth: React.FC = () => {
       if (error.message === '401') {
         alert('Неверный логин/пароль');
       } else {
+        console.log(error);
         alert('Ошибка при авторизации. Пожалуйста, свяжитесь со службой технической поддержки.');
       }
     } finally {
