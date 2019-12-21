@@ -13,14 +13,14 @@ LOCK_MASTER_KEY = '5962813a-2b27-422f-8ad8-84b5fd34ca8f'
 DEBUG = os.getenv('APP_DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
-    'http://192.168.99.100:9000',
-]
-CORS_ORIGIN_REGEX_WHITELIST = [
-    'http://192.168.99.100:9000',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://192.168.99.100:9000',
+# ]
+# CORS_ORIGIN_REGEX_WHITELIST = [
+#     'http://192.168.99.100:9000',
+# ]
 
 
 # Application definition
