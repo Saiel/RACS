@@ -89,19 +89,19 @@ class UserInfo(generics.RetrieveAPIView):
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
-class LogsViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Logs.objects.all()
-    serializer_class = LogsSerializer
-    permission_classes = [permissions.IsAdminUser]
+#lass LogsViewSet(viewsets.ReadOnlyModelViewSet):
+#   queryset = Logs.objects.all()
+#   serializer_class = LogsSerializer
+#   permission_classes = [permissions.IsAdminUser]
 
-    def get_queryset(self):
-      queryset = Logs.objects.all()
-      u_id = self.request.query_params.get('u_id', None)
+#   def get_queryset(self):
+#     queryset = Logs.objects.all()
+#     u_id = self.request.query_params.get('u_id', None)
 
-      if u_id is not None:
-        queryset = queryset.filter(user=u_id)
+#     if u_id is not None:
+#       queryset = queryset.filter(user=u_id)
 
-      return queryset
+#     return queryset
 
 
 class VueIndex(APIView):
