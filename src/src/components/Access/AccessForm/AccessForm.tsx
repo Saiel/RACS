@@ -70,7 +70,7 @@ const LockAccessForm: React.FC<Props> = ({ lockAccess = defaultLockAccess, onSub
             type="text"
             value={formState.access_start}
             name="access_start"
-            placeholder="дд.мм.гг часы:минуты"
+            placeholder="дд.мм.гггг часы:минуты"
             onChange={handleFieldChange}
             required={true}
           ></input>
@@ -83,7 +83,7 @@ const LockAccessForm: React.FC<Props> = ({ lockAccess = defaultLockAccess, onSub
             type="text"
             value={formState.access_stop}
             name="access_stop"
-            placeholder="дд.мм.гг часы:минуты"
+            placeholder="дд.мм.гггг часы:минуты"
             onChange={handleFieldChange}
             required={true}
           ></input>
