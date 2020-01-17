@@ -75,7 +75,7 @@ def echo(request: Request):
         return Response('Provide "lock" query parameter\n',
                         status=status.HTTP_400_BAD_REQUEST)
     try:
-        lock = Locks.objects.get(uuid=lock_id)
+        lock = Locks.get_instance_by_hash_id(lock_id)
     except ObjectDoesNotExist:
         return Response(f'Lock with uuid "{lock_id}" does not found',
                         status=status.HTTP_404_NOT_FOUND)
