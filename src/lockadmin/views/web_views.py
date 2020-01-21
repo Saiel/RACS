@@ -37,7 +37,7 @@ class AccessesViewSet(viewsets.ModelViewSet):
     serializer_class = AccessesSerializer
     permission_classes = [permissions.IsAdminUser]
 
-    def get_queryset(self): 
+    def get_queryset(self):
         queryset = Accesses.objects.all()
 
         u_id = self.request.query_params.get('u_id', None)
@@ -95,7 +95,7 @@ class VueIndex(APIView):
         # permissions.IsAuthenticated,
         # permissions.IsAdminUser,
     # ]
-    
+
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html')
 
