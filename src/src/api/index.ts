@@ -85,7 +85,7 @@ export const API = {
     return response.json();
   },
   delete(path: string) {
-    const url = new URL(path);
+    const url = new URL(`${API_URL}${path}`, window.location.origin);
 
     return fetch(url.href, {
       method: 'DELETE',
