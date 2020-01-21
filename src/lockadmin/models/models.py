@@ -15,7 +15,7 @@ class Locks(models.Model):
     l_id        = models.BigAutoField ('l_id', primary_key=True)
     uuid        = models.UUIDField    ('uid', default=uuid.uuid4, editable=True,
                                        unique=True)
-    hash_id     = models.CharField    ('hash_id',     null=False, blank=False, max_length=256, 
+    hash_id     = models.CharField    ('hash_id',     null=False, blank=False, max_length=256,
                                        unique=True)
     description = models.TextField    ('description', null=False, blank=True,  max_length=200)
     is_on       = models.BooleanField ('is_on',       null=False, default=True)
@@ -42,7 +42,7 @@ class Locks(models.Model):
     @classmethod
     def get_instance_by_hash_id(cls, hash_id):
         return cls.objects.get(hash_id__exact=hash_id)
-    
+
     def __str__(self):
         return f'Lock {self.l_id}: {self.description}'
 
@@ -60,7 +60,7 @@ class Accesses(models.Model):
 class Logs(models.Model):
     class Meta:
         ordering = ['-try_time']
-    
+
     lock      = models.ForeignKey   (Locks,     models.CASCADE, 'l_logs', null=True,
                                      verbose_name='l_id')
     user      = models.ForeignKey   (UserModel, models.CASCADE, 'u_logs', null=True,

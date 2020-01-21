@@ -26,7 +26,7 @@ def check_access(request: Request):
         lock = Locks.get_instance_by_hash_id(lock_id_hash.lower())
     except ObjectDoesNotExist as exc:
         return Response('*', headers={'Error': str(exc)}, status=403)
-    
+
     try:
         user = UserModel.get_instance_by_hash_id(user_id_hash.lower())
     except ObjectDoesNotExist as exc:
@@ -77,7 +77,7 @@ def echo(request: Request):
     try:
         lock = Locks.get_instance_by_hash_id(lock_id)
     except ObjectDoesNotExist:
-        return Response(f'Lock with uuid "{lock_id}" does not found',
+        return Response(f'Lock with hash "{lock_id}" does not found',
                         status=status.HTTP_404_NOT_FOUND)
     lock.echo()
     lock.save()
