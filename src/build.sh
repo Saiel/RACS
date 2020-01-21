@@ -4,4 +4,4 @@ python manage.py makemigrations lockadmin
 python manage.py migrate
 rm -rf static
 python manage.py collectstatic
-python manage.py runserver 0.0.0.0:8000
+uwsgi --ini configs/uwsgi/uwsgi.ini
