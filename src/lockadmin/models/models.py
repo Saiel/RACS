@@ -36,8 +36,10 @@ class Locks(models.Model):
     def full_version(self):
         return int(self.version)
 
-    def echo(self):
+    def echo(self, save=False):
         self.last_echo = datetime.utcnow()
+        if save:
+            self.save()
 
     @classmethod
     def get_instance_by_hash_id(cls, hash_id):
