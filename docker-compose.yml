@@ -1,7 +1,8 @@
 version: '3.7'
 services:
   web:
-    image: saiel/racs
+#   image: saiel/racs
+    build: ./
     command: bash build.sh
     env_file:
       - ./.env
