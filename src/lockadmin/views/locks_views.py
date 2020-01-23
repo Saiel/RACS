@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.mixins import UpdateModelMixin
 from rest_framework.request import Request
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
@@ -20,7 +21,6 @@ def check_access(request: Request):
         return Response('Provide "lock" and "pass" query parameters\n',
                         status=status.HTTP_400_BAD_REQUEST)
     now  = datetime.utcnow()
-
 
     try:
         lock = Locks.get_instance_by_hash_id(lock_id_hash.lower())
@@ -49,8 +49,9 @@ class RegisterLock(CreateAPIView):
     serializer_class = RegisterLockSerializer
 
     def create(self, request, *args, **kwargs):
-        master_key = request.data.get('master', None)
-        uuid       = request.data.get('uuid',   None)
+        master_key = request.data.get('master',  None)
+        uuid       = request.data.get('uuid',    None)
+        version    = request.data.get('version', None)
         if not (master_key and uuid):
             return Response('Provide "master" and "uuid" query parameters\n',
                             status=status.HTTP_400_BAD_REQUEST)
@@ -58,14 +59,16 @@ class RegisterLock(CreateAPIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
         try:
             lock = Locks.objects.get(uuid__exact=request.data['uuid'])
-            lock.echo()
+            lock.version = version or lock.version
+            lock.echo(save=True)
 
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            return super().create(request, *args, **kwargs)
+            super().create(request, *args, **kwargs)
+            return Response(status=status.HTTP_201_CREATED)
 
     def perform_create(self, serializer):
-        serializer.save(description=serializer.validated_data['uuid'])
+        serializer.save(description=serializer.validated_data['uuid'], )
 
 
 @api_view(['GET'])
