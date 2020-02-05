@@ -43,7 +43,7 @@ class Locks(models.Model):
 
     @classmethod
     def get_instance_by_hash_id(cls, hash_id):
-        return cls.objects.get(hash_id__exact=hash_id)
+        return cls.objects.get(hash_id__exact=hash_id.lower())
 
     def __str__(self):
         return f'Lock {self.l_id}: {self.description}'
