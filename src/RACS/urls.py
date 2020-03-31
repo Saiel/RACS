@@ -1,3 +1,7 @@
+"""Module with root routing.
+
+"""
+
 from django.contrib import admin
 from django.urls import path, include
 

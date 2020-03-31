@@ -1,3 +1,12 @@
+"""Module with django settings.
+
+See Also:
+    https://docs.djangoproject.com/en/2.2/topics/settings/.
+    https://docs.djangoproject.com/en/2.2/ref/settings/.
+    https://github.com/SimpleJWT/django-rest-framework-simplejwt.
+
+"""
+
 import os
 
 from datetime import timedelta
@@ -6,8 +15,10 @@ from datetime import timedelta
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # noinspection SpellCheckingInspection
+# TODO: change secret key and move it to .env (and reset all passwords :) )
 SECRET_KEY = '+@(8hq)@mnjl8(fcsft1-@k$=6&mu&pl&v0ngvm%^l&(%$&a_q'
 
+# TODO: change master key (and redeploy firmware on all locks :) )
 LOCK_MASTER_KEY = '5962813a-2b27-422f-8ad8-84b5fd34ca8f'
 
 DEBUG = os.getenv('APP_DEBUG', False)
@@ -39,11 +50,6 @@ INSTALLED_APPS = [
     'lockadmin',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'lockadmin.paginations.CustomPageNumberPagination'
-}
-
-CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'RACS.urls'
 WSGI_APPLICATION = 'RACS.wsgi.application'
 
@@ -81,8 +87,6 @@ AUTHENTICATION_BACKENDS = (
 #         'django.contrib.auth.backends.ModelBackend',
 #         'guardian.backends.ObjectPermissionBackend',
 # )
-
-ROOT_URLCONF = 'RACS.urls'
 
 # noinspection PyUnresolvedReferences
 TEMPLATES = [

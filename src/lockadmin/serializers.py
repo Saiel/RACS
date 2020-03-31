@@ -1,3 +1,12 @@
+"""Module with serializers.
+
+See Also:
+    https://www.django-rest-framework.org/api-guide/serializers/.
+    https://www.django-rest-framework.org/api-guide/fields/.
+    https://www.django-rest-framework.org/api-guide/relations/.
+
+"""
+
 from rest_framework import serializers
 
 from .models import *
@@ -5,6 +14,10 @@ from . import validators
 
 
 class RegisterLockSerializer(serializers.ModelSerializer):
+    """Serializer for lock registration.
+    
+    """
+    
     class Meta:
         model = Locks
         fields = [
@@ -23,6 +36,10 @@ class RegisterLockSerializer(serializers.ModelSerializer):
 
 
 class LocksSerializer(serializers.ModelSerializer):
+    """General purpose serializer for lock.
+    
+    """
+    
     class Meta:
         model = Locks
         fields = [
@@ -49,6 +66,10 @@ class LocksSerializer(serializers.ModelSerializer):
 
 
 class RolesSerializer(serializers.ModelSerializer):
+    """General purpose serializer for Roles.
+
+    """
+    
     class Meta:
         model = Roles
         fields = ['r_id', 'name']
@@ -58,6 +79,10 @@ class RolesSerializer(serializers.ModelSerializer):
 
 
 class AccessesSerializer(serializers.ModelSerializer):
+    """General purpose serializer for access.
+    
+    """
+    
     class Meta:
         model = Accesses
         fields = [
@@ -80,6 +105,10 @@ class AccessesSerializer(serializers.ModelSerializer):
 
 
 class UserModelSerializer(serializers.ModelSerializer):
+    """General purpose serializer for user.
+
+    """
+    
     class Meta:
         model = UserModel
         fields = [
@@ -118,6 +147,10 @@ class UserModelSerializer(serializers.ModelSerializer):
 
 
 class LogsSerializer(serializers.ModelSerializer):
+    """General purpose serializer for log.
+
+    """
+    
     class Meta:
         model = Logs
         fields = '__all__'

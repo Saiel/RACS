@@ -1,3 +1,13 @@
+"""Module with url routes related to lockadmin app.
+
+Detailed description provided in API documentation.
+
+See Also:
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/.
+    https://www.django-rest-framework.org/api-guide/routers/.
+
+"""
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
