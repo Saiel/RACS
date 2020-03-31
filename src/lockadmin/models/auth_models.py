@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """Module with models, related to UserModel
 
 Models in this module:
@@ -7,11 +8,14 @@ See Also:
     https://docs.djangoproject.com/en/2.2/ref/models/.
 
 """
+=======
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
 
 class UserModelManager(BaseUserManager):
+<<<<<<< HEAD
     """Model manager for UserModel
     
     """
@@ -37,11 +41,21 @@ class UserModelManager(BaseUserManager):
             raise ValueError('Email must be set')
         email = self.normalize_email(email)
         user = self.model(email=email, first_name=first_name, last_name=last_name, card_id=card_id, **extra_fields)
+=======
+    use_in_migrations = True
+
+    def _create_user(self, email, first_name, last_name, card_id, password, **extra_field):
+        if not email:
+            raise ValueError('Email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, first_name=first_name, last_name=last_name, card_id=card_id, **extra_field)
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_user(self, email, password, **extra_fields):
+<<<<<<< HEAD
         """Function for creating regular user.
 
         Args:
@@ -53,11 +67,14 @@ class UserModelManager(BaseUserManager):
             UserModel: created user.
 
         """
+=======
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email=email, password=password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
+<<<<<<< HEAD
         """Convenient function for creating superusers.
 
         Args:
@@ -68,6 +85,8 @@ class UserModelManager(BaseUserManager):
         Returns:
             UserModel: created superuser.
         """
+=======
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -79,6 +98,7 @@ class UserModelManager(BaseUserManager):
 
 
 class UserModel(AbstractBaseUser, PermissionsMixin):
+<<<<<<< HEAD
     """Model for user.
     
     Attributes:
@@ -99,6 +119,11 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     role         = models.ForeignKey  ('Roles', models.CASCADE, 'role', to_field='name', null=True, db_index=False)
     # TODO: index hash_id
     # TODO: resolve collisions
+=======
+    u_id         = models.BigAutoField('u_id',         primary_key=True)
+
+    role         = models.ForeignKey  ('Roles', models.CASCADE, 'role', to_field='name', null=True, db_index=False)
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     hash_id      = models.CharField   ('hash_id',      null=False, blank=False, max_length=256,
                                        unique=True)
     email        = models.EmailField  ('email',        null=False, blank=False, max_length=64,
@@ -122,6 +147,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     @classmethod
     def get_instance_by_hash_id(cls, hash_id):
+<<<<<<< HEAD
         """Finds user by hashed card_id.
         
         Args:
@@ -140,10 +166,20 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         """
         name = f'{self.last_name} {self.first_name}'
         if self.patronymic:
+=======
+        return cls.objects.get(hash_id__exact=hash_id.lower())
+
+    @property
+    def full_name(self):
+        name = f'{self.last_name} {self.first_name}'
+        if self.patronymic:
+            # noinspection PyTypeChecker
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
             name += ' ' + self.patronymic
         return name
 
     @property
+<<<<<<< HEAD
     def short_name(self) -> str:
         """Constructs user's short name (without patronymic).
 
@@ -156,4 +192,10 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         Returns:
             str: User's e-mail.
         """
+=======
+    def short_name(self):
+        return f'{self.last_name} {self.first_name}'
+
+    def __str__(self):
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
         return self.email

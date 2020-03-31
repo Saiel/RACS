@@ -157,7 +157,10 @@ dist
 
 # collected static
 /src/static
+<<<<<<< HEAD
 
 # Gsuite integration
 *secret*
 /src/gsuite-creds.json
+=======
+>>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
