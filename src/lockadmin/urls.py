@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """Module with url routes related to lockadmin app.
 
 Detailed description provided in API documentation.
@@ -9,8 +8,6 @@ See Also:
 
 """
 
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include

@@ -1,28 +1,21 @@
-<<<<<<< HEAD
 """Module with views that accessed only by web front-end by default.
 
 """
 
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
 import os
 from django.shortcuts import render
 from django.conf import settings
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from rest_framework import viewsets, permissions, filters, generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
 # from django_filters.rest_framework import DjangoFilterBackend
 # from guardian.shortcuts import get_objects_for_user, get_user_perms
 
 from ..serializers import *
 from ..models import *
 
-<<<<<<< HEAD
 # TODO: enable and test filtering and searching
 
 
@@ -38,10 +31,6 @@ class LocksViewSet(viewsets.ModelViewSet):
     
     """
     
-=======
-
-class LocksViewSet(viewsets.ModelViewSet):
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     queryset = Locks.objects.all()
     serializer_class = LocksSerializer
     permission_classes = [permissions.IsAdminUser]
@@ -51,7 +40,6 @@ class LocksViewSet(viewsets.ModelViewSet):
 
 
 class RolesViewSet(viewsets.ModelViewSet):
-<<<<<<< HEAD
     """Model viewset for Roles model.
 
     Detailed description provided in API documentation.
@@ -63,14 +51,11 @@ class RolesViewSet(viewsets.ModelViewSet):
 
     """
 
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     queryset = Roles.objects.all()
     serializer_class = RolesSerializer
     permission_classes = [permissions.IsAdminUser]
 
 
-<<<<<<< HEAD
 # TODO: delete get_queryset method and make normal filtering
 # noinspection DuplicatedCode
 class AccessesViewSet(viewsets.ModelViewSet):
@@ -85,10 +70,6 @@ class AccessesViewSet(viewsets.ModelViewSet):
 
     """
     
-=======
-# noinspection DuplicatedCode
-class AccessesViewSet(viewsets.ModelViewSet):
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     queryset = Accesses.objects.all()
     serializer_class = AccessesSerializer
     permission_classes = [permissions.IsAdminUser]
@@ -109,7 +90,6 @@ class AccessesViewSet(viewsets.ModelViewSet):
 
 
 class UserModelViewSet(viewsets.ModelViewSet):
-<<<<<<< HEAD
     """Model viewset for UserModel model.
 
     Detailed description provided in API documentation.
@@ -121,8 +101,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     queryset = UserModel.objects.all()
     serializer_class = UserModelSerializer
     permission_classes = [permissions.IsAdminUser]
@@ -130,7 +108,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
 # noinspection DuplicatedCode
 class LogsViewSet(viewsets.ReadOnlyModelViewSet):
-<<<<<<< HEAD
     """Model viewset for Logs model.
 
     Detailed description provided in API documentation.
@@ -142,8 +119,6 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
 
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     queryset = Logs.objects.all()
     serializer_class = LogsSerializer
     permission_classes = [permissions.IsAdminUser]
@@ -164,7 +139,6 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class UserInfo(generics.RetrieveAPIView):
-<<<<<<< HEAD
     """Class based view for retrieve user information.
 
     Detailed description provided in API documentation.
@@ -176,8 +150,6 @@ class UserInfo(generics.RetrieveAPIView):
 
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     queryset = UserModel.objects.all()
     serializer_class = UserModelSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -189,7 +161,6 @@ class UserInfo(generics.RetrieveAPIView):
 
 
 class VueIndex(APIView):
-<<<<<<< HEAD
     """Class based view. Gives default html page with bundled js script.
 
     Detailed description provided in API documentation.
@@ -200,12 +171,6 @@ class VueIndex(APIView):
         https://www.django-rest-framework.org/api-guide/filtering/
 
     """
-=======
-    # permission_classes = [
-        # permissions.IsAuthenticated,
-        # permissions.IsAdminUser,
-    # ]
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
 
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html')
@@ -213,7 +178,6 @@ class VueIndex(APIView):
 
 @api_view(['GET'])
 def get_server_start_time(request):
-<<<<<<< HEAD
     """Gives time in ISO 8601 format to calculate server uptime.
     
     Detailed description provided in API documentation.
@@ -225,8 +189,6 @@ def get_server_start_time(request):
         Response: Response with "datetime" and optional "Error" body fields.
     
     """
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     result = {'datetime': ''}
     try:
         with open(os.path.join(settings.BASE_DIR, 'datestart.utcdatetime'), 'r') as ds_file:
@@ -234,9 +196,5 @@ def get_server_start_time(request):
             return Response(result, status=status.HTTP_200_OK)
     except FileNotFoundError:
         # Should not be here
-<<<<<<< HEAD
         result['Error'] = 'Start file not found'
-=======
-        result['Errors'] = 'Start file not found'
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
         return Response(result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

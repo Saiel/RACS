@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """Module with serializers.
 
 See Also:
@@ -8,8 +7,6 @@ See Also:
 
 """
 
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
 from rest_framework import serializers
 
 from .models import *
@@ -17,13 +14,10 @@ from . import validators
 
 
 class RegisterLockSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
     """Serializer for lock registration.
     
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     class Meta:
         model = Locks
         fields = [
@@ -42,13 +36,10 @@ class RegisterLockSerializer(serializers.ModelSerializer):
 
 
 class LocksSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
     """General purpose serializer for lock.
     
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     class Meta:
         model = Locks
         fields = [
@@ -75,13 +66,10 @@ class LocksSerializer(serializers.ModelSerializer):
 
 
 class RolesSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
     """General purpose serializer for Roles.
 
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     class Meta:
         model = Roles
         fields = ['r_id', 'name']
@@ -91,13 +79,10 @@ class RolesSerializer(serializers.ModelSerializer):
 
 
 class AccessesSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
     """General purpose serializer for access.
     
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     class Meta:
         model = Accesses
         fields = [
@@ -120,13 +105,10 @@ class AccessesSerializer(serializers.ModelSerializer):
 
 
 class UserModelSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
     """General purpose serializer for user.
 
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     class Meta:
         model = UserModel
         fields = [
@@ -165,13 +147,10 @@ class UserModelSerializer(serializers.ModelSerializer):
 
 
 class LogsSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
     """General purpose serializer for log.
 
     """
     
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     class Meta:
         model = Logs
         fields = '__all__'

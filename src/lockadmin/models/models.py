@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """Module with general models.
 
 Models in this module:
@@ -12,8 +11,6 @@ See Also:
 
 """
 
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
 import uuid
 
 from datetime import datetime
@@ -23,7 +20,6 @@ from ..validators import version_validator
 
 
 class Roles(models.Model):
-<<<<<<< HEAD
     """Model, representing user's roles in service. Managed by superuser.
     
     Attributes:
@@ -31,14 +27,11 @@ class Roles(models.Model):
         self.name (str): Name of the role. Required.
 
     """
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     r_id = models.AutoField('r_id', primary_key=True)
     name = models.CharField(max_length=50, unique=True)
 
 
 class Locks(models.Model):
-<<<<<<< HEAD
     """Model, representing locks (rooms) in service.
     
     Can be created by superuser or lock itself. Requires verification by superuser, when created.
@@ -54,8 +47,6 @@ class Locks(models.Model):
         self.last_echo (DateTime): Last time, when lock emitted echo. Used for connection monitoring. Required,
     
     """
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     l_id        = models.BigAutoField ('l_id', primary_key=True)
     uuid        = models.UUIDField    ('uid', default=uuid.uuid4, editable=True,
                                        unique=True)
@@ -69,7 +60,6 @@ class Locks(models.Model):
     last_echo   = models.DateTimeField('last_echo',   null=False, auto_now_add=True)
 
     @property
-<<<<<<< HEAD
     def major_version(self) -> int:
         """Fetches major version (first number).
 
@@ -95,27 +85,12 @@ class Locks(models.Model):
         Args:
             save (bool): Save model immediately or later manually.
         """
-=======
-    def major_version(self):
-        return int(self.version.split('.')[0])
-
-    @property
-    def minor_version(self):
-        return int(self.version.split('.')[-1])
-
-    @property
-    def full_version(self):
-        return int(self.version)
-
-    def echo(self, save=False):
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
         self.last_echo = datetime.utcnow()
         if save:
             self.save()
 
     @classmethod
     def get_instance_by_hash_id(cls, hash_id):
-<<<<<<< HEAD
         """Finds lock by hashed uuid.
 
         Args:
@@ -134,16 +109,10 @@ class Locks(models.Model):
             str: String formatted "Lock <l_id>: <description>".
 
         """
-=======
-        return cls.objects.get(hash_id__exact=hash_id.lower())
-
-    def __str__(self):
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
         return f'Lock {self.l_id}: {self.description}'
 
 
 class Accesses(models.Model):
-<<<<<<< HEAD
     """Model, representing accesses of users to rooms.
     
     Attributes:
@@ -154,8 +123,6 @@ class Accesses(models.Model):
         self.access_stop (DateTime): Time when access ends.
 
     """
-=======
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     a_id         = models.BigAutoField('a_id', primary_key=True)
     lock         = models.ForeignKey   (Locks,     models.CASCADE, 'l_accesses', null=False,
                                         verbose_name='l_id')
@@ -166,7 +133,6 @@ class Accesses(models.Model):
 
 
 class Logs(models.Model):
-<<<<<<< HEAD
     """Model, representing access attempts.
     
     Attributes:
@@ -181,11 +147,6 @@ class Logs(models.Model):
     class Meta:
         ordering = ['-try_time']
     
-=======
-    class Meta:
-        ordering = ['-try_time']
-
->>>>>>> 504c5d7b166641875bcf20f0f5da5de61d734ea4
     lock      = models.ForeignKey   (Locks,     models.CASCADE, 'l_logs', null=True,
                                      verbose_name='l_id')
     user      = models.ForeignKey   (UserModel, models.CASCADE, 'u_logs', null=True,
