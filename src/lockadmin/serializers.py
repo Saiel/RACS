@@ -95,7 +95,6 @@ class AccessesSerializer(serializers.ModelSerializer):
             'access_stop',
             'user_fio',
             'added_by',
-            'lockadmins',
         ]
         read_only_fields = [
             'a_id',

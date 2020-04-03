@@ -8,7 +8,8 @@ from .models import UserModel
 class IsLockAdmin(permissions.BasePermission):
     
     def has_object_permission(self, request, view, obj):
-        return obj.lockadmins_set.filter(user=request.user).exists()
+        return bool(obj.admined_by.filter(user=request.user).exists()
+                    or request.user.is_superuser)
     
     def has_permission(self, request, view):
         if request.method == 'POST':
@@ -20,7 +21,8 @@ class IsLockAdmin(permissions.BasePermission):
 class IsAbleToManageAccesses(permissions.BasePermission):
     
     def has_object_permission(self, request, view, obj):
-        return obj.lock.lockadmins_set.filter(user=request.user).exists()
+        return bool(obj.lock.admined_by.filter(user=request.user).exists()
+                    or request.user.is_superuser)
 
 
 class ForbidCreating(permissions.BasePermission):
