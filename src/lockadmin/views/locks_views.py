@@ -43,8 +43,7 @@ def check_access(request):
         https://www.django-rest-framework.org/api-guide/views/#function-based-views.
         
     """
-@api_view(['GET'])
-def check_access(request: Request):
+
     lock_id_hash: str = request.query_params.get('lock', None)
     user_id_hash: str = request.query_params.get('pass', None)
     if not (lock_id_hash and user_id_hash):

@@ -23,8 +23,9 @@ router.register('accesses', views.AccessesViewSet)
 router.register('users',    views.UserModelViewSet)
 router.register('logs',     views.LogsViewSet)
 router.register('roles',    views.RolesViewSet)
+router.register('admins',   views.LockAdminsViewSet)
 
-
+# TODO: make versioning with rest_framework
 locks_urls_patterns_v1 = [
     path('check-access/', views.check_access),
     path('register-lock/', views.RegisterLock.as_view()),

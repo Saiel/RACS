@@ -15,8 +15,20 @@ from rest_framework.decorators import api_view
 
 from ..serializers import *
 from ..models import *
+from ..filters import *
+from ..permissions import *
 
-# TODO: enable and test filtering and searching
+
+# TODO: enable and test filtering and searching (for front-end)
+
+def _check_user(user, param_name='user'):
+    if user is None:
+        return Response(status=status.HTTP_400_BAD_REQUEST,
+                        headers={'Error': f'Param "{param_name}" is not provided'})
+    if not user.is_staff:
+        return Response(status=status.HTTP_400_BAD_REQUEST,
+                        headers={'Error': 'Non-staff user cannot admin a lock'})
+    return None
 
 
 class LocksViewSet(viewsets.ModelViewSet):
@@ -33,8 +45,8 @@ class LocksViewSet(viewsets.ModelViewSet):
     
     queryset = Locks.objects.all()
     serializer_class = LocksSerializer
-    permission_classes = [permissions.IsAdminUser]
-    # filter_backends = [filters.SearchFilter]
+    permission_classes = [IsLockAdmin]
+    filter_backends = [OnlyAdminedLocksFilter]  # + [filters.SearchFilter]
     # filterset_fields = ('description',)
     # search_fields = ('$description',)
 
@@ -53,11 +65,10 @@ class RolesViewSet(viewsets.ModelViewSet):
 
     queryset = Roles.objects.all()
     serializer_class = RolesSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsSuperuserOrReadOnly]
 
 
 # TODO: delete get_queryset method and make normal filtering
-# noinspection DuplicatedCode
 class AccessesViewSet(viewsets.ModelViewSet):
     """Model viewset for Accesses model.
 
@@ -72,7 +83,16 @@ class AccessesViewSet(viewsets.ModelViewSet):
     
     queryset = Accesses.objects.all()
     serializer_class = AccessesSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser, IsAbleToManageAccesses]
+    filter_backends = [AccessesOfAdminedLocksFilter]
+    
+    def create(self, request, *args, **kwargs):
+        request.data['added_by'] = request.user
+        return super(AccessesViewSet, self).create(request, *args, **kwargs)
+    
+    def update(self, request, *args, **kwargs):
+        request.data.pop('added_by')
+        return super(AccessesViewSet, self).update(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = Accesses.objects.all()
@@ -122,6 +142,7 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Logs.objects.all()
     serializer_class = LogsSerializer
     permission_classes = [permissions.IsAdminUser]
+    filter_backends = [LogsOfAdminedLocksFilter]
 
     def get_queryset(self):
         queryset = Logs.objects.all()
@@ -136,6 +157,23 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(lock=lock)
 
         return queryset
+
+
+class LockAdminsViewSet(viewsets.ModelViewSet):
+    queryset = LockAdmins.objects.all()
+    serializer_class = LockAdminsSerializer
+    permission_classes = [IsSuperuserOrReadOnly]
+    
+    def create(self, request, *args, **kwargs):
+        user: UserModel = request.data.get('user', None)
+        user.is_staff = True
+        user.save()
+        return super(LockAdminsViewSet, self).create(request, *args, **kwargs)
+    
+    def update(self, request, *args, **kwargs):
+        user: UserModel = request.data.get('user', None)
+        res = _check_user(user)
+        return res or super(LockAdminsViewSet, self).update(request, *args, **kwargs)
 
 
 class UserInfo(generics.RetrieveAPIView):
@@ -171,7 +209,7 @@ class VueIndex(APIView):
         https://www.django-rest-framework.org/api-guide/filtering/
 
     """
-
+    
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html')
 

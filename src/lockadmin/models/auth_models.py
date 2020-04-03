@@ -94,6 +94,15 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         self.objects (UserModelManager): Standard django ModelManager field.
     
     """
+    
+    class Meta:
+        ordering = [
+            'last_name',
+            'first_name',
+            'patronymic',
+            'email'
+        ]
+        
     u_id         = models.BigAutoField('u_id',         primary_key=True)
 
     role         = models.ForeignKey  ('Roles', models.CASCADE, 'role', to_field='name', null=True, db_index=False)

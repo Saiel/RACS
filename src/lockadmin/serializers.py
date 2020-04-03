@@ -93,10 +93,13 @@ class AccessesSerializer(serializers.ModelSerializer):
             'card_id',
             'access_start',
             'access_stop',
-            'user_fio'
+            'user_fio',
+            'added_by',
+            'lockadmins',
         ]
         read_only_fields = [
-            'a_id'
+            'a_id',
+            'lockadmins'
         ]
     
     card_id   = serializers.ReadOnlyField(source='user.card_id')
@@ -120,7 +123,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'patronymic',
             'card_id',
             'role',
-            'is_superuser'
+            'is_superuser',
+            'is_staff',
         ]
         read_only_fields = [
             'u_id',
@@ -166,3 +170,13 @@ class LogsSerializer(serializers.ModelSerializer):
 
     user_fio = serializers.ReadOnlyField(source='user.short_name')
     lock_desc = serializers.ReadOnlyField(source='lock.description')
+
+
+class LockAdminsSerializer(serializers.ModelSerializer):
+    """General purpose serializer for LockAdmins.
+    
+    """
+    
+    class Meta:
+        model = LockAdmins
+        fields = '__all__'

@@ -15,6 +15,8 @@ import uuid
 
 from datetime import datetime
 from django.db import models
+from django.db.models import Q
+
 from .auth_models import UserModel
 from ..validators import version_validator
 
@@ -47,6 +49,13 @@ class Locks(models.Model):
         self.last_echo (DateTime): Last time, when lock emitted echo. Used for connection monitoring. Required,
     
     """
+    
+    class Meta:
+        ordering = [
+            'description',
+            'l_id',
+        ]
+    
     l_id        = models.BigAutoField ('l_id', primary_key=True)
     uuid        = models.UUIDField    ('uid', default=uuid.uuid4, editable=True,
                                        unique=True)
@@ -123,13 +132,26 @@ class Accesses(models.Model):
         self.access_stop (DateTime): Time when access ends.
 
     """
+    
+    class Meta:
+        constraints = [
+            # TODO: Find a way to make this behaviour on db-side. Now it is in viewset.
+            # models.CheckConstraint(check=Q(added_by__is_staff=True),
+            #                        name='added_access_by_staff_check'),
+        ]
+    
     a_id         = models.BigAutoField('a_id', primary_key=True)
-    lock         = models.ForeignKey   (Locks,     models.CASCADE, 'l_accesses', null=False,
-                                        verbose_name='l_id')
-    user         = models.ForeignKey   (UserModel, models.CASCADE, 'u_accesses', null=False,
-                                        verbose_name='u_id')
+    lock         = models.ForeignKey   (Locks,     models.CASCADE, 'l_accesses',
+                                        null=False, verbose_name='l_id',
+                                        db_index=True)
+    user         = models.ForeignKey   (UserModel, models.CASCADE, 'u_accesses',
+                                        null=False, verbose_name='u_id',
+                                        db_index=True)
     access_start = models.DateTimeField('access_start', null=False)
     access_stop  = models.DateTimeField('access_stop',  null=False)
+    added_by     = models.ForeignKey   (UserModel, models.PROTECT, 'accesses_responsible_for',
+                                        to_field='email',
+                                        limit_choices_to={'is_staff': True}, null=True)
 
 
 class Logs(models.Model):
@@ -143,7 +165,7 @@ class Logs(models.Model):
         self.is_failed (bool): Is there were any exceptions while checking attempt.
     
     """
-    # TODO: Made constraints
+    # TODO: Make constraints
     class Meta:
         ordering = ['-try_time']
     
@@ -154,3 +176,20 @@ class Logs(models.Model):
     try_time  = models.DateTimeField('try_time', null=False)
     result    = models.BooleanField ('result', null=False)
     is_failed = models.BooleanField ('is_failed', null=False, default=False)
+
+
+class LockAdmins(models.Model):
+    """
+    
+    """
+    class Meta:
+        constraints = [
+            models.CheckConstraint(check=Q(user__is_staff=True),
+                                   name='staff_admins_check'
+                                   ),
+        ]
+    
+    user = models.ForeignKey(UserModel, models.CASCADE, 'locks_admins',
+                             null=False)
+    lock = models.ForeignKey(Locks, models.CASCADE, 'admined_by',
+                             null=False)
