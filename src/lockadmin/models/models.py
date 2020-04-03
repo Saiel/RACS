@@ -184,9 +184,9 @@ class LockAdmins(models.Model):
     """
     class Meta:
         constraints = [
-            models.CheckConstraint(check=Q(user__is_staff=True),
-                                   name='staff_admins_check'
-                                   ),
+            # models.CheckConstraint(check=Q(user__is_staff=True),
+            #                        name='staff_admins_check'
+            #                        ),
         ]
     
     user = models.ForeignKey(UserModel, models.CASCADE, 'locks_admins',
