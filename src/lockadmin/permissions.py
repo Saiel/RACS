@@ -1,8 +1,8 @@
 from rest_framework import permissions
 
+from .models import UserModel
 
 # TODO: maybe move all this to get_queryset methods of viewsets
-from src.lockadmin.models import UserModel
 
 
 class IsLockAdmin(permissions.BasePermission):
