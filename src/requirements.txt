@@ -5,3 +5,4 @@ psycopg2-binary==2.8.4
 djangorestframework-simplejwt==4.3.0
 wheel
 uwsgi==2.0.18
+django_cron==0.5.1
