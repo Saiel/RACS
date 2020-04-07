@@ -163,3 +163,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'USER_ID_FIELD': 'u_id',
 }
+
+CRON_CLASSES = [
+    'lockadmin.tasks.SyncGoogleGroups',
+]
