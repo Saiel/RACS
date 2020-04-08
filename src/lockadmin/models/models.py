@@ -5,6 +5,7 @@ Models in this module:
     Locks
     Accesses
     Locks
+    LockAdmins
     
 See Also:
     https://docs.djangoproject.com/en/2.2/ref/models/.
@@ -46,7 +47,8 @@ class Locks(models.Model):
         self.is_on (bool): Indicates, does lock close.
         self.is_approved (bool): Is lock verified by superuser. Required to be True. False by default.
         self.version (str): Number of firmware version in format r"\\d{1,2}\\.\\d{1,2}" (regex, version_validator).
-        self.last_echo (DateTime): Last time, when lock emitted echo. Used for connection monitoring. Required,
+        self.last_echo (DateTime): Last time, when lock emitted echo. Used for connection monitoring. Required.
+        self.gmail (str): google email, that represents google group for this lock.
     
     """
     
@@ -67,6 +69,8 @@ class Locks(models.Model):
     version     = models.CharField    ('version',     null=False, max_length=5,
                                        validators=[version_validator])
     last_echo   = models.DateTimeField('last_echo',   null=False, auto_now_add=True)
+    gmail       = models.EmailField   ('gmail',       null=True, blank=False, max_length=256,
+                                       unique=True,   db_index=True, default=None)
 
     @property
     def major_version(self) -> int:
@@ -179,7 +183,11 @@ class Logs(models.Model):
 
 
 class LockAdmins(models.Model):
-    """
+    """Model, representing lock admins
+    
+    Attributes:
+        self.user (UserModel): User, who admins the lock.
+        self.lock (Locks): Lock, which is admined by the user.
     
     """
     class Meta:

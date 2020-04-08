@@ -160,6 +160,16 @@ class LogsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class LockAdminsViewSet(viewsets.ModelViewSet):
+    """Model viewset for LockAdmins model.
+
+    Detailed description provided in API documentation.
+
+    See Also:
+        https://www.django-rest-framework.org/api-guide/viewsets/.
+        https://www.django-rest-framework.org/api-guide/permissions/.
+        https://www.django-rest-framework.org/api-guide/filtering/
+
+    """
     queryset = LockAdmins.objects.all()
     serializer_class = LockAdminsSerializer
     permission_classes = [IsSuperuserOrReadOnly]
