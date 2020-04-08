@@ -1,3 +1,9 @@
+"""Module with schedule-based tasks.
+
+There are also helpers for google-api here temporarily.
+
+"""
+
 import uuid
 from datetime import datetime
 
@@ -14,24 +20,48 @@ from .models import *
 
 # TODO: move to django 3.0 and make this async
 # TODO: move things like this in separate module
-def service_iter(service, list_filed: str, **kwargs):
-    res = service.list(**kwargs).execute()
+def service_iter(resource, list_field, **kwargs):
+    """Generator for iterate through paginated google resource list.
+
+    Args:
+        resource (googleapiclient.discovery.Resource): google resource with method list
+        list_field (str): field name with google resource list
+        **kwargs (Any): optional kwargs for list method
+    
+    Yields:
+        list[dict]: list with resources
+    
+    """
+    res: dict = resource.list(**kwargs).execute()
     while True:
         print(res.keys())
-        if list_filed not in res:
+        if list_field not in res:
             break
         else:
-            yield res[list_filed]
+            yield res[list_field]
         
         if 'nextPageToken' not in res:
             break
         else:
             next_page = res['nextPageToken']
-            res = service.list(pageToken=next_page, **kwargs).exexute()
+            # TODO: use method list_next for paginate
+            res = resource.list(pageToken=next_page, **kwargs).execute()
 
 
 # TODO: make this async
 def create_lock_group(l_uuid):
+    """Helper function for creating google group for lock
+
+    Args:
+        l_uuid (str): uuid of lock.
+
+    Returns:
+        dict: Response from google with group resource.
+    
+    Raises:
+         googleapiclient.errors.HttpError: Error from googleapi method
+
+    """
     creds = initialize_creds()
     customer = 'my_customer'
 
@@ -57,7 +87,10 @@ def create_lock_group(l_uuid):
     ).execute()
 
 
-def initialize_creds():
+def initialize_creds() -> Credentials:
+    """Helper function for initializing credentials
+
+    """
     gsuite_conf: dict = getattr(settings, 'GSUITE', dict())
     
     acc_file = gsuite_conf.get('GSUITE_ACCOUNT_FILE', 'gsuite-creds.json')
@@ -79,12 +112,29 @@ def initialize_creds():
 
 
 class SyncGoogleGroups(django_cron.CronJobBase):
+    """Task for syncing google groups with local accesses.
+    
+    Attributes:
+        members (googleapiclient.discovery.Resource): Members google resource.
+        groups (googleapiclient.discovery.Resource): Groups google resource.
+        customer (str): customer for google api method.
+        log (dict[str:list[str]]): runtime attribute for creating log after task done.
+        lock_users (dict[str:dict[str:Any]]): runtime attribute for storing
+            user with access to processing lock.
+    
+    See Also:
+        https://django-cron.readthedocs.io/en/latest/introduction.html
+    
+    """
     RUN_AT_TIMES = ['04:00']
     
     code = 'lockadmin.sync_google_groups'
     schedule = django_cron.Schedule(run_at_times=RUN_AT_TIMES, run_every_mins=10)
     
     def __init__(self):
+        """Inits task, creds, services and other members for further usage.
+        
+        """
         super(SyncGoogleGroups, self).__init__()
 
         creds = initialize_creds()
@@ -101,6 +151,9 @@ class SyncGoogleGroups(django_cron.CronJobBase):
         self.lock_users = {}  # Maybe separate class needed
     
     def do(self):
+        """Method, which evaluates by schedule.
+        
+        """
         self.log = {'Added:': [],
                     'Passed:': [],
                     'Removed:': [],
@@ -117,6 +170,9 @@ class SyncGoogleGroups(django_cron.CronJobBase):
         self.write_log()
     
     def process_group_list(self, groups: list):
+        """Helper method for process every group list while paginating.
+        
+        """
         now = datetime.utcnow()
         # For every group ...
         for gr in groups:
@@ -147,6 +203,9 @@ class SyncGoogleGroups(django_cron.CronJobBase):
                 self.remove_users_from_lock(lock, now)
     
     def process_member_list(self, members, lock, now):
+        """Helper method for processing every members list while paginating
+        
+        """
         # For every member ...
         for member in members:
             user_email = member['email']
@@ -159,6 +218,9 @@ class SyncGoogleGroups(django_cron.CronJobBase):
                 self.add_user_to_lock(user_email, lock, now)
     
     def add_user_to_lock(self, email, lock, now):
+        """Helper function for adding access to user.
+        
+        """
         try:
             # TODO: when optimize as next TODO, this will be replaced by lightweight exists() query
             user = UserModel.objects.get(email=email)
@@ -171,6 +233,9 @@ class SyncGoogleGroups(django_cron.CronJobBase):
             self.log['Added:'].append(email)
     
     def remove_users_from_lock(self, lock: Locks, now):
+        """Helper function for removing accesses.
+        
+        """
         # Clear struct from checked users
         for email, struct in self.lock_users.items():
             if struct['check']:
@@ -182,6 +247,9 @@ class SyncGoogleGroups(django_cron.CronJobBase):
         self.log['Removed:'].extend(self.lock_users.keys())
     
     def write_log(self):
+        """Helper function for writing sync log.
+        
+        """
         import os
         now = datetime.utcnow()
         with open(
