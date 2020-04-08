@@ -67,8 +67,6 @@ class Locks(models.Model):
     version     = models.CharField    ('version',     null=False, max_length=5,
                                        validators=[version_validator])
     last_echo   = models.DateTimeField('last_echo',   null=False, auto_now_add=True)
-    gmail       = models.EmailField   ('gmail',       null=True, blank=False, max_length=256,
-                                       unique=True,   db_index=True, default=None)
 
     @property
     def major_version(self) -> int:

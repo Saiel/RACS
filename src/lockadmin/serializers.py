@@ -23,7 +23,6 @@ class RegisterLockSerializer(serializers.ModelSerializer):
         fields = [
             'uuid',
             'version',
-            'gmail',
         ]
         extra_kwargs = {
             'uuid': {
@@ -32,9 +31,6 @@ class RegisterLockSerializer(serializers.ModelSerializer):
             'version': {
                 'required': True,
                 'validators': [validators.version_validator]
-            },
-            'gmail': {
-                'required': False,
             }
         }
 
@@ -54,14 +50,12 @@ class LocksSerializer(serializers.ModelSerializer):
             'is_approved',
             'last_echo',
             'is_on',
-            'gmail',
         ]
         read_only_fields = [
             'l_id',
             'uuid',
             'last_echo',
-            'is_on',
-            'gmail'
+            'is_on'
         ]
         extra_kwargs = {
             'version': {

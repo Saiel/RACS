@@ -6,7 +6,6 @@ from datetime import datetime
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from googleapiclient.errors import HttpError
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.mixins import UpdateModelMixin
@@ -16,7 +15,6 @@ from rest_framework.response import Response
 
 from ..models import Accesses, Locks, Logs, UserModel
 from ..serializers import RegisterLockSerializer
-from ..tasks import create_lock_group
 
 
 char_accept = '#'
@@ -118,14 +116,7 @@ class RegisterLock(CreateAPIView):
 
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            try:
-                res = create_lock_group(uuid)
-                request.data['gmail'] = res['email']
-            except HttpError:
-                pass
-            finally:
-                super().create(request, *args, **kwargs)
-            
+            super().create(request, *args, **kwargs)
             return Response(status=status.HTTP_201_CREATED)
 
     def perform_create(self, serializer):
