@@ -182,6 +182,7 @@ class Logs(models.Model):
     is_failed = models.BooleanField ('is_failed', null=False, default=False)
 
 
+# TODO: Remove this and make many2many rel. Additional action'll be added in router.
 class LockAdmins(models.Model):
     """Model, representing lock admins
     
