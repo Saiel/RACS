@@ -6,10 +6,13 @@ openapi: 3.0.2
 info:
   title: Web API
   description: API for administration frontend.
-  version: 0.1.0
+  version: 0.1.1
 
 servers:
   - url: 'http://172.18.198.31:8000/api/v1'
+    description: Test server
+  - url: 'https://access.miem.hse.ru/api/v1'
+    description: Production server
 
 tags:
   - name: superusers
@@ -23,7 +26,6 @@ tags:
 
 
 paths:
-
   /users:
     get:
       parameters:
@@ -105,8 +107,8 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/count'
       tags:
-        - users
-      summary: Returns a list of locks.
+        - admins
+      summary: Returns a list of locks, that admined by user.
       responses:
         '200':
           description: OK
@@ -146,7 +148,7 @@ paths:
 
     delete:
       tags:
-        - superusers
+        - admins
       summary: Delete lock by id
       responses:
         204:
@@ -181,9 +183,21 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/count'
+        - name: u_id
+          in: query
+          required: false
+          description: filter list by user id.
+          schema:
+            $ref: '#/components/schemas/User/properties/u_id'
+        - name: lock
+          in: query
+          required: false
+          description: filter list by lock id.
+          schema:
+            $ref: '#/components/schemas/Lock/properties/l_id'
       tags:
-        - users
-      summary: Returns a list of accesses.
+        - admins
+      summary: Returns a list of accesses to locks, that admined by user.
       responses:
         '200':
           description: OK
@@ -211,7 +225,7 @@ paths:
       - $ref: '#/components/parameters/a_id'
     get:
       tags:
-        - users
+        - admins
       summary: Get specific access by id
       responses:
         200:
@@ -258,9 +272,21 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/count'
+        - name: u_id
+          in: query
+          required: false
+          description: filter list by user id.
+          schema:
+            $ref: '#/components/schemas/User/properties/u_id'
+        - name: lock
+          in: query
+          required: false
+          description: filter list by lock id.
+          schema:
+            $ref: '#/components/schemas/Lock/properties/l_id'
       tags:
         - admins
-      summary: Returns a list of logs.
+      summary: Returns a list of logs, that connected to locks admined by user.
       responses:
         '200':
           description: OK
@@ -277,7 +303,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/count'
       tags:
-        - users
+        - superusers
       summary: Returns a list of roles.
       responses:
         '200':
@@ -306,7 +332,7 @@ paths:
       - $ref: '#/components/parameters/r_id'
     get:
       tags:
-        - users
+        - superusers
       summary: Get specific role bby id
       responses:
         200:
@@ -323,6 +349,134 @@ paths:
         404:
           $ref: '#/components/responses/NotFound'
 
+  /admins:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/count'
+      tags:
+        - superusers
+      summary: Returns a list of lockadmins
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LockAdmin'
+    post:
+      tags:
+        - superusers
+      summary: Make user admin of lock. Changes users field 'is_staff' to true.
+      requestBody:
+        $ref: '#/components/requestBodies/LockAdminRequestBody'
+      responses:
+        201:
+          description: Created OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LockAdmin'
+
+  /token/auth:
+    post:
+      summary: Obtain token for authorization
+      externalDocs:
+        description: ""
+        url: https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html#usage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  required: true
+                  format: email
+                  example:
+                    'example@miem.hse.ru'
+                password:
+                  type: string
+                  required: true
+                  format: password
+                  example:
+                    '123'
+      responses:
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example:
+                      No active account found with the given credentials
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refresh:
+                    type: string
+                    example:
+                      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU4NjUzMzgxOSwianRpIjoiMTE0NzkxN2QzMGIzNGJmYjljNDE5N2ZlYmUxNjliNzgiLCJ1c2VyX2lkIjozMDd9.9xBAm6NC5RI9Aox2dCydT0Sa6BNTjX8eeM2odR1Nn_Q"
+                  access:
+                    type: string
+                    example:
+                      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTg2NDQ3NzE5LCJqdGkiOiI0NzQ4MjYyZmRjNGI0NDFiOTRkM2Y2ZDFiYThjODhjMSIsInVzZXJfaWQiOjMwN30.BXIbVbNey0M7OCkPHkXaoQml3fsCddNfmqWEz6w6Z5o"
+  /token/refresh:
+    post:
+      summary: Refresh token
+      externalDocs:
+        description: ""
+        url: https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html#usage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh:
+                  type: string
+                  required: true
+                  example:
+                    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU4NjUzMzgxOSwianRpIjoiMTE0NzkxN2QzMGIzNGJmYjljNDE5N2ZlYmUxNjliNzgiLCJ1c2VyX2lkIjozMDd9.9xBAm6NC5RI9Aox2dCydT0Sa6BNTjX8eeM2odR1Nn_Q"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access:
+                    type: string
+                    example:
+                      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTg2NDQ4MDY0LCJqdGkiOiI1MTM3NjY5ZmY3MzQ0NzJjYmFkMmE2ZDhkNTdiNjE0YiIsInVzZXJfaWQiOjMwN30.OVnmUid74Fo1RvAjdD5abAeWfqw4gSfTNW50L_4OeEw"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example:
+                      Token is invalid or expired
+                  code:
+                    type: string
+                    example:
+                      token_not_valid
 
 components:
   parameters:
@@ -487,6 +641,20 @@ components:
         is_failed:
           type: boolean
           readOnly: true
+    LockAdmin:
+      type: object
+      required:
+        - lock
+        - user
+      properties:
+        lock:
+          type: integer
+          format: int64
+          readOnly: true
+        user:
+          type: integer
+          format: int64
+          readOnly: true
 
   securitySchemes:
     JWT:
@@ -531,7 +699,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Role' #'definitions/Access.yaml'
-
+    LockAdminRequestBody:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/LockAdmin'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LockAdmin'
 
   responses:
     UnauthorizedError:
@@ -564,3 +740,9 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Role' #'definitions/Role.yaml'
+    LockAdmin200Response:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LockAdmin'

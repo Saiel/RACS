@@ -1,15 +1,147 @@
-openapi: 3.0.1
+openapi: 3.0.2
 info:
-  title: Sample API
-  description: API description in Markdown.
-  version: 1.0.0
+  title: Lock API
+  description: API for lock controllers.
+  version: 0.1.1
 servers:
-  - url: 'https://api.example.com'
+  - url: 'http://172.18.198.31:8000/lock-api/v1'
+    description: Test server
+  - url: 'https://access.miem.hse.ru/lock-api/v1'
+    description: Production server
+
 paths:
-  /users:
+  /check-access:
     get:
-      summary: Returns a list of users.
-      description: Optional extended description in Markdown.
+      summary:
+        Check access for card. Returns "*" (denied) or "#" (accepted) in response.
+      parameters:
+        - $ref: '#/components/parameters/lock_hash'
+        - $ref: '#/components/parameters/card_hash'
       responses:
-        '200':
+        403:
+          description: Forbidden
+          headers:
+            Error:
+              description: Describes exception that rised on checking
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum:
+                  - "*"
+        200:
           description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum:
+                  - "*"
+                  - "#"
+
+  /register-lock:
+    post:
+      summary: Register lock in system on power on.
+      description:
+        Must be always sended on power on, especially on first boot.
+        Registers lock in local system and also creates group in google.
+        Read more about google intgration in developer guide.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                master:
+                  type: string
+                  format: uuid
+                  description: API key
+                uuid:
+                  type: string
+                  format: uuid
+                  description: uuid of the lock
+                version:
+                  type: string
+                  pattern: \d{1,2}\.\d{1,2}
+                  example:
+                    "2.12"
+      responses:
+        200:
+          description: OK. Lock already exists in system.
+        201:
+          description: Created.
+        400:
+          description: Bad request.
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum:
+                  - Provide "master" and "uuid" query parameters
+        403:
+          description: Forbidden. Provided invalid master key.
+  /echo:
+    get:
+      summary: Service beacons
+      description:
+        Must be sended every 30-60 seconds
+        for monitoring if lock has any network issues.
+      parameters:
+        - $ref: '#/components/parameters/lock_hash'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum:
+                  - Provide "lock" query parameter
+        404:
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                example:
+                  Lock with hash 40bd001563085fc35165329ea1ff5c5ecbdbbeef
+                  does not found.
+
+
+
+components:
+  parameters:
+    lock_hash:
+      name: lock
+      in: query
+      description: Hashed lock's uuid
+      required: true
+      schema:
+        type: string
+    card_hash:
+      name: pass
+      in: query
+      description: Hashed card id
+      required: true
+      schema:
+        type: string
+    master_key:
+      name: master
+      in: query
+      description: API key
+      required: true
+
+
+    uuid:
+      in: cookie
+      name: uuid
+      description: Unhashed locks' uuid
+      required: true
+    version:
+      name: version
+      in: cookie
+      description: version of firmware of lock
+      required: true
