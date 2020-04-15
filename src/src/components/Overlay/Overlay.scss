@@ -19,6 +19,22 @@
 
   &-Content {
     background: white;
-    padding: 20px;
+    padding: 0 30px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
+}
+
+.Close{
+  outline: none;
+  border: none;
+  border-radius: 30px;
+  width: 60px;
+  height: 60px;
+  
+  background: #619EF2;
+  color: #ffffff;
+  font-family: 'Montserrat';
+  font-size: 25px;
+  font-weight: 400;
 }

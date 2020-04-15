@@ -4,11 +4,11 @@ $light: rgba(251, 251, 251, 1);
 $blue: rgba(51, 101, 138, 1);
 
 :root {
-  --color-primary: #000000;
+  --color-primary: #2E2F30;
   --color-accent: rgba(51, 101, 138, 1);
   --color-light: rgba(251, 251, 251, 1);
   --color-red: rgba(254, 95, 85, 1);;
-  --color-green: rgba(175, 208, 191, 1);
+  --color-green: #619EF2;
 
   --color-table-divider: #cecece;
   --color-content-divider: #adadad;
@@ -27,7 +27,7 @@ $blue: rgba(51, 101, 138, 1);
 }
 
 .Page {
-  background: #edeef0;
+  background: #DAE4F2;
   margin: 0;
 
   &-Title {
@@ -52,11 +52,13 @@ $blue: rgba(51, 101, 138, 1);
 }
 
 .Btn {	
-  border: 2px solid black;	
-  color: var(--color-primary);	
+  /*border: 2px solid black;	*/
+  color: #ffffff;	
   cursor: pointer;	
   font-size: 16px;	
   padding: 5px;	
+  outline: none;
+  border: none;
 
   &:hover {	
     border-color: var(--color-accent);	

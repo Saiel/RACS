@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-dev": "webpack --hide-modules -d && cp src/index.html dist/index.html",
-    "build": "webpack --hide-modules -p && cp src/index.html dist/index.html",
+    "build-dev": "webpack --hide-modules -d && copy src/index.html dist/index.html",
+    "build": "webpack --hide-modules -p && copy src/index.html dist/index.html",
     "dev": "webpack-dev-server"
   },
   "author": "",
@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",

@@ -1,0 +1,33 @@
+.InLine {
+    display: flex;
+    justify-content: space-between;
+}
+
+input.InpCompact {
+    width: 190px;
+}
+
+label.LabelHeader{
+    display: block;
+    margin: 0 auto;
+    background: #619EF2;
+    height: 60px;
+    line-height: 60px;
+    color: #ffffff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.UserFormWithHeader{
+    position: relative;
+    padding: 20px;
+    display: block;
+    align-items: center;
+    text-align: center;
+}
+
+/*.UserFormWithHeader div{
+    display: flex;
+    justify-content: space-between;
+}
+*/

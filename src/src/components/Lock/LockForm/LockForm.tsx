@@ -33,53 +33,54 @@ const LockForm: React.FC<Props> = ({ lock = defaultLock, onSubmit }) => {
   };
 
   return (
+    <div className="UserFormWithHeader">
+        <label className="LabelHeader">Изменение данных замка</label>
+        <div className="Overlay-Content">
     <form onSubmit={handleSubmit}>
       <div>
-        <label>
-          uuid
+        <label className="LabelSide">uuid</label>
           <input
+            className="InpCompact"
             type="text"
             value={formState.uuid}
             name="uuid"
             onChange={handleFieldChange}
           ></input>
-        </label>
       </div>
       <div>
-        <label>
-          Описание
+        <label className="LabelSide">Описание</label>
           <input
+            className="InpCompact"
             type="text"
             value={formState.description}
             name="description"
             onChange={handleFieldChange}
           ></input>
-        </label>
       </div>
       <div>
-        <label>
-          Версия
+        <label className="LabelSide">Версия</label>
           <input
             type="text"
+            className="InpCompact"
             value={formState.version}
             name="version"
             onChange={handleFieldChange}
           ></input>
-        </label>
       </div>
       <div>
-        <label>
-          Замок включен (одобрен)
+        <label className="LabelSide">Замок включен (одобрен)</label>
           <input
+            className="InpCompact"
             type="checkbox"
             checked={formState.is_approved}
             name="is_approved"
             onChange={handleFieldChange}
           ></input>
-        </label>
       </div>
-      <button>Сохранить</button>
+      <button className="Btn Btn_add">Сохранить</button>
     </form>
+    </div>
+    </div>
   );
 };
 

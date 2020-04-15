@@ -1,12 +1,31 @@
 .Auth {
   position: relative;
   padding: 20px;
+  display: block;
+  align-items: center;
   text-align: center;
+  margin: 125px auto;
+  width: 500px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 0;
 }
 
 .Auth label {
-  display: inline-block;
-  margin-right: 10px;
-  text-align: left;
-  width: 60px;
+  display: block;
+  margin: 0 auto;
+  width: 500px;
+  height: 60px;
+  line-height: 60px;
+  background: #619EF2;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  color: #ffffff;
+}
+
+.Btn_add {
+  width: 420px;
+  height: 46px;
+  border-radius: 20px;
+  margin: 20px auto;
 }

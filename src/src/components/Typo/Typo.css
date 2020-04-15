@@ -1,10 +1,56 @@
-.Typo {
-  font-family: Tahoma, Geneva, Verdana, sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap&subset=cyrillic');
 
-  font-size: 16px;
+.Typo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
 }
 
 .Typo_h3 {
   font-size: 20px;
   font-weight: 700;
+}
+
+input {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #918C8C;
+
+  padding-left: 20px;
+  margin-top: 20px;
+  text-align: left;
+  width: 420px;
+  height: 46px;
+
+  border: 1px solid #619EF2;
+  box-sizing: border-box;
+  border-radius: 20px;
+
+  outline: none;
+}
+
+.Btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+}
+
+.Btn:hover{
+  text-decoration: none;
+}
+
+select, option {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #918C8C;
+
+  padding-left: 20px;
+  margin-top: 20px;
+  text-align: left;
+  width: 190px;
+  height: 46px;
+
+  border: 1px solid #619EF2;
+  box-sizing: border-box;
+  border-radius: 20px;
+
+  outline: none;
 }
