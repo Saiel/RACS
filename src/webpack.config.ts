@@ -43,9 +43,9 @@ const config: webpack.Configuration = {
   },
 
   devServer: {
-    contentBase: resolve(__dirname, 'dist'),
+    contentBase: resolve(__dirname, './dist'),
     compress: true,
-    host: '0.0.0.0',
+    //host: '0.0.0.0',
     port: 9000,
     hot: true,
     historyApiFallback: true,

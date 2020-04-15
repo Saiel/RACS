@@ -1,0 +1,11 @@
+.UserFormWithHeader div{
+    display: flex;
+    justify-content: space-between;
+}
+
+label.LabelSide {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    margin-top: 20px;
+}

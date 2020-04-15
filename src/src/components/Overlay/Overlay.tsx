@@ -24,11 +24,9 @@ const Overlay: React.FC<PropsWithChildren<Props>> = ({ onClose, children }) => {
 
   return (
     <div className="Overlay">
-      <div className="Overlay-Close"><button onClick={onClose}>X</button></div>
-      <div className="Overlay-Content">
-        {children}
-      </div>
-    </div>
+      <div className="Overlay-Close"><button className="Close" onClick={onClose}>X</button></div>
+          {children}
+        </div>
   )
 };
 
