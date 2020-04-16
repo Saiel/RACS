@@ -1,3 +1,5 @@
+import './UserForm.css';
+
 import React, { useCallback, useState, useEffect, ChangeEventHandler } from 'react';
 import { getRoles } from 'api';
 import { validateUser } from 'validation/validators';
@@ -59,35 +61,13 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
   }
 
   return (
+    <div className="UserFormWithHeader">
+        <label className="LabelHeader">Добавление пользователя</label>
+        <div className="Overlay-Content">
     <form onSubmit={handleSubmit}>
       <div>
-        <label>
-          Имя
-        </label>
         <input
-          type="text"
-          value={formState.first_name}
-          name="first_name"
-          onChange={handleFieldChange}
-          required={true}
-        ></input>
-      </div>
-      <div>
-        <label>
-          Отчество
-        </label>
-        <input
-          type="text"
-          value={formState.patronymic}
-          name="patronymic"
-          onChange={handleFieldChange}
-        ></input>
-      </div>
-      <div>
-        <label>
-          Фамилия
-        </label>
-        <input
+          placeholder="Фамилия*"
           type="text"
           value={formState.last_name}
           name="last_name"
@@ -96,10 +76,28 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
         ></input>
       </div>
       <div>
-        <label>
-          E-Mail
-        </label>
         <input
+          placeholder="Имя*"
+          type="text"
+          value={formState.first_name}
+          name="first_name"
+          onChange={handleFieldChange}
+          required={true}
+        ></input>
+      </div>
+      <div>
+        <input
+          placeholder="Отчество"
+          type="text"
+          value={formState.patronymic}
+          name="patronymic"
+          onChange={handleFieldChange}
+        ></input>
+      </div>
+      
+      <div>
+        <input
+          placeholder="E-mail*"
           type="email"
           value={formState.email}
           name="email"
@@ -107,34 +105,32 @@ const UserForm: React.FC<Props> = ({ user = defaultUser, onSubmit }) => {
           required={true}
         ></input>
       </div>
-      <div>
-        <label>
-          ID карточки
-        </label>
-        <input
-          type="text"
-          value={formState.card_id}
-          name="card_id"
-          onChange={handleFieldChange}
-          required={true}
-        ></input>
-      </div>
-      <div>
-        <label>
-          Роль
+      <div className="InLine">
+        <div>
+          <input
+            className="InpCompact"
+            placeholder="ID-карты*"
+            type="text"
+            value={formState.card_id}
+            name="card_id"
+            onChange={handleFieldChange}
+            required={true}
+          ></input>
+        </div>
+        <div>
           <select name="role" value={formState.role} onChange={handleFieldChange}>
-            {roles.map((role) => (
-              <option key={role.r_id} value={role.name}> 
-                {role.name}
-              </option>
-            ))}
+              <option>Роль</option>
+              <option>Студент</option>
+              <option>Сотрудник</option>
           </select>
-        </label>
+        </div>
       </div>
       <div className="Form-Submit">
         <button className="Btn Btn_add">Сохранить</button>
       </div>
     </form>
+    </div>
+    </div>
   );
 };
 

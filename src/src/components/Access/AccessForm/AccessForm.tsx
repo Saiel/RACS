@@ -1,4 +1,5 @@
 import React, { useCallback, useState, ChangeEventHandler } from 'react';
+import './AccessForm.css';
 
 interface Props {
   lockAccess?: LockAccessPOST;
@@ -46,27 +47,26 @@ const LockAccessForm: React.FC<Props> = ({ lockAccess = defaultLockAccess, onSub
   };
 
   return (
+    <div className="UserFormWithHeader">
+        <label className="LabelHeader">Добавление доступа</label>
+        <div className="Overlay-Content">
     <form onSubmit={handleSubmit}>
       <div>
-        <label>
-          Пользователь
+        <label className="LabelSide">Пользователь</label>
           <select name="user" value={formState.user} onChange={handleFieldChange} required={true}>
             {users.map((user) => <option key={user.u_id} value={user.u_id}>{`${user.first_name} ${user.last_name} (${user.email})`}</option>)}
           </select>
-        </label>
       </div>
       <div>
-        <label>
-          Замок
-          <select name="lock" value={formState.lock} onChange={handleFieldChange} required={true}>
+        <label className="LabelSide">Замок</label>
+          <select className="InpCompact" name="lock" value={formState.lock} onChange={handleFieldChange} required={true}>
             {locks.map((lock) => <option key={lock.l_id} value={lock.l_id}>{lock.description}</option>)}
           </select>
-        </label>
       </div>
       <div>
-        <label>
-          Начало
+        <label className="LabelSide">Начало</label>
           <input
+            className="InpCompact"
             type="text"
             value={formState.access_start}
             name="access_start"
@@ -74,12 +74,11 @@ const LockAccessForm: React.FC<Props> = ({ lockAccess = defaultLockAccess, onSub
             onChange={handleFieldChange}
             required={true}
           ></input>
-        </label>
       </div>
       <div>
-        <label>
-          Окончание
+        <label className="LabelSide">Окончание</label>
           <input
+            className="InpCompact"
             type="text"
             value={formState.access_stop}
             name="access_stop"
@@ -87,10 +86,12 @@ const LockAccessForm: React.FC<Props> = ({ lockAccess = defaultLockAccess, onSub
             onChange={handleFieldChange}
             required={true}
           ></input>
-        </label>
       </div>
-      <button>Сохранить</button>
+      <button className="Btn Btn_add">Сохранить</button>
     </form>
+    </div>
+    </div>
+
   );
 };
 
