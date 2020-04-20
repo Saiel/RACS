@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { APIResponse } from 'api/apiRequest';
 import { apiGet } from 'api';
-
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Locks.scss';
 import LockList from 'components/LockList/LockList';
 import usePagination from 'hooks/usePagination';
@@ -31,7 +32,7 @@ const Locks: React.FC = () => {
 
   return (
     <div className="Locks Layout">
-      <div className="Page-Title">Список замков</div>
+      <div className="Page-Title"><span>< FontAwesomeIcon icon={faLock} /> Список замков</span></div>
         { locks && 
         <>
           <LockList locks={locks.results} /> 

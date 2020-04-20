@@ -1,6 +1,8 @@
 import React from 'react';
 import Table from 'components/Table/Table';
 import { Link } from 'react-router-dom';
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const userFields = [
   'ID', 'Имя', 'Фамилия', 'Email', 'ID карточки', 'Роль',
@@ -15,7 +17,7 @@ const UserListRow: React.FC<{ user: User; onDelete?: deleteFn }> = ({ user, onDe
       <div className="User-Email">{user.email}</div>
       <div className="User-CardID">{user.card_id}</div>
       <div className="User-Role">{user.role}</div>
-      {onDelete && <button onClick={(e) => { e.preventDefault(); onDelete(user.u_id); }} className="Btn Btn_danger">Удалить</button>}
+      {onDelete && <button onClick={(e) => { e.preventDefault(); onDelete(user.u_id); }} className="Btn Btn_danger">< FontAwesomeIcon icon={faTrashAlt} /></button>}
     </React.Fragment>
   )
 };

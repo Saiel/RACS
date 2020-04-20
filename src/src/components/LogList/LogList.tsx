@@ -8,6 +8,8 @@ const LogInfoRow: React.FC<Log> = ({ lock, lock_desc, user, try_time, result, us
     if (typeof lock_desc !== 'undefined') return lock_desc.split('\r\n')[0];
     return '-';
   }, [lock_desc]);
+
+
   const tryTime = useMemo(() => new Date(try_time).toLocaleString(), [try_time]);
 
   return (

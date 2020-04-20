@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { APIResponse } from 'api/apiRequest';
 import { apiGet } from 'api';
 import LogList from 'components/LogList/LogList';
+import { faList } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import './Logs.scss';
 import usePagination from 'hooks/usePagination';
@@ -31,14 +33,16 @@ const Logs: React.FC = () => {
   }
 
   return (
+    <div className="Layout-Column Home-Tables">
     <div className="Logs Layout">
-      <div className="Page-Title">Журнал доступов</div>
+      <div className="Page-Title"><span><FontAwesomeIcon icon={faList} /> Журнал доступов</span></div>
       { logs && 
       <>
         <LogList logs={logs.results}/> 
         <Pagination paginationFn={logsPagination} state={logs} />
       </>
       }
+    </div>
     </div>
   );
 };
