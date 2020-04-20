@@ -3,6 +3,9 @@ import { APIResponse } from 'api/apiRequest';
 import { getUsers, apiPost, API, apiGet } from 'api';
 import UserList from 'components/UserList/UserList';
 import usePagination from 'hooks/usePagination';
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import './Users.scss';
 import UserForm from 'components/Forms/UserForm';
@@ -66,12 +69,10 @@ const Users: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <div className="Users Layout">
-      <div className="Page-Title">Список пользователей</div>
-      <div className="Page-Actions">
-        <button className="Btn Btn_add" onClick={toggleOverlay('open')}>
-          Добавить пользователя
+      <div className="Page-Title AccessTitle"><span><FontAwesomeIcon icon={faUsers}/> Список пользователей</span></div>
+        <button className="Btn Btn-userAdd" onClick={toggleOverlay('open')}>
+          <span>< FontAwesomeIcon icon={ faPlus } /> Добавить пользователя</span>
         </button>
-      </div>
       {users &&
         <>
           <UserList onDelete={deleteUser} users={users.results} />

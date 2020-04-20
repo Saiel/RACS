@@ -4,11 +4,11 @@ $light: rgba(251, 251, 251, 1);
 $blue: rgba(51, 101, 138, 1);
 
 :root {
-  --color-primary: #000000;
+  --color-primary: #2E2F30;
   --color-accent: rgba(51, 101, 138, 1);
   --color-light: rgba(251, 251, 251, 1);
   --color-red: rgba(254, 95, 85, 1);;
-  --color-green: rgba(175, 208, 191, 1);
+  --color-green: #619EF2;
 
   --color-table-divider: #cecece;
   --color-content-divider: #adadad;
@@ -27,14 +27,22 @@ $blue: rgba(51, 101, 138, 1);
 }
 
 .Page {
-  background: #edeef0;
+  background: #DAE4F2;
   margin: 0;
 
-  &-Title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    width: 100%;
+  &-Title{
+    font-size: 15px;
+    font-weight: 600;
+    width: 20%;
+    letter-spacing: 1px;
+    background: #619EF2;
+    color: #ffffff;
+    height: 46px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
   }
 
   &-Actions {	
@@ -52,11 +60,13 @@ $blue: rgba(51, 101, 138, 1);
 }
 
 .Btn {	
-  border: 2px solid black;	
-  color: var(--color-primary);	
+  /*border: 2px solid black;	*/
+  color: #ffffff;	
   cursor: pointer;	
   font-size: 16px;	
   padding: 5px;	
+  outline: none;
+  border: none;
 
   &:hover {	
     border-color: var(--color-accent);	
@@ -67,9 +77,19 @@ $blue: rgba(51, 101, 138, 1);
     background: var(--color-green);	
   }	
 
+  &_Change {
+    background: #81E0B2;
+    height: 42px;
+    border-radius: 20px;
+    width: 20%;
+  }
+
   &_danger {	
     background: var(--color-red);	
-    color: var(--color-light);	
+    color: var(--color-light);
+    width: 86px;
+    height: 42px;	
+    border-radius: 20px;
   }	
 
   &:disabled {	
@@ -86,3 +106,4 @@ $blue: rgba(51, 101, 138, 1);
     width: 100%;	
   }	
 } 
+

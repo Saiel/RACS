@@ -14,6 +14,11 @@ import { APIResponse } from 'api/apiRequest';
 import Pagination from 'components/Pagination/Pagination';
 import usePagination from 'hooks/usePagination';
 import LockForm from './LockForm/LockForm';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faList } from "@fortawesome/free-solid-svg-icons";
+import { faLockOpen } from "@fortawesome/free-solid-svg-icons";
+
 
 interface LockRoute {
   lockId: string;
@@ -125,28 +130,30 @@ const Lock: React.FC<RouteComponentProps<LockRoute>> = ({
   }
 
   return (
-    <div className="Lock Layout Layout_columns_2">
-      <div className="Page-Title">Замок {lock ? lock.description : ''}</div>
+    <div className="Lock Layout_columns_2">
+      <div  className="TitleCard">
+      <div className="Page-Title TitleUser">Замок {lock ? lock.description : ''}</div>
       <div className="Layout-Column Lock-LockInfo">
         {lock && (
           <Card>
             <LockInfo lock={lock} />
             <div className="Card-Actions">
-              <button className="Btn" onClick={toggleOverlay('open')}>Изменить</button>
-              <button className="Btn Btn_danger" onClick={deleteLock}>Удалить</button>
+              <button className="Btn Btn_Change" onClick={toggleOverlay('open')}>Изменить</button>
+              <button className="Btn Btn_danger" onClick={deleteLock}><span>< FontAwesomeIcon icon={faTrashAlt} /></span></button>
             </div>
           </Card>
         )}
       </div>
-      <div className="Layout-Columns Lock-Tables">
-        <div className="Layout-Title">Доступы к замку</div>
+      </div>
+      <div className="TableUser">
+        <div className="Page-Title"><span><FontAwesomeIcon icon={faLockOpen}/> Доступы </span></div>
         {lockAccessList &&
           <>
             <AccessList onDelete={deleteAccess} accesses={lockAccessList.results} className="Layout-Table" />
             <Pagination paginationFn={accessesPagination} state={lockAccessList} />
           </>
         }
-        <div className="Layout-Title">Журнал проходов</div>
+        <div className="Page-Title"><span><FontAwesomeIcon icon={faList}/> Журнал проходов </span></div>
         {logs &&
           <>
             <LogList logs={logs.results} className="Layout-Table" />

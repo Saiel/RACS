@@ -51,23 +51,20 @@ export const Auth: React.FC = () => {
     <>
       { isLoading && <Loader /> }
       <div className="Auth">
+            <label>
+              Авторизация пользователя
+            </label>
         <form className="Form" onSubmit={handleSubmit}>
           <div className="Form-Field">
-            <label>
-              E-mail
-            </label>
             <input 
               type="email" 
               name="email" 
-              placeholder="E-Mail" 
+              placeholder="Логин" 
               value={formState.email}
               onChange={handleFieldChange}
             />
           </div>
           <div className="Form-Field">
-            <label>
-              Пароль
-            </label>
             <input 
               type="password" 
               name="password" 

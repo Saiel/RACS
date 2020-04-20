@@ -7,4 +7,5 @@ __all__ = [
     'Accesses',
     'Logs',
     'Roles',
+    'LockAdmins',
 ]

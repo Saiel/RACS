@@ -13,6 +13,11 @@ import LockAccessForm from 'components/Access/AccessForm/AccessForm';
 import usePagination from 'hooks/usePagination';
 import { APIResponse } from 'api/apiRequest';
 import Pagination from 'components/Pagination/Pagination';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faList } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface UserRoute {
   uId: string;
@@ -153,29 +158,31 @@ const User: React.FC<RouteComponentProps<UserRoute>> = ({
   }
 
   return (
-    <div className="User Layout Layout_columns_2">
-      <div className="Page-Title">Пользователь {userName}</div>
+    <div className="User Layout_columns_2">
+      <div className="TitleCard">
+        <div className="Page-Title TitleUser">Пользователь {userName}</div>
       <div className="Layout-Column User-UserInfo">
         {user && (
           <Card>
             <UserInfo user={user} />
             <div className="Card-Actions">	            
-              <button className="Btn Btn_add" onClick={toggleAccessOverlay('open')}>Добавить доступ</button>
-              <button className="Btn" onClick={toggleOverlay('open')}>Изменить</button>	
-              <button className="Btn Btn_danger" onClick={deleteUser}>Удалить</button>	
+              <button className="Btn Btn_add" onClick={toggleAccessOverlay('open')}><span><FontAwesomeIcon icon={faPlus}/> Добавить доступ </span></button>
+              <button className="Btn Btn_Change" onClick={toggleOverlay('open')}>Изменить</button>	
+              <button className="Btn Btn_danger" onClick={deleteUser}><span>< FontAwesomeIcon icon={faTrashAlt} /></span></button>	
             </div>
           </Card>
         )}
       </div>
-      <div className="Layout-Columns User-Tables">
-        <div className="Layout-Title">Доступы пользователя</div>
+      </div>
+      <div className="TableUser">
+      <div className="Page-Title"><span><FontAwesomeIcon icon={faLockOpen}/> Доступы </span></div>
         {}
         {userAccessList &&	
           <>	
             <AccessList accesses={userAccessList.results} onDelete={deleteAccess} className="Layout-Table" />	
             <Pagination paginationFn={accessPagination} state={userAccessList} />	
           </>}
-        <div className="Layout-Title">Журнал проходов</div>
+          <div className="Page-Title"><span><FontAwesomeIcon icon={faList}/> Журнал проходов </span></div>
         {logs &&
           <>	
             <LogList logs={logs.results} className="Layout-Table" />	

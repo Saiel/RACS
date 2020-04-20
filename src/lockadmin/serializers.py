@@ -1,3 +1,12 @@
+"""Module with serializers.
+
+See Also:
+    https://www.django-rest-framework.org/api-guide/serializers/.
+    https://www.django-rest-framework.org/api-guide/fields/.
+    https://www.django-rest-framework.org/api-guide/relations/.
+
+"""
+
 from rest_framework import serializers
 
 from .models import *
@@ -5,11 +14,16 @@ from . import validators
 
 
 class RegisterLockSerializer(serializers.ModelSerializer):
+    """Serializer for lock registration.
+    
+    """
+    
     class Meta:
         model = Locks
         fields = [
             'uuid',
             'version',
+            'gmail',
         ]
         extra_kwargs = {
             'uuid': {
@@ -18,11 +32,18 @@ class RegisterLockSerializer(serializers.ModelSerializer):
             'version': {
                 'required': True,
                 'validators': [validators.version_validator]
+            },
+            'gmail': {
+                'required': False,
             }
         }
 
 
 class LocksSerializer(serializers.ModelSerializer):
+    """General purpose serializer for lock.
+    
+    """
+    
     class Meta:
         model = Locks
         fields = [
@@ -33,12 +54,14 @@ class LocksSerializer(serializers.ModelSerializer):
             'is_approved',
             'last_echo',
             'is_on',
+            'gmail',
         ]
         read_only_fields = [
             'l_id',
             'uuid',
             'last_echo',
-            'is_on'
+            'is_on',
+            'gmail'
         ]
         extra_kwargs = {
             'version': {
@@ -49,6 +72,10 @@ class LocksSerializer(serializers.ModelSerializer):
 
 
 class RolesSerializer(serializers.ModelSerializer):
+    """General purpose serializer for Roles.
+
+    """
+    
     class Meta:
         model = Roles
         fields = ['r_id', 'name']
@@ -58,6 +85,10 @@ class RolesSerializer(serializers.ModelSerializer):
 
 
 class AccessesSerializer(serializers.ModelSerializer):
+    """General purpose serializer for access.
+    
+    """
+    
     class Meta:
         model = Accesses
         fields = [
@@ -68,10 +99,12 @@ class AccessesSerializer(serializers.ModelSerializer):
             'card_id',
             'access_start',
             'access_stop',
-            'user_fio'
+            'user_fio',
+            'added_by',
         ]
         read_only_fields = [
-            'a_id'
+            'a_id',
+            'lockadmins'
         ]
     
     card_id   = serializers.ReadOnlyField(source='user.card_id')
@@ -80,6 +113,10 @@ class AccessesSerializer(serializers.ModelSerializer):
 
 
 class UserModelSerializer(serializers.ModelSerializer):
+    """General purpose serializer for user.
+
+    """
+    
     class Meta:
         model = UserModel
         fields = [
@@ -91,7 +128,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'patronymic',
             'card_id',
             'role',
-            'is_superuser'
+            'is_superuser',
+            'is_staff',
         ]
         read_only_fields = [
             'u_id',
@@ -118,6 +156,10 @@ class UserModelSerializer(serializers.ModelSerializer):
 
 
 class LogsSerializer(serializers.ModelSerializer):
+    """General purpose serializer for log.
+
+    """
+    
     class Meta:
         model = Logs
         fields = '__all__'
@@ -133,3 +175,13 @@ class LogsSerializer(serializers.ModelSerializer):
 
     user_fio = serializers.ReadOnlyField(source='user.short_name')
     lock_desc = serializers.ReadOnlyField(source='lock.description')
+
+
+class LockAdminsSerializer(serializers.ModelSerializer):
+    """General purpose serializer for LockAdmins.
+    
+    """
+    
+    class Meta:
+        model = LockAdmins
+        fields = '__all__'
