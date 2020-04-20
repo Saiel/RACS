@@ -1,4 +1,6 @@
 import React, { PropsWithChildren, useEffect, useCallback } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import './Overlay.scss';
 
@@ -24,7 +26,7 @@ const Overlay: React.FC<PropsWithChildren<Props>> = ({ onClose, children }) => {
 
   return (
     <div className="Overlay">
-      <div className="Overlay-Close"><button className="Close" onClick={onClose}>X</button></div>
+      <div className="Overlay-Close"><button className="Close" onClick={onClose}><span>< FontAwesomeIcon icon={faTimes} /></span></button></div>
           {children}
         </div>
   )

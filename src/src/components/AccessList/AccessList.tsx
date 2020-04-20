@@ -1,5 +1,9 @@
 import React, { useMemo } from 'react';
 import Table from 'components/Table/Table';
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 const accessFields = [
   'Замок',
@@ -30,7 +34,7 @@ const AccessInfoRow: React.FC<AccessInfoRowProps> = ({ access: { a_id, lock_desc
       <div className="Access-User">{user_fio}</div>
       <div className="Access-Start">{accessStart}</div>
       <div className="Access-Stop">{accessStop}</div>
-      { onDelete && <button onClick={() => onDelete(a_id)} className="Btn Btn_danger Access-Delete">Удалить</button> }
+      { onDelete && <button onClick={() => onDelete(a_id)} className="Btn Btn_danger Access-Delete"><span>< FontAwesomeIcon icon={faTrashAlt} /></span></button> }
     </React.Fragment>
   )
 }

@@ -8,6 +8,7 @@
 }
 
 .ModelField-Field {
+  color: var(--color-green);
   font-weight: bold;
   width: 50%;
 }

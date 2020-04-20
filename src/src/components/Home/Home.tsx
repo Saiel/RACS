@@ -4,6 +4,9 @@ import UserInfo from 'components/UserInfo/UserInfo';
 import LockList from 'components/LockList/LockList';
 import UserList from 'components/UserList/UserList';
 import { APIResponse } from 'api/apiRequest';
+import { faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import './Home.scss';
 import { getUsers, getLocks } from 'api';
@@ -36,24 +39,24 @@ const Home: React.FC<RouteComponentProps<{}>> = ({ history }) => {
 
   return (
     <div className="Home Layout Layout_columns_2">
-      <div className="Page-Title">Управление системой</div>
       <div className="Layout-Column Home-User">
         <div className="Layout-Title">
-          Текущий пользователь
+          
         </div>
         {/* {users && users.results.length > 0 &&
           <UserInfo user={users.results[0]} />
         } */}
       </div>
+      
       <div className="Layout-Column Home-Tables">
-        <div className="Layout-Title">Аудитории</div>
+        <div className="Page-Title"><span><FontAwesomeIcon icon={faLockOpen}/> Аудитории</span></div>
         {locks &&
            <div className="Layout-Table" >
             <LockList locks={locks.results} />
             <Pagination paginationFn={locksPagination} state={locks} />
           </div>
         }
-        <div className="Layout-Title">Пользователи</div>
+        <div className="Page-Title"><span><FontAwesomeIcon icon={faUsers}/> Пользователи</span></div>
         {users &&
           <div className="Layout-Table" >
             <UserList users={users.results} />

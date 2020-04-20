@@ -1,7 +1,14 @@
 .Pagination {
-  margin: 10px auto;
+  margin: 10px 45%;
 
   &-Prev {
     margin-right: 5px;
   }
+}
+
+.Btn.Pagination-Prev, .Btn.Pagination-Next {
+  outline: none;
+  background: #DAE4F2;
+  font-size: 20px;
+  color: #619EF2;
 }

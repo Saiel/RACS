@@ -30,11 +30,19 @@ $blue: rgba(51, 101, 138, 1);
   background: #DAE4F2;
   margin: 0;
 
-  &-Title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    width: 100%;
+  &-Title{
+    font-size: 15px;
+    font-weight: 600;
+    width: 20%;
+    letter-spacing: 1px;
+    background: #619EF2;
+    color: #ffffff;
+    height: 46px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
   }
 
   &-Actions {	
@@ -69,9 +77,19 @@ $blue: rgba(51, 101, 138, 1);
     background: var(--color-green);	
   }	
 
+  &_Change {
+    background: #81E0B2;
+    height: 42px;
+    border-radius: 20px;
+    width: 20%;
+  }
+
   &_danger {	
     background: var(--color-red);	
-    color: var(--color-light);	
+    color: var(--color-light);
+    width: 86px;
+    height: 42px;	
+    border-radius: 20px;
   }	
 
   &:disabled {	
@@ -88,3 +106,4 @@ $blue: rgba(51, 101, 138, 1);
     width: 100%;	
   }	
 } 
+

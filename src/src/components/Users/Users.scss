@@ -1,26 +1,39 @@
 .Users {
   .UserList {
     width: 100%;
-
+    text-align: center;
+    
     .Table-Row div {
+      
       &:nth-child(1) {
-        width: 5%;
+        width: 6%;
       }
       &:nth-child(2) {
-        width: 15%;
+        width: 14%;
       }
       &:nth-child(3) {
-        width: 15%;
+        width: 20%;
       }
       &:nth-child(4) {
         width: 20%;
       } 
       &:nth-child(5) {
-        width: 8%;
+        width: 15%;
       }
       &:nth-child(6) {
-        width: 8%;
+        width: 15%;
       }
     }
   }
+}
+
+.Btn-userAdd{
+  margin: 0;
+  align-items: flex-end;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background: #ffffff;
+  color: #619EF2;
+  width: 20%;
+  font-weight: 600;
 }
